@@ -259,7 +259,6 @@ Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int*
 
     int T = 0;
     T = search( S, ID );
-    printf("%d      %d          %d\n", S->ID, ID, T);
 
     if ( (T == 1) ){
         searchEditVector(S, ID, v, v2);
