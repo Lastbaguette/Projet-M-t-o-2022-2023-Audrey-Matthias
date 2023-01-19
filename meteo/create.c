@@ -1,7 +1,7 @@
 #include "weathersort.h"
 
 
-Station1* createStation1 ( int ID, float v, Date* D){
+Station1* createStation1 ( int ID, float v, Date* D){               //Function to create a station using one value to sort
     Station1* NewStation = malloc(sizeof(Station1));
     if (NewStation == NULL){
         exit(4);
@@ -22,7 +22,7 @@ Station1* createStation1 ( int ID, float v, Date* D){
 
 }
 
-Station1* createStation1bis( int ID, float v, float v2){
+Station1* createStation1bis( int ID, float v, float v2){            //Function to create a station using two values to sort
     Station1* NewStation = malloc(sizeof(Station1));
     if (NewStation == NULL){
         exit(4);
@@ -44,6 +44,7 @@ Station1* createStation1bis( int ID, float v, float v2){
 
     NewStation -> rs = NULL;
     NewStation -> ls = NULL;
+    NewStation -> balance = 0;
 
     return NewStation;
 
@@ -68,7 +69,7 @@ Station1* AddLeftSt ( Station1* S, int ID, float v, Date* D){         //Add left
     return S;
 }
 
-Station1* AddRightSt ( Station1* S, int ID, float v, Date* D ){        //Add right son
+Station1* AddRightSt ( Station1* S, int ID, float v, Date* D ){        //Add right son (from one tree (here called a station) to another)
 
     Station1* NewS = createStation1 ( ID, v, D );
 
@@ -86,7 +87,7 @@ Station1* AddRightSt ( Station1* S, int ID, float v, Date* D ){        //Add rig
     return S;
 }
 
-Station1* AddLeftSt2 ( Station1* S, Station1* NS ){        //Add left son
+Station1* AddLeftSt2 ( Station1* S, Station1* NS ){                     //Add left son (from one tree (here called a station) to another)
 
     if (NS == NULL){
         NS = S;
@@ -102,7 +103,7 @@ Station1* AddLeftSt2 ( Station1* S, Station1* NS ){        //Add left son
     return NS;
 }
 
-Station1* AddRightSt2 ( Station1* S, Station1* NS ){        //Add right son
+Station1* AddRightSt2 ( Station1* S, Station1* NS ){                    //Add right son
 
     if (NS == NULL){
         NS = S;
@@ -118,7 +119,7 @@ Station1* AddRightSt2 ( Station1* S, Station1* NS ){        //Add right son
     return NS;
 }
 
-Station1* AddLeftStbis  ( Station1* S, int ID, float v, float v2 ){        //Add left son
+Station1* AddLeftStbis  ( Station1* S, int ID, float v, float v2 ){        //Add left son (if it has two given values)
 
     Station1* NewS = createStation1bis ( ID, v, v2 );
 
@@ -137,7 +138,7 @@ Station1* AddLeftStbis  ( Station1* S, int ID, float v, float v2 ){        //Add
 
 }
 
-Station1* AddRightStbis ( Station1* S, int ID, float v, float v2 ){        //Add right son
+Station1* AddRightStbis ( Station1* S, int ID, float v, float v2 ){        //Add right son (if it has two given values)
 
     Station1* NewS = createStation1bis ( ID, v, v2 );
 
