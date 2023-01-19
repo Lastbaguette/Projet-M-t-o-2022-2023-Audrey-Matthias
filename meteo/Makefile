@@ -1,20 +1,20 @@
 
-sort: weathersort.o ABRSort.o AVLSort.o display.o create.o
+sort: weathersort.o ./ABR/ABRSort.o ./AVL/AVLSort.o ./display/display.o ./create/create.o
 	gcc weathersort.o ABRSort.o AVLSort.o display.o create.o -o sort
 
 weathersort.o: weathersort.c
 	gcc -c weathersort.c
 
-ABRSort.o: ABRSort.c
+./ABR/ABRSort.o: ./ABR/ABRSort.c
 	gcc -c ABRSort.c
 
-AVLSort.o: AVLSort.c
+./AVL/AVLSort.o: ./AVL/AVLSort.c
 	gcc -c AVLSort.c
 
-display.o: display.c
+./display/display.o: ./display/display.c
 	gcc -c display.c
 
-create.o: create.c
+./create/create.o: ./create/create.c
 	gcc -c create.c
 
 
