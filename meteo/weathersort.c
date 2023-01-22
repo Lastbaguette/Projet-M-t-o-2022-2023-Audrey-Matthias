@@ -134,7 +134,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
     pre = fopen( preFN, "r" );
     post = fopen( postFN, "w" );
     
-    if( (pre == NULL) ){  return 2;  }
+    if( (pre == NULL) ){ printf("a"); return 2;  }
     if( (post == NULL) ){  return 3;  }
     
     do {
@@ -142,7 +142,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
-        if (( d == 9 )){
+        if (( d == 10 )){
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
                 case(1):
@@ -359,7 +359,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &year, &month, &day, &hour, &utc, &x, &y);
-        if((d == 9)){
+        if((d == 10)){
 
         } else {
             fclose(pre);
@@ -417,7 +417,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
-        if ((d == 9)){
+        if ((d == 10)){
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
                 case(1):
@@ -529,7 +529,7 @@ if ( argc != 6 ) { test = 1; }                   //Check if the number of given 
 
 for ( i=1 ; i < argc; i++){
 
-    //printf("%d | %s          ", i, argv[i]);
+    //printf("%d | %s          \n", i, argv[i]);
 
     if ( (i == 1) ){                            //Test if pre-sorting file exists
         tpre = TestFileExist ( argv[i] );
