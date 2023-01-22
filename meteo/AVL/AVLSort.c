@@ -60,7 +60,6 @@ Station1* DoubleLeftRotationSt ( Station1* S ){
     return LeftRotationSt(S);
 }
 
-
 Station1* StationBalance ( Station1* S ){
     if(S != NULL){
         if( S->balance >= 2 ){
@@ -85,6 +84,8 @@ Station1* StationBalance ( Station1* S ){
     return S;
 }
 
+
+
 Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){    //Inserts the read value into the tree with the AVL sorting method
 
     if ( S == NULL ){
@@ -106,7 +107,6 @@ Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, flo
     if ( *pH != 0 ){
 
         S->balance = S->balance + *pH;
-        printf("%d\n", S->balance);
         S = StationBalance(S);
         if (S->balance == 0){
             *pH = 0;
@@ -127,7 +127,6 @@ Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, fl
 
     int T = 0;
     T = search( S, ID );
-    printf("%d      %d          %d\n", S->ID, ID, T);
 
     if ( (T == 1) ){
         searchEdit(S, ID, v);
@@ -236,7 +235,6 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
     if ( *pH != 0 ){
 
         S->balance = S->balance + *pH;
-        printf(" balance = %d\n", S->balance);
         S = StationBalance(S);
         if (S->balance == 0){
             *pH = 0;
@@ -244,7 +242,6 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
         else {
             *pH = 1;
         }    
-        printf("ph = %d\n", S->balance);
 
     }
     return S; 
@@ -268,4 +265,88 @@ Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int*
 
     return S;
 
+}
+
+Station1* InsertHeightAVL(Station1* S, int ID, float v, Date* D, int* pH, float x, float y){
+    if ( S == NULL ){
+        *pH = 1;
+        return createStation1(ID, v, D, x, y);
+    }
+    else if ( v < S->average ){
+        S-> ls = InsertHeightAVL( S->ls, ID, v, D, pH, x, y ); 
+        *pH = -*pH;
+    }
+    else if ( (v >= S->average) ){
+        S ->rs = InsertHeightAVL( S->rs, ID, v, D, pH, x, y ); 
+    }
+
+    if ( *pH != 0 ){
+        S->balance = S->balance + *pH;
+        S = StationBalance(S);
+        if ( S->balance == 0){
+            *pH = 0; 
+        } else {
+            *pH = 1;
+        }
+    }
+    return S;
+}
+
+Station1* SortHeightAVL( Station1* S, int ID, float v, Date* D, int* pH, float x, float y){  
+
+    if ( S == NULL ){
+        exit(1);
+    } 
+
+    int T = 0;
+    T = search( S, ID );
+    printf("%d\n", T);
+
+
+    if ( (T != 1) ){
+        S = InsertHeightAVL(S, ID, v, D, pH, x, y);
+    }
+
+    return S;
+}
+
+Station1* InsertMoistureAVL(Station1* S, Station1* NS, int* pH){
+
+    if(NS == NULL){
+        *pH = 1;
+        NS = S;
+    }
+    else if (S != NULL){
+        if ( S->max < NS->max ){
+            NS->ls = InsertMoistureAVL( S, NS->ls, pH );
+            *pH = -*pH;
+        }
+        else {
+            NS->rs = InsertMoistureAVL( S, NS->rs, pH );
+        }
+    }
+
+    if(*pH != 0){
+        NS-> balance = NS->balance + *pH;
+        NS = StationBalance(NS);
+        if ( NS -> balance == 0 ){
+            *pH = 0;
+        } else {
+            *pH = 1;
+        }
+    }
+
+    return NS;
+}
+
+Station1* SortMoistureAVL( Station1* S, Station1* NS, int* pH){ 
+
+    if ( S != NULL ){
+        Station1* temp = createStation1( S->ID, S->max, S->date, S->x, S->y );
+        NS = SortMoistureAVL(S->ls, NS, pH);
+        NS = InsertMoistureAVL(temp, NS, pH);
+        NS = SortMoistureAVL(S->rs, NS, pH);
+    }
+
+    return NS;
 }

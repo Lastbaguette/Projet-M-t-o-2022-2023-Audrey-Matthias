@@ -1,7 +1,7 @@
 #include "../weathersort.h"
 
 void processAvPerSt( Station1* S, FILE* post ){
-    fprintf( post, "%d %f %f %f\n", S -> ID, S -> average, S -> min, S-> max);
+    fprintf( post, "%d    %f   %f %f\n", S -> ID, S -> average, S -> min, S-> max);
 }
 
 void processAvPerDateAllSt( Station1* S, FILE* post ){
@@ -13,15 +13,15 @@ void processPerDatePSt( Station1* S, FILE* post ){
 }
 
 void processWind( Station1* S, FILE* post ){
-    fprintf( post, "%d %d %f %f %f %f\n", S -> ID,S ->count, S -> average, S->average2, S->x, S->y);
+    fprintf( post, "%d    %f %f    %f %f\n", S -> ID, S -> average, S->average2, S->x, S->y);
 }
 
 void processHeight( Station1* S, FILE* post ){
-    fprintf( post, "%d %f %f %f\n", S -> ID, S -> max, S->x, S->y);
+    fprintf( post, "%d %f    %f %f\n", S -> ID, S -> max, S->x, S->y);
 }
 
 void processMoisture( Station1* S, FILE* post ){
-    fprintf( post, "%d %f %f %f\n", S -> ID, S -> max, S->x, S->y);
+    fprintf( post, "%d %f    %f %f\n", S -> ID, S -> max, S->x, S->y);
 }
 
 void displayAvPerSt( Station1* S, FILE* post){

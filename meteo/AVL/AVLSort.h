@@ -20,6 +20,10 @@ Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, f
 Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y);
 Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH, float x, float y);
 Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int* pH, float x, float y);
+Station1* InsertHeightAVL(Station1* S, int ID, float v, Date* D, int* pH, float x, float y);
+Station1* SortHeightAVL( Station1* S, int ID, float v, Date* D, int* pH, float x, float y);
+Station1* InsertMoistureAVL(Station1* S, Station1* NS, int* pH);
+Station1* SortMoistureAVL( Station1* S, Station1* NS, int* pH);
 
 //=======================================================================
 

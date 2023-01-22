@@ -168,7 +168,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
                     break;
                 case(4):
                     if ( S == NULL ){
-                        S = createStation1bis(ID, x, y, x, y);
+                        S = createStation1bis(ID, N, N2, x, y);
                     } else {
                         AveragePStationVectorABR(S, ID, N, N2, x, y);
                     }
@@ -332,8 +332,6 @@ void addListdate(List* L, int ID, float value, Date* D, float x, float y, float 
 }
 
 
-
-
 int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doubly linked list sorting function
 
     FILE* pre = NULL;
@@ -445,15 +443,22 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     if ( S == NULL ){
                         S = createStation1bis(ID, N, N2, x, y);
                     } else {
-                        AveragePStationVectorAVL(S, ID, x, y, pH, x, y);
+                        AveragePStationVectorAVL(S, ID, N, N2, pH, x, y);
                     }
                     break;
-                    break;
                 case(5):
-
+                    if ( S == NULL ){
+                        S = createStation1(ID, N, D, x, y);
+                    } else {
+                        S = SortHeightAVL(S, ID, N, D, pH, x, y);
+                    }
                     break;
                 case(6):
-
+                    if ( S == NULL ){
+                        S = createStation1(ID, N, D, x, y);
+                    } else {
+                        S = AveragePStationAVL(S, ID, N, pH, D, x, y);
+                    }
                     break;
                 default:
                     
@@ -490,8 +495,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     }
                     break;
                 case(6):
-
-                    NS = SortMoisture(S, NS);
+                    NS = SortMoistureAVL(S, NS, pH);
                     if ( R == 1 ){
                         displayMoisture(NS, post);
                     } else {

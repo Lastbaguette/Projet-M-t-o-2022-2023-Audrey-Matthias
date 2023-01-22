@@ -1,5 +1,5 @@
 
-sort: weathersort.o ABRSort.o AVLSort.o display.o create.o
+sort: weathersort.o ./ABR/ABRSort.o ./AVL/AVLSort.o ./display/display.o ./create/create.o
 	gcc weathersort.o ABRSort.o AVLSort.o display.o create.o -o sort
 
 weathersort.o: weathersort.c

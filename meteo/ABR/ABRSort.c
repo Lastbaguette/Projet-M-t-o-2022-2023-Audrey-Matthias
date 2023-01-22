@@ -68,6 +68,8 @@ void searchEditVector( Station1* S , int ID, float v, float v2){
     }
 }
 
+
+
 void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y){
     if ( S == NULL ){
         exit(1);
@@ -208,22 +210,18 @@ void InsertHeightABR(Station1* S, int ID, float v, Date* D, float x, float y){
     else if ( v < S->average ){
         if (S->ls != NULL){
             InsertHeightABR( S->ls, ID, v, D, x, y );
-            printf("AAaqqqqqqqqqqqqqqqqA%f \n", S->x);
         }
         else{
            S = AddLeftSt(S, ID, v, D, x, y);
-            printf("%f \n", S->x);
         }       
     }
     else if ( (v > S->average) ){
 
         if (S->rs != NULL){
             InsertHeightABR( S->rs, ID, v, D, x, y );
-            printf("AAadssssssssAAAAAAAA%f \n", S->x);
         }
         else{
             S = AddRightSt(S, ID, v, D, x, y);
-            printf("AAAAAAAAAAAAAAAAAAAAAA%f \n", S->x);
         }
     }
 }
