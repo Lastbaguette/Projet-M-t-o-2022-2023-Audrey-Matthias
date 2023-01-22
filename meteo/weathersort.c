@@ -125,7 +125,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
     int test;
     char temp[200];
     int ID = 0, year = 0, month = 0, day = 0, hour = 0, utc = 0;
-    float N = 0, x = 0, y = 0;
+    float N = 0, N2 = 0, x = 0, y = 0;
     Station1* S = NULL;
     Station1* NS = NULL;
     Date* D = malloc(sizeof(Date));
@@ -141,50 +141,50 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
         fgets(temp, 200, pre);
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
-        d = sscanf(temp, "%d %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &year, &month, &day, &hour, &utc, &x, &y);
+        d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
         if (( d == 9 )){
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
                 case(1):
                     if ( S == NULL ){
-                        S = createStation1(ID, N, D);
+                        S = createStation1(ID, N, D, x, y);
                     } else {
-                        AveragePStationABR(S, ID, N, D);
+                        AveragePStationABR(S, ID, N, D, x, y);
                     }
                     break;
                 case(2):
                     if ( S == NULL ){
-                        S = createStation1(ID, N, D);
+                        S = createStation1(ID, N, D, x, y);
                     } else {
-                        InsertPDateAllStABR(S, ID, N, D);
+                        InsertPDateAllStABR(S, ID, N, D, x, y);
                     }
                     break;
                 case(3):
                     if ( S == NULL ){
-                        S = createStation1(ID, N, D);
+                        S = createStation1(ID, N, D, x, y);
                     } else {
-                        InsertPDatePStABR(S, ID, N, D);
+                        InsertPDatePStABR(S, ID, N, D, x, y);
                     }
                     break;
                 case(4):
                     if ( S == NULL ){
-                        S = createStation1bis(ID, x, y);
+                        S = createStation1bis(ID, x, y, x, y);
                     } else {
-                        AveragePStationVectorABR(S, ID, x, y);
+                        AveragePStationVectorABR(S, ID, N, N2, x, y);
                     }
                     break;
                 case(5):
                     if ( S == NULL ){
-                        S = createStation1(ID, N, D);
+                        S = createStation1(ID, N, D, x, y);
                     } else {
-                        SortHeight(S, ID, N, D);
+                        SortHeight(S, ID, N, D, x, y);
                     }
                     break;
                 case(6):
                     if ( S == NULL ){
-                        S = createStation1(ID, N, D);
+                        S = createStation1(ID, N, D, x, y);
                     } else {
-                        AveragePStationABR(S, ID, N, D);
+                        AveragePStationABR(S, ID, N, D, x, y);
                     }
                     break;
                 default:
@@ -399,7 +399,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
     int test;
     char temp[200];
     int ID = 0, year = 0, month = 0, day = 0, hour = 0, utc = 0;
-    float N = 0, x = 0, y = 0;
+    float N = 0, N2 = 0, x = 0, y = 0;
     Station1* S = NULL;
     Station1* NS = NULL;
     Date* D = malloc(sizeof(Date));
@@ -416,36 +416,36 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
         fgets(temp, 200, pre);
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
-        d = sscanf(temp, "%d %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &year, &month, &day, &hour, &utc, &x, &y);
+        d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
         if ((d == 9)){
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
                 case(1):
                     if ( S == NULL ){
-                        S = createStation1(ID, N, D);
+                        S = createStation1(ID, N, D, x, y);
                     } else {
-                        S = AveragePStationAVL(S, ID, N, pH, D);
+                        S = AveragePStationAVL(S, ID, N, pH, D, x, y);
                     }
                     break;
                 case(2):
                     if ( S == NULL ){
-                        S = createStation1(ID, N, D);
+                        S = createStation1(ID, N, D, x, y);
                     } else {
-                        S = InsertPDateAllStAVL(S, ID, N, pH, D);
+                        S = InsertPDateAllStAVL(S, ID, N, pH, D, x, y);
                     }
                     break;
                 case(3):
                     if ( S == NULL ){
-                        S = createStation1(ID, N, D);
+                        S = createStation1(ID, N, D, x, y);
                     } else {
-                        S = InsertPDatePStAVL(S, ID, N, pH, D);
+                        S = InsertPDatePStAVL(S, ID, N, pH, D, x, y);
                     }
                     break;
                 case(4):
                     if ( S == NULL ){
-                        S = createStation1bis(ID, x, y);
+                        S = createStation1bis(ID, N, N2, x, y);
                     } else {
-                        AveragePStationVectorAVL(S, ID, x, y, pH);
+                        AveragePStationVectorAVL(S, ID, x, y, pH, x, y);
                     }
                     break;
                     break;

@@ -17,6 +17,7 @@ typedef struct _date {
 
 typedef struct _station1 {
     int ID;
+
     float min;
     float max;
     float min2;
@@ -26,10 +27,17 @@ typedef struct _station1 {
     float total2;
     float average;
     float average2;
+
     Date* date;
+
     struct _station1* rs;
     struct _station1* ls;
+
     int balance;
+
+    float x;
+    float y;
+
 } Station1;
 
 typedef struct _node {
@@ -50,10 +58,10 @@ typedef struct _list {
 }List;
 
 
-#include "create.h"
-#include "display.h"
-#include "ABRSort.h"
-#include "AVLSort.h"
+#include "./create/create.h"
+#include "./display/display.h"
+#include "./ABR/ABRSort.h"
+#include "./AVL/AVLSort.h"
 
 
 //=======================================================================

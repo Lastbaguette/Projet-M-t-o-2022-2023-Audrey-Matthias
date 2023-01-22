@@ -1,4 +1,4 @@
-#include "weathersort.h"
+#include "../weathersort.h"
 
 void processAvPerSt( Station1* S, FILE* post ){
     fprintf( post, "%d %f %f %f\n", S -> ID, S -> average, S -> min, S-> max);

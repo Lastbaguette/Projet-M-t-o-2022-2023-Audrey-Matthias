@@ -2,7 +2,7 @@
 #define DISPLAYDEF
 
 
-#include "weathersort.h"
+#include "../weathersort.h"
 
 //=======================================================================
 

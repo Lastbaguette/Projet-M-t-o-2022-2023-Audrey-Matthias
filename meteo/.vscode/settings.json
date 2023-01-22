@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "create.h": "c",
+        "abrsort.h": "c",
+        "avlsort.h": "c",
+        "display.h": "c",
+        "weathersort.h": "c"
+    }
+}

@@ -1,4 +1,4 @@
-#include "weathersort.h"
+#include "../weathersort.h"
 
 int min( int a, int b ){
     if (a>b){ return b; }
@@ -85,18 +85,18 @@ Station1* StationBalance ( Station1* S ){
     return S;
 }
 
-Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D){    //Inserts the read value into the tree with the AVL sorting method
+Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){    //Inserts the read value into the tree with the AVL sorting method
 
     if ( S == NULL ){
         *pH = 1;
-        return createStation1(ID, v, D);
+        return createStation1(ID, v, D, x, y);
     }
     else if ( ID < S->ID ){
-        S->ls = InsertAVLStation(S->ls, ID, v, pH, D);
+        S->ls = InsertAVLStation(S->ls, ID, v, pH, D, x, y);
         *pH =  -*pH;
     }
     else if (( ID > S->ID ) || ( ID == S->ID )){
-        S->rs = InsertAVLStation(S->rs, ID, v, pH, D);
+        S->rs = InsertAVLStation(S->rs, ID, v, pH, D, x, y);
     }
     else {
         *pH = 0;
@@ -119,7 +119,7 @@ Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D){   
     return S; 
 }
 
-Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D){  
+Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){  
 
     if ( S == NULL ){
         exit(1);
@@ -132,29 +132,29 @@ Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D){
     if ( (T == 1) ){
         searchEdit(S, ID, v);
     } else {
-        S = InsertAVLStation( S, ID, v, pH, D );
+        S = InsertAVLStation( S, ID, v, pH, D, x, y );
     }
 
     return S;
 
 }
 
-Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D ){
+Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y ){
 
     if ( S == NULL ){
         *pH = 1;
-        return createStation1(ID, v, D);
+        return createStation1(ID, v, D, x, y);
     }
 
     int comp = 0;
     comp = dateComp( D, S->date );
 
     if ( comp == -1 ){
-        S->ls = InsertPDateAllStAVL(S->ls, ID, v, pH, D);
+        S->ls = InsertPDateAllStAVL(S->ls, ID, v, pH, D, x, y);
         *pH =  -*pH;
     }
     else if ( comp == 1 ){
-        S->rs = InsertPDateAllStAVL(S->rs, ID, v, pH, D);
+        S->rs = InsertPDateAllStAVL(S->rs, ID, v, pH, D, x, y);
     }
     else if ( comp == 0 ){
         S -> count = S -> count + 1;
@@ -178,11 +178,11 @@ Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D ){
     return S; 
 }
 
-Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D ){
+Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y ){
 
     if ( S == NULL ){
         *pH = 1;
-        return createStation1(ID, v, D);
+        return createStation1(ID, v, D, x, y);
     } 
 
     int comp = 0;
@@ -190,18 +190,18 @@ Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D ){
 
 
     if ( comp == -1 ){
-        S->ls = InsertPDatePStAVL(S->ls, ID, v, pH, D);
+        S->ls = InsertPDatePStAVL(S->ls, ID, v, pH, D, x, y);
         *pH =  -*pH;
     }
     else if ( comp == 1 ){
-        S->rs = InsertPDatePStAVL(S->rs, ID, v, pH, D);
+        S->rs = InsertPDatePStAVL(S->rs, ID, v, pH, D, x, y);
     }
     else if ( comp == 0 ){
         if ( ID < S -> ID ){
-            S->ls = InsertPDatePStAVL( S->ls, ID, v, pH, D);
+            S->ls = InsertPDatePStAVL( S->ls, ID, v, pH, D, x, y);
             *pH =  -*pH;
         } else {
-            S->rs = InsertPDatePStAVL( S->rs, ID, v, pH, D );
+            S->rs = InsertPDatePStAVL( S->rs, ID, v, pH, D, x, y);
         }
     }
 
@@ -220,17 +220,17 @@ Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D ){
     return S; 
 }
 
-Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH){
+Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH, float x, float y){
     if ( S == NULL ){
         *pH = 1;
-        return createStation1bis(ID, v, v2);
+        return createStation1bis(ID, v, v2, x, y);
     } 
     else if ( ID < S->ID ){
-        S->ls = InsertAVLStationbis( S->ls, ID, v, v2, pH);  
+        S->ls = InsertAVLStationbis( S->ls, ID, v, v2, pH, x, y);  
         *pH =  -*pH;   
     }
     else if ( (ID >= S->ID) ){
-        S->rs = InsertAVLStationbis( S->rs, ID, v, v2, pH);
+        S->rs = InsertAVLStationbis( S->rs, ID, v, v2, pH, x, y);
     }
 
     if ( *pH != 0 ){
@@ -250,11 +250,11 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH)
     return S; 
 }
 
-Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int* pH){  
+Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int* pH, float x, float y){  
 
     if ( S == NULL ){
         *pH = 1;
-        return createStation1bis(ID, v, v2);
+        return createStation1bis(ID, v, v2, x, y);
     } 
 
     int T = 0;
@@ -263,7 +263,7 @@ Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int*
     if ( (T == 1) ){
         searchEditVector(S, ID, v, v2);
     } else {
-        S = InsertAVLStationbis( S, ID, v, v2, pH );
+        S = InsertAVLStationbis( S, ID, v, v2, pH, x, y );
     }
 
     return S;

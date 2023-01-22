@@ -2,7 +2,7 @@
 #define AVLDEF
 
 
-#include "weathersort.h"
+#include "../weathersort.h"
 
 
 //=======================================================================
@@ -14,12 +14,12 @@ Station1* RightRotationSt( Station1* S );
 Station1* DoubleRightRotationSt ( Station1* S );
 Station1* DoubleLeftRotationSt ( Station1* S );
 Station1* StationBalance ( Station1* S );
-Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D);
-Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D);
-Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D );
-Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D );
-Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH);
-Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int* pH);
+Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, float x, float y);
+Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y);
+Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y);
+Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y);
+Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH, float x, float y);
+Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int* pH, float x, float y);
 
 //=======================================================================
 

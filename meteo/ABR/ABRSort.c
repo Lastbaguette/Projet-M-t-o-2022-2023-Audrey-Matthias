@@ -1,4 +1,4 @@
-#include "weathersort.h"
+#include "../weathersort.h"
 
 
 int search( Station1* S , int ID ){
@@ -68,32 +68,32 @@ void searchEditVector( Station1* S , int ID, float v, float v2){
     }
 }
 
-void InsertABRStation ( Station1* S, int ID, float v, Date* D){
+void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y){
     if ( S == NULL ){
         exit(1);
     }
     else if ( ID < S->ID ){
         if (S->ls != NULL){
-            InsertABRStation( S->ls, ID, v, D );
+            InsertABRStation( S->ls, ID, v, D, x, y );
         }
         else{
-           S = AddLeftSt(S, ID, v, D);
+           S = AddLeftSt(S, ID, v, D, x, y);
         }       
     }
     else if ( (ID > S->ID) ){
         if (S->rs != NULL){
             
-            InsertABRStation ( S->rs, ID, v, D );
+            InsertABRStation ( S->rs, ID, v, D, x, y );
         }
         else{
             
-            S = AddRightSt(S, ID, v, D);
+            S = AddRightSt(S, ID, v, D, x, y);
             
         }
     }
 }
 
-void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D ){
+void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
 
     if ( S == NULL ){
         exit(1);
@@ -106,18 +106,18 @@ void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D ){
     {
     case -1:
         if (S->ls != NULL){
-            InsertPDateAllStABR( S->ls, ID, v, D);
+            InsertPDateAllStABR( S->ls, ID, v, D, x, y);
         }
         else{
-            S = AddLeftSt(S , ID, v, D );
+            S = AddLeftSt(S , ID, v, D, x, y );
         }       
         break;
     case 1:
         if (S->rs != NULL){
-            InsertPDateAllStABR( S->rs, ID, v, D );
+            InsertPDateAllStABR( S->rs, ID, v, D, x, y );
         }
         else{
-            S = AddRightSt(S, ID, v, D );
+            S = AddRightSt(S, ID, v, D, x, y );
         }
         break;
     case 0:
@@ -130,7 +130,7 @@ void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D ){
     }
 }
 
-void InsertPDatePStABR( Station1* S, int ID, float v, Date* D ){
+void InsertPDatePStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
 
     if ( S == NULL ){
         exit(1);
@@ -143,34 +143,34 @@ void InsertPDatePStABR( Station1* S, int ID, float v, Date* D ){
     {
     case -1:
         if (S->ls != NULL){
-            InsertPDatePStABR( S->ls, ID, v, D);
+            InsertPDatePStABR( S->ls, ID, v, D, x, y);
         }
         else{
-            S = AddLeftSt(S , ID, v, D );
+            S = AddLeftSt(S , ID, v, D, x, y );
         }       
         break;
     case 1:
         if (S->rs != NULL){
-            InsertPDatePStABR( S->rs, ID, v, D );
+            InsertPDatePStABR( S->rs, ID, v, D, x, y );
         }
         else{
-            S = AddRightSt(S, ID, v, D );
+            S = AddRightSt(S, ID, v, D, x, y );
         }
         break;
     case 0:
         if ( ID < S -> ID ){
             if (S->ls != NULL){
-            InsertPDatePStABR( S->ls, ID, v, D);
+            InsertPDatePStABR( S->ls, ID, v, D, x, y);
             }
             else{
-                S = AddLeftSt(S , ID, v, D );
+                S = AddLeftSt(S , ID, v, D, x, y );
             } 
         } else {
             if (S->rs != NULL){
-            InsertPDatePStABR( S->rs, ID, v, D );
+            InsertPDatePStABR( S->rs, ID, v, D, x, y );
             }
             else{
-                S = AddRightSt(S, ID, v, D );
+                S = AddRightSt(S, ID, v, D, x, y );
             }
         }
         break;
@@ -179,47 +179,47 @@ void InsertPDatePStABR( Station1* S, int ID, float v, Date* D ){
     }
 }
 
-void InsertABRStationbis ( Station1* S, int ID, float v, float v2){
+void InsertABRStationbis ( Station1* S, int ID, float v, float v2, float x, float y){
     if ( S == NULL ){
         exit(1);
     }
     else if ( ID < S->ID ){
         if (S->ls != NULL){
-            InsertABRStationbis( S->ls, ID, v, v2);
+            InsertABRStationbis( S->ls, ID, v, v2, x, y);
         }
         else{
-           S = AddLeftStbis(S, ID, v, v2);
+           S = AddLeftStbis(S, ID, v, v2, x, y);
         }       
     }
     else if ( (ID > S->ID) ){
         if (S->rs != NULL){
-            InsertABRStationbis( S->rs, ID, v, v2);
+            InsertABRStationbis( S->rs, ID, v, v2, x, y);
         }
         else{
-            S = AddRightStbis(S, ID, v, v2);
+            S = AddRightStbis(S, ID, v, v2, x, y);
         }
     }
 }
 
-void InsertHeightABR(Station1* S, int ID, float v, Date* D){
+void InsertHeightABR(Station1* S, int ID, float v, Date* D, float x, float y){
     if ( S == NULL ){
         exit(1);
     }
     else if ( v < S->average ){
         if (S->ls != NULL){
-            InsertHeightABR( S->ls, ID, v, D );
+            InsertHeightABR( S->ls, ID, v, D, x, y );
         }
         else{
-           S = AddLeftSt(S, ID, v, D);
+           S = AddLeftSt(S, ID, v, D, x, y);
         }       
     }
     else if ( (v > S->average) ){
 
         if (S->rs != NULL){
-            InsertHeightABR( S->rs, ID, v, D );
+            InsertHeightABR( S->rs, ID, v, D, x, y );
         }
         else{
-            S = AddRightSt(S, ID, v, D);
+            S = AddRightSt(S, ID, v, D, x, y);
         }
     }
 }
@@ -252,7 +252,7 @@ Station1* InsertMoistureABR(Station1* S, Station1* NS){
     return NS;
 }
 
-void AveragePStationABR( Station1* S, int ID, float v, Date* D){  
+void AveragePStationABR( Station1* S, int ID, float v, Date* D, float x, float y){  
 
     if ( S == NULL ){
         exit(1);
@@ -264,12 +264,12 @@ void AveragePStationABR( Station1* S, int ID, float v, Date* D){
     if ( (T == 1) ){
         searchEdit(S, ID, v);
     } else {
-        InsertABRStation( S, ID, v, D );
+        InsertABRStation( S, ID, v, D, x, y );
     }
 
 }
 
-void AveragePStationVectorABR( Station1* S, int ID, float v, float v2 ){  
+void AveragePStationVectorABR( Station1* S, int ID, float v, float v2, float x, float y ){  
 
     if ( S == NULL ){
         exit(1);
@@ -281,12 +281,12 @@ void AveragePStationVectorABR( Station1* S, int ID, float v, float v2 ){
     if ( (T == 1) ){
         searchEditVector(S, ID, v, v2);
     } else {
-        InsertABRStationbis( S, ID, v, v2 );
+        InsertABRStationbis( S, ID, v, v2, x, y);
     }
 
 }
 
-void SortHeight( Station1* S, int ID, float v, Date* D){  
+void SortHeight( Station1* S, int ID, float v, Date* D, float x, float y){  
 
     if ( S == NULL ){
         exit(1);
@@ -297,7 +297,7 @@ void SortHeight( Station1* S, int ID, float v, Date* D){
 
 
     if ( (T != 1) ){
-        InsertHeightABR(S, ID, v, D);
+        InsertHeightABR(S, ID, v, D, x, y);
     }
 
 }
@@ -305,7 +305,7 @@ void SortHeight( Station1* S, int ID, float v, Date* D){
 Station1* SortMoisture( Station1* S, Station1* NS){ 
 
     if ( S != NULL ){
-        Station1* temp = createStation1( S->ID, S->max, S->date );
+        Station1* temp = createStation1( S->ID, S->max, S->date, S->x, S->y );
         NS = SortMoisture(S->ls, NS);
         NS = InsertMoistureABR(temp, NS);
         NS = SortMoisture(S->rs, NS);
