@@ -103,6 +103,7 @@ void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float 
 
     int comp = 0;
     comp = dateComp( D, S->date );
+    printf("%d-%d-%d %d:00:00+%d          %d-%d-%d %d:00:00+%d\n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, D->year, D->month, D->day,D->hour, D->utc);
 
     switch (comp)
     {

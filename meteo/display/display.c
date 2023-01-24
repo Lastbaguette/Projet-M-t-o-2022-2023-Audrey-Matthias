@@ -5,7 +5,7 @@ void processAvPerSt( Station1* S, FILE* post ){
 }
 
 void processAvPerDateAllSt( Station1* S, FILE* post ){
-    fprintf( post, "%d-%d-%d    %d:00:00+%d     %f \n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, S -> average);
+    fprintf( post, "%d-%d-%d %d:00:00+%d          %f \n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, S -> average);
 }
 
 void processPerDatePSt( Station1* S, FILE* post ){
