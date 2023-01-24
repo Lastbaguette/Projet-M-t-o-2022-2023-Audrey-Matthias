@@ -203,27 +203,32 @@ void InsertABRStationbis ( Station1* S, int ID, float v, float v2, float x, floa
     }
 }
 
-void InsertHeightABR(Station1* S, int ID, float v, Date* D, float x, float y){
-    if ( S == NULL ){
-        exit(1);
+Station1* InsertHeightABR(Station1* S, Station1* NS){
+    if(NS == NULL){
+        NS = S;
     }
-    else if ( v < S->average ){
-        if (S->ls != NULL){
-            InsertHeightABR( S->ls, ID, v, D, x, y );
+    else if (S != NULL){
+        if ( S->average < NS->average ){
+            if (NS->ls != NULL){
+                InsertMoistureABR( S, NS->ls );
+            }
+            else{
+                //NS = AddLeftSt2(S, NS);
+                NS->ls = S;
+            }       
         }
-        else{
-           S = AddLeftSt(S, ID, v, D, x, y);
-        }       
+        else {
+            if (NS->rs != NULL){
+                InsertMoistureABR ( S, NS->rs );
+            }
+            else{
+                //NS = AddRightSt2(S, NS);
+                NS->rs = S;
+            }
+        }
     }
-    else if ( (v > S->average) ){
 
-        if (S->rs != NULL){
-            InsertHeightABR( S->rs, ID, v, D, x, y );
-        }
-        else{
-            S = AddRightSt(S, ID, v, D, x, y);
-        }
-    }
+    return NS;
 }
 
 Station1* InsertMoistureABR(Station1* S, Station1* NS){
@@ -288,7 +293,7 @@ void AveragePStationVectorABR( Station1* S, int ID, float v, float v2, float x, 
 
 }
 
-void SortHeight( Station1* S, int ID, float v, Date* D, float x, float y){  
+void SortHeight1( Station1* S, int ID, float v, Date* D, float x, float y){  
 
     if ( S == NULL ){
         exit(1);
@@ -299,9 +304,21 @@ void SortHeight( Station1* S, int ID, float v, Date* D, float x, float y){
 
 
     if ( (T != 1) ){
-        InsertHeightABR(S, ID, v, D, x, y);
+        InsertABRStation( S, ID, v, D, x, y );
     }
 
+}
+
+Station1* SortHeight2( Station1* S, Station1* NS){ 
+
+    if ( S != NULL ){
+        Station1* temp = createStation1( S->ID, S->max, S->date, S->x, S->y );
+        NS = SortHeight2(S->ls, NS);
+        NS = InsertHeightABR(temp, NS);
+        NS = SortHeight2(S->rs, NS);
+    }
+
+    return NS;
 }
 
 Station1* SortMoisture( Station1* S, Station1* NS){ 

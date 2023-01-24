@@ -14,6 +14,7 @@ Station1* RightRotationSt( Station1* S );
 Station1* DoubleRightRotationSt ( Station1* S );
 Station1* DoubleLeftRotationSt ( Station1* S );
 Station1* StationBalance ( Station1* S );
+
 Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, float x, float y);
 Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y);
 Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y);

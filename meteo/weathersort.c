@@ -177,7 +177,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
-                        SortHeight(S, ID, N, D, x, y);
+                        SortHeight1(S, ID, N, D, x, y);
                     }
                     break;
                 case(6):
@@ -188,7 +188,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
                     }
                     break;
                 default:
-                    
+                    return 4;
                     break;
                 }
         
@@ -215,10 +215,11 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
                     displayWind(S, post);
                     break;
                 case(5):
+                    NS = SortHeight2(S, NS);
                     if ( R == 1 ){
-                        displayHeight(S, post);
+                        displayHeight(NS, post);
                     } else {
-                        RdisplayHeight(S, post);
+                        RdisplayHeight(NS, post);
                     }
                     break;
                 case(6):
@@ -231,7 +232,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
                     }
                     break;
                 default:
-                    
+                    return 4;
                     break;
             }
 
@@ -461,7 +462,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     }
                     break;
                 default:
-                    
+                    return 4;
                     break;
                 }
 
@@ -503,7 +504,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     }
                     break;
                 default:
-                    
+                    return 4;
                     break;
             }
 
