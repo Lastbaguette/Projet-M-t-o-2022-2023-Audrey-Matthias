@@ -11,7 +11,7 @@ void searchEdit( Station1* S , int ID, float v);
 void searchEditVector( Station1* S , int ID, float v, float v2);
 
 void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y);
-void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D , float x, float y);
+Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D , float x, float y);
 void InsertPDatePStABR( Station1* S, int ID, float v, Date* D, float x, float y );
 void InsertABRStationbis ( Station1* S, int ID, float v, float v2, float x, float y);
 Station1* InsertHeightABR(Station1* S, Station1* NS);

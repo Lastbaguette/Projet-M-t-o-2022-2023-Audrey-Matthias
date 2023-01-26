@@ -142,6 +142,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
+        printf("\n\n%d-%d-%d %d:00:00+%d\n",year, month, day, hour, utc);
         if (( d == 10 )){
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
@@ -156,7 +157,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
-                        InsertPDateAllStABR(S, ID, N, D, x, y);
+                        S = InsertPDateAllStABR(S, ID, N, D, x, y);
                     }
                     break;
                 case(3):

@@ -95,7 +95,7 @@ void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y)
     }
 }
 
-void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
+Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
 
     if ( S == NULL ){
         exit(1);
@@ -103,13 +103,14 @@ void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float 
 
     int comp = 0;
     comp = dateComp( D, S->date );
+    printf("%d          ", comp);
     printf("%d-%d-%d %d:00:00+%d          %d-%d-%d %d:00:00+%d\n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, D->year, D->month, D->day,D->hour, D->utc);
 
     switch (comp)
     {
     case -1:
         if (S->ls != NULL){
-            InsertPDateAllStABR( S->ls, ID, v, D, x, y);
+            S->ls = InsertPDateAllStABR( S->ls, ID, v, D, x, y);
         }
         else{
             S = AddLeftSt(S , ID, v, D, x, y );
@@ -117,20 +118,22 @@ void InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float 
         break;
     case 1:
         if (S->rs != NULL){
-            InsertPDateAllStABR( S->rs, ID, v, D, x, y );
+            S->rs = InsertPDateAllStABR( S->rs, ID, v, D, x, y );
         }
         else{
             S = AddRightSt(S, ID, v, D, x, y );
         }
         break;
     case 0:
-        S -> count = S -> count + 1;
-        S -> total = S -> total + v;
-        S -> average = S -> total/ S -> count;
+        (S -> count) = ((S -> count) + 1);
+        (S -> total) = ((S -> total) + v);
+        (S -> average) = (( S -> total)/ (S -> count));
         break;
     default:
         break;
     }
+
+    return S;
 }
 
 void InsertPDatePStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
