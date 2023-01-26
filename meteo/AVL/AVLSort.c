@@ -17,107 +17,98 @@ int max( int a, int b ){
 
 Station1* LeftRotationSt( Station1* S ){
     Station1* pivot = malloc(sizeof(Station1));
-    int eqA = 0, eqP = 0;
 
     pivot = S->rs;
-    S->rs = pivot->ls;
+    pivot->rs = pivot->ls;
     pivot->ls = S;
 
-    eqA = S->balance;
-    eqP = pivot->balance;
-
-    eqA = eqA - max( eqP, 0 ) - 1;
-    eqP = min( min(eqA-2, eqA+eqP-2), eqP-1 );
-    S = pivot;
-    return S; 
+    return pivot; 
 }
 
 Station1* RightRotationSt( Station1* S ){
     Station1* pivot = malloc(sizeof(Station1));
-    int eqA = 0, eqP = 0;
 
     pivot = S->ls;
     S->ls = pivot->rs;
     pivot->rs = S;
 
-    eqA = S->balance;
-    eqP = pivot->balance;
-
-    eqA = eqA - min( eqP, 0 ) + 1;
-    eqP = max( max(eqA+2, eqA+eqP+2), eqP+1 );
-    S = pivot;
-    return S; 
+    return pivot; 
 }
 
 
-Station1* DoubleRightRotationSt ( Station1* S ){
-    S->ls = LeftRotationSt(S->ls);
-    return RightRotationSt(S);
-}
+Station1* correct( Station1* S ){
+    if ( S != NULL ){    
+    if ( S->balance < -1 || S->balance > 1 ){  
+        if ( S->balance < -1 ) { 
+            S = RightRotationSt(S); 
+            return S;
+            }
+        else if ( S->balance > 1 ) { 
+            S = LeftRotationSt(S); 
+            return S;
+         }
+    }
+    S->ls = correct(S->ls);
+    S->rs = correct(S->rs);
 
-Station1* DoubleLeftRotationSt ( Station1* S ){
-    S->rs = RightRotationSt(S->rs);
-    return LeftRotationSt(S);
-}
-
-Station1* StationBalance ( Station1* S ){
-    if(S != NULL){
-        if( S->balance >= 2 ){
-            if( S->rs->balance >= 0 ){
-                return LeftRotationSt(S);
-            }
-            else{
-                return DoubleLeftRotationSt(S);
-            }
-        }
-
-        if( S->balance <= -2 ){
-            if( S->ls->balance <=0 ){
-                return RightRotationSt(S);
-            }
-            else{
-                return DoubleRightRotationSt(S);
-            }
-        }
     return S;
+    }
+}
+
+int TestBalance(Station1* S){
+    if ( S == NULL ){  return 0 ;  }
+    if ( S->balance < -1 || S->balance > 1 ){  return 1 ;  }
+    return TestBalance( S->ls ) || TestBalance( S->rs );
+}
+
+
+int Balance (Station1* S){
+    if (S != NULL){
+        int rb = Balance (S->rs);
+        int lb = Balance (S->ls);
+        S->balance = rb - lb ;
+        return ( rb > lb ? rb : lb ) + 1;
+    } else {
+        return 0;
+    }
+}
+
+Station1* Test( Station1* S ){
+    Balance(S);
+    while (TestBalance(S)){         //while Station's balance is < -1 or > 1
+        S = correct(S);
+        Balance(S);
+        printf("%d %d 1 \n", S->balance, S->ID);
     }
     return S;
 }
 
-
-
-Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){    //Inserts the read value into the tree with the AVL sorting method
+Station1* InsertAVLStation ( Station1* S, int ID, float v, Date* D, float x, float y){    //Inserts the read value into the tree with the AVL sorting method
 
     if ( S == NULL ){
-        *pH = 1;
-        return createStation1(ID, v, D, x, y);
+        return NULL;
     }
     else if ( ID < S->ID ){
-        S->ls = InsertAVLStation(S->ls, ID, v, pH, D, x, y);
-        *pH =  -*pH;
-    }
-    else if (( ID > S->ID ) || ( ID == S->ID )){
-        S->rs = InsertAVLStation(S->rs, ID, v, pH, D, x, y);
-    }
-    else {
-        *pH = 0;
-        return S;
-    }
-
-    if ( *pH != 0 ){
-
-        S->balance = S->balance + *pH;
-        S = StationBalance(S);
-        if (S->balance == 0){
-            *pH = 0;
+        if (S->ls != NULL){
+            S->ls = InsertAVLStation( S->ls, ID, v, D, x, y );
         }
-        else {
-            *pH = 1;
-        }    
-
+        else{
+           S = AddLeftSt(S, ID, v, D, x, y);
+        }       
     }
+    else if ( (ID > S->ID) ){
+        if (S->rs != NULL){   
+            S->rs = InsertAVLStation ( S->rs, ID, v, D, x, y );
+        }
+        else{
+            S = AddRightSt(S, ID, v, D, x, y); 
+        }
+    }
+
+    S = Test(S);
     return S; 
 }
+
 
 Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){  
 
@@ -127,11 +118,12 @@ Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, fl
 
     int T = 0;
     T = search( S, ID );
+    printf("%d      %d %d\n", T, S->ID, ID);
 
     if ( (T == 1) ){
         searchEdit(S, ID, v);
     } else {
-        S = InsertAVLStation( S, ID, v, pH, D, x, y );
+        S = InsertAVLStation( S, ID, v, D, x, y );
     }
 
     return S;
@@ -163,16 +155,7 @@ Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, f
         return S;
     }
 
-    if ( *pH != 0 ){
-        S->balance = S->balance + *pH;
-        S = StationBalance(S);
-        if (S->balance == 0){
-            *pH = 0;
-        }
-        else {
-            *pH = 1;
-        }    
-    }
+
 
     return S; 
 }
@@ -204,18 +187,6 @@ Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, flo
         }
     }
 
-    if ( *pH != 0 ){
-
-        S->balance = S->balance + *pH;
-        S = StationBalance(S);
-        if (S->balance == 0){
-            *pH = 0;
-        }
-        else {
-            *pH = 1;
-        }    
-
-    }
     return S; 
 }
 
@@ -232,18 +203,6 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
         S->rs = InsertAVLStationbis( S->rs, ID, v, v2, pH, x, y);
     }
 
-    if ( *pH != 0 ){
-
-        S->balance = S->balance + *pH;
-        S = StationBalance(S);
-        if (S->balance == 0){
-            *pH = 0;
-        }
-        else {
-            *pH = 1;
-        }    
-
-    }
     return S; 
 }
 
@@ -280,15 +239,6 @@ Station1* InsertHeightAVL(Station1* S, int ID, float v, Date* D, int* pH, float 
         S ->rs = InsertHeightAVL( S->rs, ID, v, D, pH, x, y ); 
     }
 
-    if ( *pH != 0 ){
-        S->balance = S->balance + *pH;
-        S = StationBalance(S);
-        if ( S->balance == 0){
-            *pH = 0; 
-        } else {
-            *pH = 1;
-        }
-    }
     return S;
 }
 
@@ -300,8 +250,6 @@ Station1* SortHeightAVL( Station1* S, int ID, float v, Date* D, int* pH, float x
 
     int T = 0;
     T = search( S, ID );
-    printf("%d\n", T);
-
 
     if ( (T != 1) ){
         S = InsertHeightAVL(S, ID, v, D, pH, x, y);
@@ -326,15 +274,6 @@ Station1* InsertMoistureAVL(Station1* S, Station1* NS, int* pH){
         }
     }
 
-    if(*pH != 0){
-        NS-> balance = NS->balance + *pH;
-        NS = StationBalance(NS);
-        if ( NS -> balance == 0 ){
-            *pH = 0;
-        } else {
-            *pH = 1;
-        }
-    }
 
     return NS;
 }

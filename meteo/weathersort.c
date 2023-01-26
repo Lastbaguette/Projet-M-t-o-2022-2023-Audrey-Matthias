@@ -417,6 +417,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
+
         if ((d == 10)){
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
@@ -425,6 +426,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         S = AveragePStationAVL(S, ID, N, pH, D, x, y);
+                        S = Test(S);
                     }
                     break;
                 case(2):

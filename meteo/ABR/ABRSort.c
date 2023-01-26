@@ -82,15 +82,12 @@ void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y)
            S = AddLeftSt(S, ID, v, D, x, y);
         }       
     }
-    else if ( (ID > S->ID) ){
+    else if ( (ID >= S->ID) ){
         if (S->rs != NULL){
-            
             InsertABRStation ( S->rs, ID, v, D, x, y );
         }
         else{
-            
             S = AddRightSt(S, ID, v, D, x, y);
-            
         }
     }
 }
@@ -98,31 +95,23 @@ void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y)
 Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
 
     if ( S == NULL ){
-        exit(1);
+        S = createStation1(ID, v, D, x, y);
+        return S;
     } 
 
     int comp = 0;
     comp = dateComp( D, S->date );
-    printf("%d          ", comp);
-    printf("%d-%d-%d %d:00:00+%d          %d-%d-%d %d:00:00+%d\n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, D->year, D->month, D->day,D->hour, D->utc);
+    //printf("%d          ", comp);
+    //printf("%d-%d-%d %d:00:00+%d          %d-%d-%d %d:00:00+%d\n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, D->year, D->month, D->day,D->hour, D->utc);
+    //printf("%p %d\n", &(S->date->year), S->date->year);
 
     switch (comp)
     {
     case -1:
-        if (S->ls != NULL){
-            S->ls = InsertPDateAllStABR( S->ls, ID, v, D, x, y);
-        }
-        else{
-            S = AddLeftSt(S , ID, v, D, x, y );
-        }       
+        S->ls = InsertPDateAllStABR( S->ls, ID, v, D, x, y);      
         break;
     case 1:
-        if (S->rs != NULL){
-            S->rs = InsertPDateAllStABR( S->rs, ID, v, D, x, y );
-        }
-        else{
-            S = AddRightSt(S, ID, v, D, x, y );
-        }
+        S->rs = InsertPDateAllStABR( S->rs, ID, v, D, x, y );
         break;
     case 0:
         (S -> count) = ((S -> count) + 1);
