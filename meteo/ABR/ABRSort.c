@@ -203,7 +203,7 @@ Station1* InsertHeightABR(Station1* S, Station1* NS){
     else if (S != NULL){
         if ( S->average < NS->average ){
             if (NS->ls != NULL){
-                InsertMoistureABR( S, NS->ls );
+                InsertHeightABR( S, NS->ls );
             }
             else{
                 //NS = AddLeftSt2(S, NS);
@@ -212,7 +212,7 @@ Station1* InsertHeightABR(Station1* S, Station1* NS){
         }
         else {
             if (NS->rs != NULL){
-                InsertMoistureABR ( S, NS->rs );
+                InsertHeightABR( S, NS->rs );
             }
             else{
                 //NS = AddRightSt2(S, NS);

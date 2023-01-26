@@ -142,7 +142,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
-        printf("\n\n%d-%d-%d %d:00:00+%d\n",year, month, day, hour, utc);
+        //printf("\n\n%d-%d-%d %d:00:00+%d\n",year, month, day, hour, utc);
         if (( d == 10 )){
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
@@ -426,7 +426,6 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         S = AveragePStationAVL(S, ID, N, pH, D, x, y);
-                        S = Test(S);
                     }
                     break;
                 case(2):
@@ -454,7 +453,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
-                        S = SortHeightAVL(S, ID, N, D, pH, x, y);
+                        S = SortHeight1AVL(S, ID, N, pH, D, x, y);
                     }
                     break;
                 case(6):
@@ -492,10 +491,11 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     displayWind(S, post);
                     break;
                 case(5):
+                    NS = SortHeight2AVL(S, NS, pH);
                     if ( R == 1 ){
-                        displayHeight(S, post);
+                        displayHeight(NS, post);
                     } else {
-                        RdisplayHeight(S, post);
+                        RdisplayHeight(NS, post);
                     }
                     break;
                 case(6):
@@ -514,8 +514,6 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
     fclose(pre);
     fclose(post);
 
-
-    free(D);
     return 0;
 }
 

@@ -17,7 +17,7 @@ void processWind( Station1* S, FILE* post ){
 }
 
 void processHeight( Station1* S, FILE* post ){
-    fprintf( post, "%d %f    %f %f\n", S -> ID, S -> max, S->x, S->y);
+    fprintf( post, "%d %f    %f %f\n", S -> ID, S -> average, S->x, S->y);
 }
 
 void processMoisture( Station1* S, FILE* post ){
