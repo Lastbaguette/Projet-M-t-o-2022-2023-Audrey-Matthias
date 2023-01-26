@@ -1,0 +1,371 @@
+#!/bin/bash
+
+	
+		
+function Help(){
+	
+	printf "Use one file with .csv \n";
+	printf "'-f' file.csv :  select one file\n";
+	printf "You can select location  :\n";
+	printf "'-F' :  Corse\n";
+	printf "'-G' :  Guyane\n";
+	printf "'-O' :  Indian Ocean\n";
+	printf "'-Q' :  Artique\n";
+	printf "'-A' :  Antilles\n";
+	printf "'-S' :  Saint-Pierre et Miquelon\n";
+        printf "You need to use one option\n";                          # utiliser uniq a la fin
+	printf "user commands  :\n";
+	printf "'-h' :  sort by height descending.  \n";
+	printf "'-m' :  sort by maximum moisture descending. \n";
+	printf "'-w' :  sort by average winds for each station increasing.\n";
+	printf "'-p' :  sort by atmospherique pressure with mode 1 or 2 or 3 \n";
+	printf "        1: in order of station increasing\n"
+	printf "        2: in order of average pressure\n"
+	printf "        3: in order of date and with order of station increasing\n"
+	printf "'-t' :  sort by temperature with mode 1 or 2 or 3 \n";
+	printf "        1: in order of station increasing\n"
+	printf "        2: in order of average temperature\n"
+	printf "        3: in order of date and with order of station increasing\n"
+	printf "change type of sort: \n";
+	printf "'--avl'\n";
+	printf "'--avl'\n";
+	printf "'--tab'\n";
+	
+	printf "\nManual:\n";
+	printf "'--help'\n";
+	
+	exit 1
+}
+
+
+function error(){
+        printf "You need to use one option\n";                          # utiliser uniq a la fin
+	printf "user commands  :\n";
+	printf "'-h' :  sort by height descending.  \n";
+	printf "'-m' :  sort by maximum moisture descending. \n";
+	printf "'-p' :  sort by atmospherique pressure with mode 1 or 2 or 3 \n";
+	printf "'-t' :  sort by temperature with mode 1 or 2 or 3 \n";
+	printf "'-w' :  sort by average winds for each station increasing.\n";
+	exit 1
+}
+
+function create_files(){                       #general file creation when you choose one mode
+	touch tmpsort;
+	touch endsort;
+}
+
+function delete_files(){                       #general file deleted  
+	rm -f tmpsort;
+	rm -f endsort;
+}
+
+function MinMaxAvg_StationP(){
+        cut -d ';' -f 1,7 < $a | awk '(NR>1)' > tmpsort
+        
+        head  tmpsort
+        #appel tri d'audrey croissant
+        
+        head  endsort
+        
+        #printf moyenne du fichier        
+}
+
+function DateP(){
+
+        cut -d ';' -f 2,7 < $a | awk '(NR>1)' > tmpsort
+        
+        head  tmpsort
+        #appel tri d'audrey croissant
+        
+        
+        head  endsort
+        #printf moyenne du fichier        
+}
+
+function MinMaxAvg_StationT(){
+        cut -d ';' -f 11,1 < $a | awk '(NR>1)' > tmpsort
+        
+        tr "," " "  <  $a | grep -v -e " $" -e "^ " -e "  " | awk -F ";" '{print $1, $11, $2, $10 }' | awk '(NR>1)'> tmpsort
+        
+        head  tmpsort
+        #appel tri d'audrey croissant
+        
+        head  endsort
+        #printf moyenne du fichier        
+}
+
+function DateT(){
+
+        tr "," " "  <  $a | grep -v -e " $" -e "^ " -e "  " | awk -F ";" '{print $1, $2, $2, $10 }' | awk '(NR>1)'> tmpsort
+        
+        head  tmpsort
+        #appel tri d'audrey croissant
+        
+        head  endsort
+        #printf moyenne du fichier        
+}
+
+  if [ $# == 0 ];
+then 
+	error;
+	exit 1
+fi
+
+	b=${!#}	
+
+
+if [ 1==1 ];then
+	
+	a=$b
+
+ 
+		if [ -e "tmp" ];then
+			rm tmp
+		fi
+		nsort="avl"
+		Argn=""
+		
+
+		# handle double dash -- options
+		for arg in $@ ; do
+			case "$arg" in
+				
+				
+			        --avl)  nsort='avl'
+			        	;;
+				--tab)  nsort='tab'
+					;;	
+				--abr)  nsort='abr'
+					;;
+				--help) Help
+					;;
+				*.cvs) test=1	
+					;;	
+				-f) 	a="$OPTARG"
+			      		b=$a
+					;;
+				--*) error
+				;;
+			esac
+		done	
+		
+		
+			
+		
+		while getopts 'f:e:a:g:d:FGOQASmwp:t:h' OPTION; do          #selection mode of sort with options
+		case "$OPTION" in 
+		  	
+		  	
+		  	
+		      	
+		      		      	
+		      	a)	argA="$OPTARG"
+				min=$(echo $argA | cut -d " " -f1)
+				max=$(echo $argA | cut -d " " -f2)	
+				
+				if [[ $max =~ ^-?[0-9]+$ || $max =~ ^-?[0-9]*\.[0-9]+$ ]] && [[ $min =~ ^-?[0-9]+$ || $min =~ ^-?[0-9]*\.[0-9]+$ ]] ; then
+						
+					exit 1
+				fi
+				
+			    	if [ 1 != `echo "$min >= -90 && $min <= 90 && $max >= -90 && $max <= 90" | bc` ] ; then
+					echo "yo" 	
+					exit 1
+	    			fi
+	    			
+			    	if [ $min -gt $max ] ; then
+				       	tmpmin=$min
+				       	min=$max
+				       	max=$tmpmin
+		       		fi
+			    																																					
+				awk -F '[;,]' '{if( $10>='$min' && $10<='$max'){print}}'  $a  > tmp
+				a=tmp	
+	  			
+	  			
+	    		#	reprendre -g
+	    			
+	    			;;
+    				
+	    		g)	argG="$OPTARG"
+				min=$(echo $argG | cut -d " " -f1)
+				max=$(echo $argG | cut -d " " -f2)	
+				
+				if [[ $max =~ ^-?[0-9]+$ || $max =~ ^-?[0-9]*\.[0-9]+$ ]] && [[ $min =~ ^-?[0-9]+$ || $min =~ ^-?[0-9]*\.[0-9]+$ ]] ; then
+						
+				
+			    	if [ 1 != `echo "$min >= -180 && $min <= 180 && $max >= -180 && $max <= 180" | bc` ] ; then
+					echo "yo" 	
+					exit 1
+	    			fi
+	    			
+			    	if [ $min -gt $max ] ; then
+				       	tmpmin=$min
+				       	min=$max
+				       	max=$tmpmin
+		       		fi
+			    																																					
+				awk -F '[;,]' '{if( $11>='$min' && $11<='$max'){print}}'  $a  > tmp
+				a=tmp		
+	  			
+	  			
+	    			
+	    			else
+	    			 exit 1
+	    			fi
+		      		;;
+		      		
+		      	d)	argD="$OPTARG"
+				min=$(echo $argD | cut -d " " -f1)
+				max=$(echo $argD | cut -d " " -f2)
+			    	
+			    	if echo "$min" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}' && echo "$max" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}' ; then
+	  				if [[ $min > $max ]]; then
+			       			tmp=$min
+			       			min=$max
+			       			max=$tmp
+	       				fi
+			    	
+				    	awk -F";" '$2 ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}/ && $2 >= "'"$min"'" && $2 <= "'"$max"'" {print}' $a > tmp
+					a=tmp
+						
+	  				
+	  			else 
+	  			
+	  			echo "arguments is in the format yyyy-mm-dd"
+	  			exit 1
+	    			fi
+	    			;;
+		      	                 	
+			F) 	awk -F '[;,]' '{if( $10>=41 && $10<=52 && $11>=-5 && $11<=10 ){print}}'< $b | grep ';'.....$  >  tmps1 
+				a=tmp
+				rm tmps1 
+				;;
+			G) 	awk -F '[;,]' '{if( $10>=1 && $10<=2 && $11>=-54 && $11<=-55 ){print}}' $b >  tmp2           #973 guyane Fr
+				cat tmp2 >> tmp     
+				a=tmp
+				rm tmp2               
+				;;
+			O)	awk -F '[;,]' '{if( $10>=-28 && $10<=-27 && $11>=42 && $11<=46 ){print}}' $b >  tmp3   		 #974 976  indian ocean
+				cat tmp3 >> tmp 
+				a=tmp
+				rm tmp3
+				;;
+			Q) 	awk -F '[;,]' '{if( $10>=-45 ){print}}' $b >  tmp4           #984  antartique
+				cat tmp4 >> tmp 
+				a=tmp
+				rm tmp4
+				;;
+			A)	awk -F '[;,]' '{if( $10>=11 && $10<=19 && $11>=-64 && $11<=-58 ){print}}' $b >  tmp5 			# Antille
+				cat tmp5 >> tmp 
+				a=tmp
+				rm tmp5
+				;;
+			S) 	awk -F '[;,]' '{if( $10>=46 && $10<=47 && $11>=--56 && $11<=57 ){print}}' $b >  tmp6           #975 st pierre
+				cat tmp6 >> tmp
+				a=tmp
+				rm tmp6
+				;;
+				
+			m)	Argn="m"
+				;;
+
+			w) 	Argn="w"
+				;;
+		 
+			p)  	argP="$OPTARG"
+			   	Argn="p"
+				;;
+				
+			t)      argT="$OPTARG"
+				Argn="t"
+				;;
+				
+			h)      Argn="h"
+				;;
+				
+			?) 			
+				echo "error arg";
+				exit 1
+				;;
+			esac
+		done
+		
+					
+		if [[ -z "$Argn" ]]; then
+			echo "Vous devez choisir une option obligatoire parmi les suivantes : -h, -m, -t, -p, -w"
+			exit 1
+		else 
+			case $Argn in
+					
+			m)	tr "," " "  <  $a |  tail -n+2  | grep -v -e " $" -e "^ " -e "  " | cut -d ";" -f1,11,2,10 > tmpsort	 # Id, Value, Date, coordonné, exra		
+			#appel tri d'audrey decroissant
+				;;
+
+			w) 	tr "," " "  <  $a |  tail -n+2  | grep -v -e " $" -e "^ " -e "  " | cut -d ";" -f1,14,2,10 > tmpsort	# Id, Value, Date, coordonné, exra
+				cut -d ';' -f 4,10 < $a | awk '(NR>1)' > tmpXsort
+				cut -d ';' -f 5,10 < $a | awk '(NR>1)' > tmpYsort
+				#racine (a²+b²) > fichier
+				#appel tri d'audrey sur 
+				;;
+		 
+			p)  	if [ "1" == "$argP" ];
+				then
+					MinMaxAvg_StationP;
+				
+				elif [ "2" == "$argP" ];
+				then
+					DateP;
+				
+				elif [ "3" == "$argP" ];
+				then 
+				        
+					cat "yo	"
+				else 
+				
+					printf "select one mode :\n"
+					printf "        1: in order of station increasing\n"
+					printf "        2: in order of average pressure\n"
+					printf "        3: in order of date and with order of station increasing\n"
+				fi
+				
+				;;
+			t)      if [ "1" == "$argT" ];
+				then
+					MinMaxAvg_StationT;
+				
+				elif [ "2" == "$argT" ];
+				then
+					DateT;
+				
+				elif [ "3" == "$argT" ];
+				then 
+				        
+				printf  "c tjrs nous\n "
+				else 
+				
+					printf "select one mode :\n"
+					printf "        1: in order of station increasing\n"
+					printf "        2: in order of average temperature\n"
+					printf "        3: in order of date and with order of station increasing\n"
+				fi
+				
+				;;
+			h)     	tr "," " "  <  $a | tail -n+2  | tr ";" " " | grep -v -e " $" -e "^ " -e "  " | cut -d ";" -f1,10,11,2,10,11 | awk '{print $1,$14,0,$2,$10,$11}' > tmpsort
+				#appel tri d'audrey decroissant
+				;;
+
+			*)	error
+				;;
+			esac
+		
+		fi
+		
+	exit 0
+	
+	fi
+	
+	printf "Can you call an existing filename at the end of your command\n"
+	exit 1
+
+
