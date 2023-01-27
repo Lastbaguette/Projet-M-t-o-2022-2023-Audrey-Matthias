@@ -61,8 +61,8 @@ function delete_files(){                       #general file deleted
 
 function MinMaxAvg_StationP(){
         
- 
-	tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+ 	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort
+	
         #appel tri d'audrey croissant
         
        
@@ -72,8 +72,8 @@ function MinMaxAvg_StationP(){
 
 function DateP(){
 
+        tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort
         
-        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
         
         #appel tri d'audrey croissant
         
@@ -85,7 +85,7 @@ function DateP(){
 function Sort3P(){
 
         
-        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+        tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort
         
         #appel tri d'audrey croissant
         
@@ -96,8 +96,7 @@ function Sort3P(){
 
 function Sort3T(){
                 
-        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
-       
+      	tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort
         #appel tri d'audrey croissant
         
         
@@ -106,7 +105,8 @@ function Sort3T(){
 
 function MinMaxAvg_StationT(){
                 
-        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+        tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort
+        
        
         #appel tri d'audrey croissant
         
@@ -115,8 +115,9 @@ function MinMaxAvg_StationT(){
 }
 
 function DateT(){
-
-        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+	
+	tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort
+       
        
         #appel tri d'audrey croissant
         
@@ -317,14 +318,12 @@ if [ 1==1 ];then
 		else 
 			case $Argn in
 					
-			m)	tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,10 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort # Id, Value, Date, coordonné, exra		
+			m)	tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort  # Id, Value, Date, coordonné, exra		
 			#appel tri d'audrey decroissant
 				;;
 
-			w) 	tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+			w) 	tail -n+2  <  $a | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort
 				# Id, Value, Date, coordonné, exra
-				
-				
 				#appel tri d'audrey sur 
 				;;
 		 
@@ -369,7 +368,8 @@ if [ 1==1 ];then
 				fi
 					
 				;;
-			h)     	tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+			h)     	tail -n+2  <  $a | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " | tr "," " " > tmpsort
+				
 				#appel tri d'audrey decroissant
 				;;
 
