@@ -24,6 +24,11 @@ Station1* createStation1 ( int ID, float v, Date* D, float x, float y){         
     NewStation -> x = x;
     NewStation -> y = y;
 
+    NewStation -> min2 = 0;
+    NewStation -> max2 = 0;
+    NewStation -> total2 = 0;
+    NewStation -> average2 = 0;
+
     return NewStation;
 
 }
@@ -165,3 +170,36 @@ Station1* AddRightStbis ( Station1* S, int ID, float v, float v2 , float x, floa
     return S;
 }
 
+void Init(List* L){
+    L->pFirst = NULL;
+    L->pLast = NULL;
+
+}
+
+Node* createNode ( int ID, float v, Date* D, float x, float y ){
+    Node* pNode = malloc( sizeof(Node) );
+    if (pNode ==  NULL){
+        exit(1);
+    }
+    pNode->ID = ID;
+
+    pNode -> min = v;
+    pNode -> max = v;
+    pNode -> count = 1;
+    pNode -> total = v;
+    pNode -> average = v;
+
+    pNode -> date = D;
+    pNode->pBefore=NULL;
+    pNode->pNext=NULL;
+
+    pNode -> x = x;
+    pNode -> y = y;
+
+    pNode -> min2 = 0;
+    pNode -> max2 = 0;
+    pNode -> total2 = 0;
+    pNode -> average2 = 0;
+
+    return pNode;
+}

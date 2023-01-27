@@ -87,3 +87,27 @@ void displayWind( Station1* S, FILE* post){
         displayWind( S -> rs, post);
     }
 }
+
+void displayList(FILE* post, Node* pNode){
+    if (pNode == NULL){
+        printf("end\n");
+    }
+    while(pNode != NULL){
+        //printf("%.3f > ", pNode->elt);
+        fprintf(post, "%d %.3f %d-%d-%dT%d:00:00+%d:00 %f %f %f %f\n", pNode->ID, pNode->elt, pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode->x, pNode->y, pNode->e1, pNode->e2);
+        pNode = pNode->pNext;
+    }
+    
+}
+
+void RdisplayList(FILE* post, Node* pNode){
+    if (pNode == NULL){
+        printf("end\n");
+    }
+    while(pNode != NULL){
+        //printf("%.3f > ", pNode->elt);
+        fprintf(post, "%d %.3f %d-%d-%dT%d:00:00+%d:00 %f %f %f %f\n", pNode->ID, pNode->elt, pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode->x, pNode->y, pNode->e1, pNode->e2);
+        pNode = pNode->pBefore;
+    }
+    
+}
