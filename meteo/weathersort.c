@@ -342,6 +342,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
     char temp[200];
     int ID = 0, year = 0, month = 0, day = 0, hour = 0, utc = 0;
     float N = 0, x = 0, y = 0;
+    float N2 = 0;
     Date* D = malloc(sizeof(Date));
     List* L = malloc(sizeof(List));
     Init(L);
@@ -626,23 +627,23 @@ for ( i=1 ; i < argc; i++){
 switch (test)
 {
 case 4:
-    printf("|    Program terminated with error code < 4 > :      Other issues    |\n");
+    printf("\n|    Program terminated with error code < 4 > :      Other issues    |\n");
     break;
 
 case 3:
-    printf("|    Program terminated with error code < 3 > :      Post-sorting file issues    |\n");
+    printf("\n|    Program terminated with error code < 3 > :      Post-sorting file issues    |\n");
     break;
 
 case 2:
-    printf("|    Program terminated with error code < 2 > :      Pre-sorting file issues    |\n");
+    printf("\n|    Program terminated with error code < 2 > :      Pre-sorting file issues    |\n");
     break;
 
 case 1:
-    printf("|    Program terminated with error code < 1 > :      Given arguments incorrect    |\n");
+    printf("\n|    Program terminated with error code < 1 > :      Given arguments incorrect    |\n");
     break;
 
 case 0:
-    printf("|    Program correctly executed    |\n");
+    printf("\n|    Program correctly executed    |\n");
     break;
 
 

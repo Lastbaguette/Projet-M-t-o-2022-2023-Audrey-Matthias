@@ -226,11 +226,16 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
     } 
     else if ( ID < S->ID ){
         S->ls = InsertAVLStationbis( S->ls, ID, v, v2, pH, x, y);  
-        *pH =  -*pH;   
+        *pH =  -(*pH);   
     }
     else if ( (ID >= S->ID) ){
         S->rs = InsertAVLStationbis( S->rs, ID, v, v2, pH, x, y);
+    } 
+    else {
+        *pH = 0;
+        return S;
     }
+
 
     if ( *pH != 0 ){
 
@@ -244,18 +249,15 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
         }    
 
     }
+
     return S; 
 }
 
 Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int* pH, float x, float y){  
 
-    if ( S == NULL ){
-        *pH = 1;
-        return createStation1bis(ID, v, v2, x, y);
-    } 
-
     int T = 0;
     T = search( S, ID );
+    printf("%d   %d %d\n", T, S->ID, ID);
 
     if ( (T == 1) ){
         searchEditVector(S, ID, v, v2);

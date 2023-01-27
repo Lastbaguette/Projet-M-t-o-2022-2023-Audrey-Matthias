@@ -64,7 +64,6 @@ void searchEditVector( Station1* S , int ID, float v, float v2){
         else if ( ( ID < S -> ID ) && ( S -> ls != NULL)){
                 return searchEditVector( S->ls, ID, v , v2);
         }
-
     }
 }
 
