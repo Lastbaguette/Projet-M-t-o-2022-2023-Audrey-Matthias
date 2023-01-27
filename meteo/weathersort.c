@@ -447,7 +447,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     if ( S == NULL ){
                         S = createStation1bis(ID, N, N2, x, y);
                     } else {
-                        AveragePStationVectorAVL(S, ID, N, N2, pH, x, y);
+                        S = AveragePStationVectorAVL(S, ID, N, N2, pH, x, y);
                     }
                     break;
                 case(5):

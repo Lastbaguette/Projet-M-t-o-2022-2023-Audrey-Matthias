@@ -220,6 +220,7 @@ Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, flo
 }
 
 Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH, float x, float y){
+
     if ( S == NULL ){
         *pH = 1;
         return createStation1bis(ID, v, v2, x, y);
@@ -228,7 +229,7 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
         S->ls = InsertAVLStationbis( S->ls, ID, v, v2, pH, x, y);  
         *pH =  -(*pH);   
     }
-    else if ( (ID >= S->ID) ){
+    else if (( ID > S->ID ) || ( ID == S->ID )){
         S->rs = InsertAVLStationbis( S->rs, ID, v, v2, pH, x, y);
     } 
     else {
@@ -236,9 +237,8 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
         return S;
     }
 
-
+    printf("pre %d\n", S->ID);
     if ( *pH != 0 ){
-
         S->balance = S->balance + *pH;
         S = StationBalance(S);
         if (S->balance == 0){
@@ -247,9 +247,8 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
         else {
             *pH = 1;
         }    
-
     }
-
+    printf("post %d\n", S->ID);
     return S; 
 }
 
@@ -257,7 +256,6 @@ Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int*
 
     int T = 0;
     T = search( S, ID );
-    printf("%d   %d %d\n", T, S->ID, ID);
 
     if ( (T == 1) ){
         searchEditVector(S, ID, v, v2);
