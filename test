@@ -60,9 +60,9 @@ function delete_files(){                       #general file deleted
 }
 
 function MinMaxAvg_StationP(){
-        cut -d ';' -f 1,7 < $a | awk '(NR>1)' > tmpsort
         
-       
+ 
+	tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
         #appel tri d'audrey croissant
         
        
@@ -72,8 +72,8 @@ function MinMaxAvg_StationP(){
 
 function DateP(){
 
-        cut -d ';' -f 2,7 < $a | awk '(NR>1)' > tmpsort
         
+        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
         
         #appel tri d'audrey croissant
         
@@ -82,11 +82,31 @@ function DateP(){
         #printf moyenne du fichier        
 }
 
+function Sort3P(){
+
+        
+        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+        
+        #appel tri d'audrey croissant
+        
+        
+        
+        #printf moyenne du fichier        
+}
+
+function Sort3T(){
+                
+        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+       
+        #appel tri d'audrey croissant
+        
+        
+        #printf moyenne du fichier        
+}
+
 function MinMaxAvg_StationT(){
-        cut -d ';' -f 11,1 < $a | awk '(NR>1)' > tmpsort
-        
-        tr "," " "  <  $a | grep -v -e " $" -e "^ " -e "  " | 	 -F ";" '{print $1, $11, $2, $10 }' | awk '(NR>1)'> tmpsort
-        
+                
+        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
        
         #appel tri d'audrey croissant
         
@@ -96,8 +116,7 @@ function MinMaxAvg_StationT(){
 
 function DateT(){
 
-        tr "," " "  <  $a | grep -v -e " $" -e "^ " -e "  " | awk -F ";" '{print $1, $2, $2, $10 }' | awk '(NR>1)'> tmpsort
-        
+        tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
        
         #appel tri d'audrey croissant
         
@@ -298,14 +317,14 @@ if [ 1==1 ];then
 		else 
 			case $Argn in
 					
-			m)	tr "," " "  <  $a |  tail -n+2  | grep -v -e " $" -e "^ " -e "  " | cut -d ";" -f1,2,11,10 > tmpsort	 # Id, Value, Date, coordonné, exra		
+			m)	tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,10 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort # Id, Value, Date, coordonné, exra		
 			#appel tri d'audrey decroissant
 				;;
 
-			w) 	tr "," " "  <  $a |  tail -n+2  | grep -v -e " $" -e "^ " -e "  " | cut -d ";" -f1,2,14,10 > tmpsort	# Id, Value, Date, coordonné, exra
-				cut -d ';' -f 4,10 < $a | awk '(NR>1)' > tmpXsort
-				cut -d ';' -f 5,10 < $a | awk '(NR>1)' > tmpYsort
-				#racine (a²+b²) > fichier
+			w) 	tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
+				# Id, Value, Date, coordonné, exra
+				
+				
 				#appel tri d'audrey sur 
 				;;
 		 
@@ -318,9 +337,8 @@ if [ 1==1 ];then
 					DateP;
 				
 				elif [ "3" == "$argP" ];
-				then 
-				        
-					cat "yo	"
+				then
+					Sort3P;
 				else 
 				
 					printf "select one mode :\n"
@@ -340,8 +358,8 @@ if [ 1==1 ];then
 				
 				elif [ "3" == "$argT" ];
 				then 
-				        
-				printf  "c tjrs nous\n "
+				        Sort3T;
+				
 				else 
 				
 					printf "select one mode :\n"
@@ -349,9 +367,9 @@ if [ 1==1 ];then
 					printf "        2: in order of average temperature\n"
 					printf "        3: in order of date and with order of station increasing\n"
 				fi
-				
+					
 				;;
-			h)     	tr "," " "  <  $a | tail -n+2  | tr ";" " " | grep -v -e " $" -e "^ " -e "  " | cut -d ";" -f1,2,10,11,10,11 | awk '{print $1,$2,$14,0,$10,$11}' > tmpsort
+			h)     	tr "," " "  <  $a | tail -n+2 | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr ";" " " > tmpsort
 				#appel tri d'audrey decroissant
 				;;
 
