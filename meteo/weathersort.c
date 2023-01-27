@@ -141,7 +141,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
         fgets(temp, 200, pre);
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
-        d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
+        d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);
         //printf("\n\n%d-%d-%d %d:00:00+%d\n",year, month, day, hour, utc);
         if (( d == 10 )){
             D = addDate(year,month,day,hour,utc);
@@ -358,7 +358,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
         fgets(temp, 200, pre);
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
-        d = sscanf(temp, "%d %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &year, &month, &day, &hour, &utc, &x, &y);
+        d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);
         if((d == 10)){
 
         } else {
@@ -416,7 +416,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
         fgets(temp, 200, pre);
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
-        d = sscanf(temp, "%d %f %f %d-%d-%dT%d:00:00+%d:00 %f %f", &ID, &N, &N2, &year, &month, &day, &hour, &utc, &x, &y);
+        d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);
 
         if ((d == 10)){
             D = addDate(year,month,day,hour,utc);
