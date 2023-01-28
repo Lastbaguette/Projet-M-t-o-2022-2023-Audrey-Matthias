@@ -34,6 +34,7 @@ void RdisplayMoisture( Station1* S, FILE* post);            //Moisture in revers
 //File writing functions for List mode
 
 void displayListAvPerSt(FILE* post, Node* pNode);
+void displayListAvPerDateAllSt(FILE* post, Node* pNode);
 
 //=======================================================================
 

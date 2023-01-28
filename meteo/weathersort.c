@@ -246,6 +246,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         L = Init(L, elt);
                         p = 0;
                     } else {
+                        InsertPerDateAllStList(L, L->pFirst, ID, N, D, x, y);
                     }
                     break;
                 case(3):
@@ -304,7 +305,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                     displayListAvPerSt(post, L->pFirst);
                     break;
                 case(2):
-                    //displayAvPerDateAllSt(S, post);
+                    displayListAvPerDateAllSt(post, L->pFirst);
                     break;
                 case(3):
                     //displayPerDatePSt(S, post);

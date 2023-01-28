@@ -1,5 +1,10 @@
 #include "../weathersort.h"
 
+
+//=======================================================================
+
+// Searching and average calculation (called editing) functions
+
 int searchList( Node* pHead, int ID ){
 
     if( pHead != NULL ){  
@@ -40,6 +45,9 @@ void searchEditList( Node* pHead, int ID, float v ){
     }
 }
 
+//=======================================================================
+
+// Mode 1 Sort for temperature and pressure
 
 void AvPStationList( List* L, int ID, float v, Date* D, float x, float y ){
 
@@ -91,6 +99,78 @@ void InsertListSt( List* L, Node* pHead, int ID, float v, Date* D, float x, floa
         }
     }
 }
+
+//=======================================================================
+
+// Mode 2 Sort for temperature and pressure
+
+void InsertPerDateAllStList(List* L, Node* pHead, int ID, float v, Date* D, float x, float y){                 //Inserts the read value into the doubly linked list in ascending order
+
+    Node* pNew = createNode(ID, v , D , x , y); 
+
+    if (pNew == NULL){
+        exit(1);
+    }
+
+    int comp = 0;
+    comp = dateComp( D, pHead->date );
+
+    switch (comp)
+    {
+    case 0:
+        (pHead -> count) = ((pHead -> count) + 1);
+        (pHead -> total) = ((pHead -> total) + v);
+        (pHead -> average) = (( pHead -> total)/ (pHead -> count));
+        break;
+
+    case 1:
+        if( pHead -> pNext != NULL ){
+            InsertPerDateAllStList(L, pHead->pNext, ID, v, D, x, y );
+        } 
+        else if (pHead-> pNext == NULL){
+            pNew -> pBefore = pHead;
+            pHead -> pNext = pNew;
+            L -> pLast = pNew;
+        }
+        break;
+    
+    case -1:
+        if  ( pHead->pBefore == NULL ){
+            L->pFirst = pNew;
+            pNew->pNext = pHead;
+            pHead->pBefore = pNew;
+            pHead = pNew;
+        } else {
+            pNew->pBefore = pHead->pBefore;
+            pNew->pNext = pHead;
+            pHead->pBefore->pNext = pNew;
+            pHead->pBefore = pNew;
+        }
+        break;    
+    
+    default:
+        break;
+    }
+    
+}
+
+//=======================================================================
+
+// Mode 3 Sort for temperature and pressure
+
+//=======================================================================
+
+// Wind Sort
+
+//=======================================================================
+
+// Height Sort
+
+//=======================================================================
+
+// Moisture Sort
+
+//=======================================================================
 
 
 
