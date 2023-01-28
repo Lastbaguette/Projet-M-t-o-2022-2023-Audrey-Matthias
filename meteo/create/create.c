@@ -1,6 +1,12 @@
 #include "../weathersort.h"
 
 
+/*=======================================================================
+
+Tree and Tree element creation functions
+
+/=======================================================================*/
+
 Station1* createStation1 ( int ID, float v, Date* D, float x, float y){               //Function to create a station using one value to sort
     Station1* NewStation = malloc(sizeof(Station1));
     if (NewStation == NULL){
@@ -65,7 +71,8 @@ Station1* createStation1bis( int ID, float v, float v2, float x, float y){      
 }
 
 
-Station1* AddLeftSt ( Station1* S, int ID, float v, Date* D, float x, float y){         //Add left son
+
+Station1* AddLeftSt ( Station1* S, int ID, float v, Date* D, float x, float y){         //Add left son (from one tree (here called a station) to another)
     
     Station1* NewS = createStation1 ( ID, v, D, x, y  );
 
@@ -101,7 +108,8 @@ Station1* AddRightSt ( Station1* S, int ID, float v, Date* D, float x, float y )
     return S;
 }
 
-Station1* AddLeftSt2 ( Station1* S, Station1* NS ){                     //Add left son (from one tree (here called a station) to another)
+
+Station1* AddLeftSt2 ( Station1* S, Station1* NS ){                     //Add left son (from one tree element into a new one)
 
     if (NS == NULL){
         NS = S;
@@ -117,7 +125,7 @@ Station1* AddLeftSt2 ( Station1* S, Station1* NS ){                     //Add le
     return NS;
 }
 
-Station1* AddRightSt2 ( Station1* S, Station1* NS ){                    //Add right son
+Station1* AddRightSt2 ( Station1* S, Station1* NS ){                    //Add right son (from one tree element into a new one)
 
     if (NS == NULL){
         NS = S;
@@ -132,6 +140,7 @@ Station1* AddRightSt2 ( Station1* S, Station1* NS ){                    //Add ri
 
     return NS;
 }
+
 
 Station1* AddLeftStbis  ( Station1* S, int ID, float v, float v2, float x, float y){        //Add left son (if it has two given values)
 
@@ -170,13 +179,23 @@ Station1* AddRightStbis ( Station1* S, int ID, float v, float v2 , float x, floa
     return S;
 }
 
-void Init(List* L){
-    L->pFirst = NULL;
-    L->pLast = NULL;
+//=======================================================================
 
+
+
+/*=======================================================================
+
+List and List node creation functions
+
+/=======================================================================*/
+
+List* Init(List* L, Node* elt){                //Initialize the beginning and end of the list
+    L->pFirst = elt;
+    L->pLast = L->pFirst;
+    return L;
 }
 
-Node* createNode ( int ID, float v, Date* D, float x, float y ){
+Node* createNode ( int ID, float v, Date* D, float x, float y ){        //Create a list node from one value
     Node* pNode = malloc( sizeof(Node) );
     if (pNode ==  NULL){
         exit(1);
@@ -203,3 +222,5 @@ Node* createNode ( int ID, float v, Date* D, float x, float y ){
 
     return pNode;
 }
+
+//=======================================================================

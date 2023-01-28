@@ -76,8 +76,14 @@ typedef struct _list {
 
 //=======================================================================
 
+int TestFileExist ( char* FN );
+
 Date* addDate( int year, int month, int day, int hour, int utc);
 int dateComp ( Date* NewDate, Date* currDate );
+
+int SortABR( char* preFN , char* postFN , int R, int dSort, int mode);
+int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode);
+int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode );
 
 //=======================================================================
 

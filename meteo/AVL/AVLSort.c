@@ -1,5 +1,9 @@
 #include "../weathersort.h"
 
+
+//=======================================================================
+// Station and Balancing functions
+
 int min( int a, int b ){
     if (a>b){ return b; }
     if (b>a){ return a; }
@@ -49,7 +53,6 @@ Station1* RightRotationSt( Station1* S ){
     return S; 
 }
 
-
 Station1* DoubleRightRotationSt ( Station1* S ){
     S->ls = LeftRotationSt(S->ls);
     return RightRotationSt(S);
@@ -84,7 +87,10 @@ Station1* StationBalance ( Station1* S ){
     return S;
 }
 
+//=======================================================================
 
+//=======================================================================
+// Mode 1 Sort for temperature and pressure
 
 Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){    //Inserts the read value into the tree with the AVL sorting method
 
@@ -138,6 +144,11 @@ Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, fl
 
 }
 
+//=======================================================================
+
+//=======================================================================
+// Mode 2 Sort for temperature and pressure
+
 Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y ){
 
     if ( S == NULL ){
@@ -176,6 +187,11 @@ Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, f
 
     return S; 
 }
+
+//=======================================================================
+
+//=======================================================================
+// Mode 3 Sort for temperature and pressure
 
 Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y ){
 
@@ -218,6 +234,11 @@ Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, flo
     }
     return S; 
 }
+
+//=======================================================================
+
+//=======================================================================
+// Wind Sort
 
 Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH, float x, float y){
 
@@ -266,6 +287,11 @@ Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int*
     return S;
 
 }
+
+//=======================================================================
+
+//=======================================================================
+// Height Sort
 
 Station1* InsertHeightAVL(Station1* S, Station1* NS, int* pH){
     if(NS == NULL){
@@ -325,6 +351,11 @@ Station1* SortHeight2AVL( Station1* S, Station1* NS, int* pH){
     return NS;
 }
 
+//=======================================================================
+
+//=======================================================================
+// Moisture Sort
+
 Station1* InsertMoistureAVL(Station1* S, Station1* NS, int* pH){
 
     if(NS == NULL){
@@ -365,3 +396,5 @@ Station1* SortMoistureAVL( Station1* S, Station1* NS, int* pH){
 
     return NS;
 }
+
+//=======================================================================

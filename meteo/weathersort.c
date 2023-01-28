@@ -35,30 +35,36 @@ Date* addDate( int year, int month, int day, int hour, int utc){
     Date->day = day;
     Date->hour = hour;
     Date->utc = utc;
+
+    return Date;
 }
 
 int dateComp ( Date* NewDate, Date* currDate ){         //date comparing function. will return -1 if new date is older or will return 1 if new date is more recent or equal to current date
     if ((NewDate == NULL)||(currDate == NULL)){
         exit(4);
     }
+
+    int comp = 0;
     
-    if( NewDate->year > currDate->year ){   return 1;   } 
-    else if ( NewDate->year < currDate->year ){   return -1;   }
+    if( NewDate->year > currDate->year ){   comp = 1;   } 
+    else if ( NewDate->year < currDate->year ){   comp = -1;   }
     else if ( NewDate->year == currDate->year ){
-        if( NewDate->month > currDate->month ){   return 1;   } 
-        else if ( NewDate->month < currDate->month ){   return -1;   }
+        if( NewDate->month > currDate->month ){   comp = 1;   } 
+        else if ( NewDate->month < currDate->month ){   comp = -1;   }
         else if ( NewDate->month == currDate->month ){
-            if( NewDate->day > currDate->day ){   return 1;   } 
-            else if ( NewDate->day < currDate->day ){   return -1;   }
+            if( NewDate->day > currDate->day ){   comp = 1;   } 
+            else if ( NewDate->day < currDate->day ){   comp = -1;   }
             else if ( NewDate->day == currDate->day ){
-                if( NewDate->hour > currDate->hour ){   return 1;   } 
-                else if ( NewDate->hour < currDate->hour ){   return -1;   }
+                if( NewDate->hour > currDate->hour ){   comp = 1;   } 
+                else if ( NewDate->hour < currDate->hour ){   comp = -1;   }
                 else if( NewDate->hour == currDate->hour ){
-                    return 0;
+                    comp = 0;
                 }
             }
         }
     }
+
+    return comp;
 }
 
 /*==============================================================
@@ -70,7 +76,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
     FILE* pre = NULL;
     FILE* post = NULL;
     int test;
-    char temp[200];
+    char temp[300];
     int ID = 0, year = 0, month = 0, day = 0, hour = 0, utc = 0;
     float N = 0, N2 = 0, x = 0, y = 0;
     Station1* S = NULL;
@@ -85,7 +91,8 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
     if( (post == NULL) ){  return 3;  }
     
     do {
-        fgets(temp, 200, pre);
+        char temp[300];
+        fgets(temp, 300, pre);
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);
@@ -202,14 +209,12 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
     FILE* pre = NULL;
     FILE* post = NULL;
     int test;
-    char temp[200];
+    char temp[300];
     int ID = 0, year = 0, month = 0, day = 0, hour = 0, utc = 0;
     float N = 0, N2 = 0, x = 0, y = 0;
     Date* D = malloc(sizeof(Date));
-    List* L = NULL;
-    Node* elt = malloc(sizeof(Node));
-    Init(L);
-    int d = 0;
+    List* L = malloc(sizeof(List));
+    int d = 0, p = 1;
     
 
     pre = fopen( preFN, "r" );
@@ -219,7 +224,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
     if( (post == NULL) ){  return 3;  }
 
     do {
-        fgets(temp, 200, pre);
+        fgets(temp, 300, pre);
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);
@@ -227,54 +232,54 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
                 case(1):
-                    if ( L == NULL ){
-                        elt = createNode(ID, N, D, x, y);
-                        L->pFirst = elt;
-                        L->pLast = elt;
+                    if ( p == 1 ){
+                        Node* elt = createNode(ID, N, D, x, y);
+                        L = Init(L, elt);
+                        p = 0;
                     } else {
                         AvPStationList(L, ID, N, D, x, y);
                     }
                     break;
                 case(2):
-                    if ( L == NULL ){
-                        elt = createNode(ID, N, D, x, y);
-                        L->pFirst = elt;
-                        L->pLast = elt;
+                    if ( p == 1 ){
+                        Node* elt = createNode(ID, N, D, x, y);
+                        L = Init(L, elt);
+                        p = 0;
                     } else {
                     }
                     break;
                 case(3):
-                    if ( L == NULL ){
-                        elt = createNode(ID, N, D, x, y);
-                        L->pFirst = elt;
-                        L->pLast = elt;
+                    if ( p == 1 ){
+                        Node* elt = createNode(ID, N, D, x, y);
+                        L = Init(L, elt);
+                        p = 0;
                     } else {
 
                     }
                     break;
                 case(4):
-                    if ( L == NULL ){
-                        elt = createNode(ID, N, D, x, y);
-                        L->pFirst = elt;
-                        L->pLast = elt;
+                    if ( p == 1 ){
+                        Node* elt = createNode(ID, N, D, x, y);
+                        L = Init(L, elt);
+                        p = 0;
                     } else {
 
                     }
                     break;
                 case(5):
-                    if ( L == NULL ){
-                        elt = createNode(ID, N, D, x, y);
-                        L->pFirst = elt;
-                        L->pLast = elt;
+                    if ( p == 1 ){
+                        Node* elt = createNode(ID, N, D, x, y);
+                        L = Init(L, elt);
+                        p = 0;
                     } else {
 
                     }
                     break;
                 case(6):
-                    if ( L == NULL ){
-                        elt = createNode(ID, N, D, x, y);
-                        L->pFirst = elt;
-                        L->pLast = elt;
+                    if ( p == 1 ){
+                        Node* elt = createNode(ID, N, D, x, y);
+                        L = Init(L, elt);
+                        p = 0;
                     } else {
 
                     }
@@ -296,7 +301,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
 
     switch( mode ){
                 case(1):
-                    //displayAvPerSt(S, post);
+                    displayListAvPerSt(post, L->pFirst);
                     break;
                 case(2):
                     //displayAvPerDateAllSt(S, post);
@@ -344,7 +349,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
     FILE* pre = NULL;
     FILE* post = NULL;
     int test;
-    char temp[200];
+    char temp[300];
     int ID = 0, year = 0, month = 0, day = 0, hour = 0, utc = 0;
     float N = 0, N2 = 0, x = 0, y = 0;
     Station1* S = NULL;
@@ -360,7 +365,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
     if( (post == NULL) ){  return 3;  }
 
     do {
-        fgets(temp, 200, pre);
+        fgets(temp, 300, pre);
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);

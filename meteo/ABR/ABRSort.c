@@ -1,6 +1,9 @@
 #include "../weathersort.h"
 
 
+//=======================================================================
+// Searching and average calculation (called editing) functions
+
 int search( Station1* S , int ID ){
 
     if( S != NULL ){  
@@ -67,7 +70,10 @@ void searchEditVector( Station1* S , int ID, float v, float v2){
     }
 }
 
+//=======================================================================
 
+//=======================================================================
+// Mode 1 Sort for temperature and pressure
 
 void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y){
     if ( S == NULL ){
@@ -91,6 +97,28 @@ void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y)
     }
 }
 
+void AveragePStationABR( Station1* S, int ID, float v, Date* D, float x, float y){  
+
+    if ( S == NULL ){
+        exit(1);
+    } 
+
+    int T = 0;
+    T = search( S, ID );
+
+    if ( (T == 1) ){
+        searchEdit(S, ID, v);
+    } else {
+        InsertABRStation( S, ID, v, D, x, y );
+    }
+
+}
+
+//=======================================================================
+
+//=======================================================================
+// Mode 2 Sort for temperature and pressure
+
 Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
 
     if ( S == NULL ){
@@ -100,14 +128,11 @@ Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, f
 
     int comp = 0;
     comp = dateComp( D, S->date );
-    //printf("%d          ", comp);
-    //printf("%d-%d-%d %d:00:00+%d          %d-%d-%d %d:00:00+%d\n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, D->year, D->month, D->day,D->hour, D->utc);
-    //printf("%p %d\n", &(S->date->year), S->date->year);
 
     switch (comp)
     {
     case -1:
-        S->ls = InsertPDateAllStABR( S->ls, ID, v, D, x, y);      
+        S->ls = InsertPDateAllStABR( S->ls, ID, v, D, x, y);    
         break;
     case 1:
         S->rs = InsertPDateAllStABR( S->rs, ID, v, D, x, y );
@@ -123,6 +148,11 @@ Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, f
 
     return S;
 }
+
+//=======================================================================
+
+//=======================================================================
+// Mode 3 Sort for temperature and pressure
 
 void InsertPDatePStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
 
@@ -173,6 +203,11 @@ void InsertPDatePStABR( Station1* S, int ID, float v, Date* D, float x, float y 
     }
 }
 
+//=======================================================================
+
+//=======================================================================
+// Wind Sort
+
 void InsertABRStationbis ( Station1* S, int ID, float v, float v2, float x, float y){
     if ( S == NULL ){
         exit(1);
@@ -194,6 +229,28 @@ void InsertABRStationbis ( Station1* S, int ID, float v, float v2, float x, floa
         }
     }
 }
+
+void AveragePStationVectorABR( Station1* S, int ID, float v, float v2, float x, float y ){  
+
+    if ( S == NULL ){
+        exit(1);
+    } 
+
+    int T = 0;
+    T = search( S, ID );
+
+    if ( (T == 1) ){
+        searchEditVector(S, ID, v, v2);
+    } else {
+        InsertABRStationbis( S, ID, v, v2, x, y);
+    }
+
+}
+
+//=======================================================================
+
+//=======================================================================
+// Height Sort
 
 Station1* InsertHeightABR(Station1* S, Station1* NS){
     if(NS == NULL){
@@ -221,68 +278,6 @@ Station1* InsertHeightABR(Station1* S, Station1* NS){
     }
 
     return NS;
-}
-
-Station1* InsertMoistureABR(Station1* S, Station1* NS){
-    if(NS == NULL){
-        NS = S;
-    }
-    else if (S != NULL){
-        if ( S->max < NS->max ){
-            if (NS->ls != NULL){
-                InsertMoistureABR( S, NS->ls );
-            }
-            else{
-                //NS = AddLeftSt2(S, NS);
-                NS->ls = S;
-            }       
-        }
-        else {
-            if (NS->rs != NULL){
-                InsertMoistureABR ( S, NS->rs );
-            }
-            else{
-                //NS = AddRightSt2(S, NS);
-                NS->rs = S;
-            }
-        }
-    }
-
-    return NS;
-}
-
-void AveragePStationABR( Station1* S, int ID, float v, Date* D, float x, float y){  
-
-    if ( S == NULL ){
-        exit(1);
-    } 
-
-    int T = 0;
-    T = search( S, ID );
-
-    if ( (T == 1) ){
-        searchEdit(S, ID, v);
-    } else {
-        InsertABRStation( S, ID, v, D, x, y );
-    }
-
-}
-
-void AveragePStationVectorABR( Station1* S, int ID, float v, float v2, float x, float y ){  
-
-    if ( S == NULL ){
-        exit(1);
-    } 
-
-    int T = 0;
-    T = search( S, ID );
-
-    if ( (T == 1) ){
-        searchEditVector(S, ID, v, v2);
-    } else {
-        InsertABRStationbis( S, ID, v, v2, x, y);
-    }
-
 }
 
 void SortHeight1( Station1* S, int ID, float v, Date* D, float x, float y){  
@@ -313,6 +308,39 @@ Station1* SortHeight2( Station1* S, Station1* NS){
     return NS;
 }
 
+//=======================================================================
+
+//=======================================================================
+// Moisture Sort
+
+Station1* InsertMoistureABR(Station1* S, Station1* NS){
+    if(NS == NULL){
+        NS = S;
+    }
+    else if (S != NULL){
+        if ( S->max < NS->max ){
+            if (NS->ls != NULL){
+                InsertMoistureABR( S, NS->ls );
+            }
+            else{
+                //NS = AddLeftSt2(S, NS);
+                NS->ls = S;
+            }       
+        }
+        else {
+            if (NS->rs != NULL){
+                InsertMoistureABR ( S, NS->rs );
+            }
+            else{
+                //NS = AddRightSt2(S, NS);
+                NS->rs = S;
+            }
+        }
+    }
+
+    return NS;
+}
+
 Station1* SortMoisture( Station1* S, Station1* NS){ 
 
     if ( S != NULL ){
@@ -325,3 +353,4 @@ Station1* SortMoisture( Station1* S, Station1* NS){
     return NS;
 }
 
+//=======================================================================

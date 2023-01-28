@@ -1,5 +1,9 @@
 #include "../weathersort.h"
 
+
+//=======================================================================
+//File writing functions for ABR and AVL modes
+
 void processAvPerSt( Station1* S, FILE* post ){
     fprintf( post, "%d    %f   %f %f\n", S -> ID, S -> average, S -> min, S-> max);
 }
@@ -23,6 +27,11 @@ void processHeight( Station1* S, FILE* post ){
 void processMoisture( Station1* S, FILE* post ){
     fprintf( post, "%d %f    %f %f\n", S -> ID, S -> max, S->x, S->y);
 }
+
+//=======================================================================
+
+//=======================================================================
+//Functions to go across the tree
 
 void displayAvPerSt( Station1* S, FILE* post){
     if ( S != NULL ){
@@ -48,6 +57,15 @@ void displayPerDatePSt( Station1* S, FILE* post){
     }
 }
 
+void displayWind( Station1* S, FILE* post){
+    if ( S != NULL ){
+        displayWind( S -> ls, post);
+        processWind( S, post );
+        displayWind( S -> rs, post);
+    }
+}
+
+
 void displayHeight( Station1* S, FILE* post){
     if ( S != NULL ){
         displayHeight( S -> rs, post);
@@ -63,6 +81,7 @@ void RdisplayHeight( Station1* S, FILE* post){
         RdisplayHeight( S -> rs, post);
     }
 }
+
 
 void displayMoisture( Station1* S, FILE* post){
     if ( S != NULL ){
@@ -80,18 +99,25 @@ void RdisplayMoisture( Station1* S, FILE* post){
     }
 }
 
-void displayWind( Station1* S, FILE* post){
-    if ( S != NULL ){
-        displayWind( S -> ls, post);
-        processWind( S, post );
-        displayWind( S -> rs, post);
+//=======================================================================
+
+//=======================================================================
+//File writing functions for List mode
+
+void displayListAvPerSt(FILE* post, Node* pNode){
+
+    while(pNode != NULL){
+        //printf("%.3f > ", pNode->elt);
+        fprintf( post, "%d    %f   %f %f\n", pNode -> ID, pNode -> average, pNode -> min, pNode-> max);
+        pNode = pNode->pNext;
     }
+    
 }
 
+
+/*
 void displayList(FILE* post, Node* pNode){
-    if (pNode == NULL){
-        printf("end\n");
-    }
+
     while(pNode != NULL){
         //printf("%.3f > ", pNode->elt);
         fprintf(post, "%d %.3f %d-%d-%dT%d:00:00+%d:00 %f %f %f %f\n", pNode->ID, pNode->elt, pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode->x, pNode->y, pNode->e1, pNode->e2);
@@ -101,9 +127,7 @@ void displayList(FILE* post, Node* pNode){
 }
 
 void RdisplayList(FILE* post, Node* pNode){
-    if (pNode == NULL){
-        printf("end\n");
-    }
+
     while(pNode != NULL){
         //printf("%.3f > ", pNode->elt);
         fprintf(post, "%d %.3f %d-%d-%dT%d:00:00+%d:00 %f %f %f %f\n", pNode->ID, pNode->elt, pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode->x, pNode->y, pNode->e1, pNode->e2);
@@ -111,3 +135,4 @@ void RdisplayList(FILE* post, Node* pNode){
     }
     
 }
+*/

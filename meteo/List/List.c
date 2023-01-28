@@ -1,6 +1,6 @@
 #include "../weathersort.h"
 
-int searchList( List* L , int ID ){
+int searchList( Node* pHead, int ID ){
 
     if( pHead != NULL ){  
 
@@ -35,7 +35,7 @@ void searchEditList( Node* pHead, int ID, float v ){
         }
         if ( ( ID > pHead -> ID ) && ( pHead->pNext != NULL) ){
             pHead = pHead->pNext;
-            return searchEditList( pHead, ID );
+            return searchEditList( pHead, ID, v );
         }
     }
 }
@@ -43,23 +43,22 @@ void searchEditList( Node* pHead, int ID, float v ){
 
 void AvPStationList( List* L, int ID, float v, Date* D, float x, float y ){
 
-    if ( L == NULL ){
+    if ( L == NULL ){ 
         exit(1);
     } 
-
     Node* pHead = L -> pFirst;
     int T = 0;
-    T = searchList( L, ID );
+    T = searchList( pHead, ID );
 
     if ( (T == 1) ){
         searchEditList(pHead, ID, v);
     } else {
-        InsertListSt( pHead, ID, v, D, x, y );
+        InsertListSt(L, pHead, ID, v, D, x, y );
     }
 
 }
 
-void InsertListSt( Node* pHead, int ID, float v, Date* D, float x, float y ){                 //Inserts the read value into the doubly linked list in ascending order
+void InsertListSt( List* L, Node* pHead, int ID, float v, Date* D, float x, float y ){                 //Inserts the read value into the doubly linked list in ascending order
 
     Node* pNew = createNode(ID, v , D , x , y); 
 
@@ -92,6 +91,10 @@ void InsertListSt( Node* pHead, int ID, float v, Date* D, float x, float y ){   
         }
     }
 }
+
+
+
+
 
 /*
 
