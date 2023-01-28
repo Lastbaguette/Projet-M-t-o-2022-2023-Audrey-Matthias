@@ -61,69 +61,48 @@ function delete_files(){                       #general file deleted
 
 function MinMaxAvg_StationP(){
         
- 	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" { print }' > tmpsort
+ 	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
 	
-        #appel tri d'audrey croissant
-        
-       
-        
-        #printf moyenne du fichier        
+        #appel tri d'audrey croissant      
 }
 
 function DateP(){
-	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" { print }'> tmpsort
+	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
         
         
         
         #appel tri d'audrey croissant
-        
-        
-        
-        #printf moyenne du fichier        
 }
 
 function Sort3P(){
 
-        tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" { print }' > tmpsort
+        tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
         
         
         #appel tri d'audrey croissant
-        
-        
-        
-        #printf moyenne du fichier        
 }
 
 function Sort3T(){
         
-        tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" { print }' > tmpsort
+        tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
       	
         #appel tri d'audrey croissant
-        
-        
-        #printf moyenne du fichier        
 }
 
 function MinMaxAvg_StationT(){
         
-        tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" { print }' > tmpsort
+        tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
         
        
         #appel tri d'audrey croissant
-        
-        
-        #printf moyenne du fichier        
 }
 
 function DateT(){
 	
-	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" { print }' > tmpsort
+	tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
        
        
         #appel tri d'audrey croissant
-        
-        
-        #printf moyenne du fichier        
 }
 
   if [ $# == 0 ];
@@ -319,11 +298,11 @@ if [ 1==1 ];then
 		else 
 			case $Argn in
 					
-			m)	tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' |  paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" { print }' > tmpsort  # Id, Value, Date, coordonné, exra
+			m)	tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' |  paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort  # Id, Value, Date, coordonné, exra
 			#appel tri d'audrey decroissant
 				;;
 
-			w) 	tail -n+2  <  $a | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" && $4 != "0" { print }'> tmpsort
+			w) 	tail -n+2  <  $a | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
 				# Id, Value, Date, coordonné, exra
 				#appel tri d'audrey sur 
 				;;
@@ -369,7 +348,7 @@ if [ 1==1 ];then
 				fi
 					
 				;;
-			h)     	 tail -n+2  <  $a | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk '$3 != "0" { print }' > tmpsort
+			h)     	 tail -n+2  <  $a | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
 				
 				#appel tri d'audrey decroissant
 				;;
