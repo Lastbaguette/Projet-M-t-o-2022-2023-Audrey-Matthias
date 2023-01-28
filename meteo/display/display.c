@@ -107,8 +107,16 @@ void RdisplayMoisture( Station1* S, FILE* post){
 void displayListAvPerSt(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        //printf("%.3f > ", pNode->elt);
         fprintf( post, "%d    %f   %f %f\n", pNode -> ID, pNode -> average, pNode -> min, pNode-> max);
+        pNode = pNode->pNext;
+    }
+    
+}
+
+void displayListAvPerDateAllSt(FILE* post, Node* pNode){
+
+    while(pNode != NULL){
+        fprintf( post, "%d-%d-%d   %d:00:00+%d          %f \n", pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode -> average);
         pNode = pNode->pNext;
     }
     
