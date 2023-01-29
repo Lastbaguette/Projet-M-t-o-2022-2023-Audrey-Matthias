@@ -140,11 +140,11 @@ void displayListWind(FILE* post, Node* pNode){
     
 }
 
-void displayListHeight(FILE* post, Node* pNode){
+void displayListHeight(FILE* post, Node* pNode){                    //Starting from the end to have decreasing values
 
     while(pNode != NULL){
         fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);
-        pNode = pNode->pNext;
+        pNode = pNode->pBefore;
     }
     
 }
@@ -153,7 +153,7 @@ void RdisplayListHeight(FILE* post, Node* pNode){
 
     while(pNode != NULL){
         fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);
-        pNode = pNode->pBefore;
+        pNode = pNode->pNext;
     }
     
 }
@@ -161,8 +161,8 @@ void RdisplayListHeight(FILE* post, Node* pNode){
 void displayListMoisture(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);
-        pNode = pNode->pNext;
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> max, pNode->x, pNode->y);
+        pNode = pNode->pBefore;
     }
     
 }
@@ -171,7 +171,7 @@ void RdisplayListMoisture(FILE* post, Node* pNode){
 
     while(pNode != NULL){
         fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> max, pNode -> x, pNode -> y);
-        pNode = pNode->pBefore;
+        pNode = pNode->pNext;
     }
     
 }

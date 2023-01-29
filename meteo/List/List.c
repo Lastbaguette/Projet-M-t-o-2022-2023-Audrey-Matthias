@@ -308,90 +308,33 @@ void InsertListStBis( List* L, Node* pHead, int ID, float v, float v2, float x, 
 
 // Height Sort
 
-//=======================================================================
+List* InsertHeightList( Node* pNew, List* L2 ){
+    if( L2->pFirst == NULL ){
+        return L2 = Init(L2, pNew);
+    } 
+    else {
+        Node* pHead = L2->pFirst;
 
-// Moisture Sort
-
-//=======================================================================
-
-
-
-
-
-/*
-
-void addList(List* L, int ID, float value, Date* D, float x, float y, float e1, float e2){                 //Inserts the read value into the doubly linked list in ascending order
-
-    Node* pHead = L -> pFirst;
-    Node* pNew = createNode(ID, value , D , x , y, e1, e2); 
-
-    if (pNew == NULL){
-        exit(1);
-    }
-
-    if( (L->pFirst == NULL) && (L->pLast == NULL) ){
-        L->pFirst = pNew;
-        L->pLast = L->pFirst;
-    }
-    else if ( (pHead->elt >= pNew->elt) ){
-        L->pFirst = pNew;
-        pNew->pNext = pHead;
-        pHead->pBefore = pNew;
-        pHead = pNew;
-    }   
-    else if ( ( pHead->elt < pNew->elt ) ){
-
-        while ((pHead->elt < pNew->elt) && (pHead->pNext != NULL)){
-            pHead = pHead->pNext;   
+        if (pNew == NULL){
+            exit(1);
         }
 
-        if ((pHead-> pNext == NULL) && (pHead->elt < pNew->elt)){
-            pNew -> pBefore = pHead;
-            pHead -> pNext = pNew;
-            L -> pLast = pNew;
-        }
-        else {
-            pNew -> pNext = pHead;
-            pNew -> pBefore = pHead -> pBefore;
-            pHead -> pBefore -> pNext = pNew;
-            pHead -> pBefore = pNew;
-        }
-    }
-}
-
-void addListdate(List* L, int ID, float value, Date* D, float x, float y, float e1, float e2){                 //Inserts the read value into the doubly linked list in ascending order
-    
-    Node* pHead = L -> pFirst;
-    Node* pNew = createNode(ID, value , D , x , y, e1, e2); 
-
-    if (pNew == NULL){
-        printf;
-        exit(1);
-    }
-    else if( (L->pFirst == NULL) && (L->pLast == NULL) ){
-        L->pFirst = pNew;
-        L->pLast = L->pFirst;
-    }
-    else { 
-        int comp = 0;
-        comp = dateComp( D, L->pFirst->date );
-        switch (comp) {
-        case -1:
-            L->pFirst = pNew;
+        else if ( (pHead->average >= pNew->average) ){
+            L2->pFirst = pNew;
             pNew->pNext = pHead;
             pHead->pBefore = pNew;
             pHead = pNew;
-            break;
-            
-        default:
-            while ((comp == 1) && (pHead->pNext != NULL)){
-                pHead = pHead->pNext;
-                comp = dateComp( D, pHead->date );
+        }   
+        else if ( ( pHead->average < pNew->average ) ){
+
+            while ((pHead->average < pNew->average) && (pHead->pNext != NULL)){
+                pHead = pHead->pNext;   
             }
-            if ((pHead-> pNext == NULL) && (comp == 1)){
+
+            if ((pHead-> pNext == NULL) && (pHead->average < pNew->average)){
                 pNew -> pBefore = pHead;
                 pHead -> pNext = pNew;
-                L -> pLast = pNew;
+                L2 -> pLast = pNew;
             }
             else {
                 pNew -> pNext = pHead;
@@ -399,9 +342,91 @@ void addListdate(List* L, int ID, float value, Date* D, float x, float y, float 
                 pHead -> pBefore -> pNext = pNew;
                 pHead -> pBefore = pNew;
             }
-            break;
         }
     }
+
+    return L2;
 }
 
-*/
+void SortHeight1List( List* L, int ID, float v, Date* D, float x, float y ){
+
+    if ( L == NULL ){ 
+        exit(1);
+    } 
+    Node* pHead = L -> pFirst;
+    int T = 0;
+    T = searchList( pHead, ID );
+
+    if ( (T != 1) ){
+        InsertListSt(L, pHead, ID, v, D, x, y );
+    }
+
+}
+
+List* SortHeight2List( Node* pHead, List* L2 ){ 
+
+    if ( pHead != NULL ){
+        Node* temp = createNode( pHead->ID, pHead->max, pHead->date, pHead->x, pHead->y );
+        L2 = InsertHeightList(temp, L2);
+        L2 = SortHeight2List(pHead->pNext, L2);
+    }
+
+    return L2;
+}
+
+//=======================================================================
+
+// Moisture Sort
+
+List* InsertMoistureList( Node* pNew, List* L2 ){
+    if( L2->pFirst == NULL ){
+        return L2 = Init(L2, pNew);
+    } 
+    else {
+        Node* pHead = L2->pFirst;
+
+        if (pNew == NULL){
+            exit(1);
+        }
+
+        else if ( (pHead->max >= pNew->max) ){
+            L2->pFirst = pNew;
+            pNew->pNext = pHead;
+            pHead->pBefore = pNew;
+            pHead = pNew;
+        }   
+        else if ( ( pHead->max < pNew->max ) ){
+
+            while ((pHead->max < pNew->max) && (pHead->pNext != NULL)){
+                pHead = pHead->pNext;   
+            }
+
+            if ((pHead-> pNext == NULL) && (pHead->max < pNew->max)){
+                pNew -> pBefore = pHead;
+                pHead -> pNext = pNew;
+                L2 -> pLast = pNew;
+            }
+            else {
+                pNew -> pNext = pHead;
+                pNew -> pBefore = pHead -> pBefore;
+                pHead -> pBefore -> pNext = pNew;
+                pHead -> pBefore = pNew;
+            }
+        }
+    }
+
+    return L2;
+}
+
+List* SortMoistureList( Node* pHead, List* L2 ){ 
+
+    if ( pHead != NULL ){
+        Node* temp = createNode( pHead->ID, pHead->max, pHead->date, pHead->x, pHead->y );
+        L2 = InsertMoistureList(temp, L2);
+        L2 = SortMoistureList(pHead->pNext, L2);
+    }
+
+    return L2;
+}
+
+//=======================================================================

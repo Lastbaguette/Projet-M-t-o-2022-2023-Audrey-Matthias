@@ -214,6 +214,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
     float N = 0, N2 = 0, x = 0, y = 0;
     Date* D = malloc(sizeof(Date));
     List* L = malloc(sizeof(List));
+    List* L2 = malloc(sizeof(List));
     int d = 0, p = 1;
     
 
@@ -273,7 +274,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         L = Init(L, elt);
                         p = 0;
                     } else {
-
+                        SortHeight1List(L, ID, N, D, x, y);
                     }
                     break;
                 case(6):
@@ -282,7 +283,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         L = Init(L, elt);
                         p = 0;
                     } else {
-
+                        AvPStationList(L, ID, N, D, x, y);
                     }
                     break;
                 default:
@@ -314,18 +315,21 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                     displayListWind(post, L->pFirst);
                     break;
                 case(5):
+                    L2 -> pFirst = NULL;
+                    L2 = SortHeight2List(L->pFirst, L2);
                     if ( R == 1 ){
-                        //displayHeight(NS, post);
+                        displayListHeight(post, L2->pLast);
                     } else {
-                        //RdisplayHeight(NS, post);
+                        RdisplayListHeight(post, L2->pFirst);
                     }
                     break;
                 case(6):
-
+                    L2 -> pFirst = NULL;
+                    L2 = SortMoistureList(L->pFirst, L2);
                     if ( R == 1 ){
-                        //displayMoisture(NS, post);
+                        displayListMoisture(post, L2->pLast);
                     } else {
-                        //RdisplayMoisture(NS, post);
+                        RdisplayListMoisture(post, L2->pFirst);
                     }
                     break;
                 default:
@@ -493,7 +497,7 @@ for ( i=1 ; i < argc; i++){
     if ( (i == 1) ){                            //Test if pre-sorting file exists
         tpre = TestFileExist ( argv[i] );
         if ( tpre == 1 ){
-            //printf("Pre-sorting File exists\n");
+            //Pre-sorting File exists
         }
         else { return 2 ; }
     }
@@ -501,7 +505,7 @@ for ( i=1 ; i < argc; i++){
     if ( (i == 2) ){                            //Test if post-sorting file exists
         tpost = TestFileExist ( argv[i] );
         if ( tpost == 1 ){
-            //printf("Post-sorting File exists\n");
+            //Post-sorting File exists
         }
         else { return 3 ; }
     }
@@ -510,9 +514,9 @@ for ( i=1 ; i < argc; i++){
         tr = strcmp ( "-r" , argv[i] );
         if ( (tr == 0) ){
             R = 1;
-            //printf("Reverse sorting\n");
+            //Reverse sorting
         } else {
-            //printf("Normal sorting\n");
+            //Normal sorting
         }
     }
     
@@ -559,16 +563,13 @@ for ( i=1 ; i < argc; i++){
 
 
         if ( (tabr == 0 && ttab != 0) ){
-            //printf("Sort using ABR method\n\n");
-            test = SortABR( argv[1] , argv[2] , R , dsort, mode);
+            test = SortABR( argv[1] , argv[2] , R , dsort, mode);           //Sort using ABR method
         }
         else if ( (tabr != 0 && ttab == 0) ){
-            //printf("Sort using LIST method\n\n");
-            test = SortLIST( argv[1] , argv[2] , R , dsort, mode);
+            test = SortLIST( argv[1] , argv[2] , R , dsort, mode);          //Sort using LIST method
         }
         else {
-            //printf("Sort using AVL method\n\n");
-            test = SortAVL( argv[1] , argv[2] , R , pH, dsort, mode);
+            test = SortAVL( argv[1] , argv[2] , R , pH, dsort, mode);       //Sort using AVL method
         }
 
     }

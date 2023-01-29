@@ -36,11 +36,15 @@ void InsertListStBis( List* L, Node* pHead, int ID, float v, float v2, float x, 
 //=======================================================================
 
 // Height Sort
+List* InsertHeightList( Node* pNew, List* L2 );
+void SortHeight1List( List* L, int ID, float v, Date* D, float x, float y );
+List* SortHeight2List( Node* pHead, List* L2 );
 
 //=======================================================================
 
 // Moisture Sort
-
+List* InsertMoistureList( Node* pNew, List* L2 );
+List* SortMoistureList( Node* pHead, List* L2 );
 //=======================================================================
 
 
