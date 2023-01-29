@@ -223,4 +223,32 @@ Node* createNode ( int ID, float v, Date* D, float x, float y ){        //Create
     return pNode;
 }
 
+Node* createNodebis ( int ID, float v, float v2, float x, float y ){        //Create a list node from two values
+    Node* pNode = malloc( sizeof(Node) );
+    if (pNode ==  NULL){
+        exit(1);
+    }
+    pNode->ID = ID;
+
+    pNode -> min = v;
+    pNode -> max = v;
+    pNode -> total = v;
+    pNode -> average = v;
+
+    pNode -> min2 = 0;
+    pNode -> max2 = 0;
+    pNode -> total2 = 0;
+    pNode -> average2 = 0;
+
+    pNode -> count = 1;
+
+    pNode->pBefore=NULL;
+    pNode->pNext=NULL;
+
+    pNode -> x = x;
+    pNode -> y = y;
+
+    return pNode;
+}
+
 //=======================================================================

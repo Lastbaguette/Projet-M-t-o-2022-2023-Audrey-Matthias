@@ -255,16 +255,16 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         L = Init(L, elt);
                         p = 0;
                     } else {
-
+                        InsertPerDatePerStList(L, L->pFirst, ID, N, D, x, y);
                     }
                     break;
                 case(4):
                     if ( p == 1 ){
-                        Node* elt = createNode(ID, N, D, x, y);
+                        Node* elt = createNodebis(ID, N, N2, x, y);
                         L = Init(L, elt);
                         p = 0;
                     } else {
-
+                        AvPStationVectorList(L, ID, N, N2, x, y);
                     }
                     break;
                 case(5):
@@ -308,10 +308,10 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                     displayListAvPerDateAllSt(post, L->pFirst);
                     break;
                 case(3):
-                    //displayPerDatePSt(S, post);
+                    displayListAvPerDatePerSt(post, L->pFirst);
                     break;
                 case(4):
-                    //displayWind(S, post);
+                    displayListWind(post, L->pFirst);
                     break;
                 case(5):
                     if ( R == 1 ){
@@ -579,23 +579,23 @@ for ( i=1 ; i < argc; i++){
 switch (test)
 {
 case 4:
-    printf("\n|    Program terminated with error code < 4 > :      Other issues    |\n");
+    printf("|    Program terminated with error code < 4 > :      Other issues    |\n");
     break;
 
 case 3:
-    printf("\n|    Program terminated with error code < 3 > :      Post-sorting file issues    |\n");
+    printf("|    Program terminated with error code < 3 > :      Post-sorting file issues    |\n");
     break;
 
 case 2:
-    printf("\n|    Program terminated with error code < 2 > :      Pre-sorting file issues    |\n");
+    printf("|    Program terminated with error code < 2 > :      Pre-sorting file issues    |\n");
     break;
 
 case 1:
-    printf("\n|    Program terminated with error code < 1 > :      Given arguments incorrect    |\n");
+    printf("|    Program terminated with error code < 1 > :      Given arguments incorrect    |\n");
     break;
 
 case 0:
-    printf("\n|    Program correctly executed    |\n");
+    printf("|    Program correctly executed    |\n");
     break;
 
 

@@ -18,6 +18,7 @@ Station1* AddRightStbis ( Station1* S, int ID, float v, float v2, float x, float
 
 List* Init(List* L, Node* elt);             //Initialize the beginning and end of the list
 Node* createNode ( int ID, float v, Date* D, float x, float y );            //Create a list node from one value
+Node* createNodebis ( int ID, float v, float v2, float x, float y );        //Create a list node from two values
 
 //=======================================================================
 

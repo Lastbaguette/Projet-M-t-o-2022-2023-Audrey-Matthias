@@ -258,7 +258,6 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
         return S;
     }
 
-    printf("pre %d\n", S->ID);
     if ( *pH != 0 ){
         S->balance = S->balance + *pH;
         S = StationBalance(S);
@@ -269,7 +268,6 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
             *pH = 1;
         }    
     }
-    printf("post %d\n", S->ID);
     return S; 
 }
 

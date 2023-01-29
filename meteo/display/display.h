@@ -33,8 +33,16 @@ void RdisplayMoisture( Station1* S, FILE* post);            //Moisture in revers
 //=======================================================================
 //File writing functions for List mode
 
-void displayListAvPerSt(FILE* post, Node* pNode);
-void displayListAvPerDateAllSt(FILE* post, Node* pNode);
+void displayListAvPerSt(FILE* post, Node* pNode);           //M1 for temperature and pressure
+void displayListAvPerDateAllSt(FILE* post, Node* pNode);    //M2 for temperature and pressure
+void displayListAvPerDatePerSt(FILE* post, Node* pNode);    //M3 for temperature and pressure
+void displayListWind(FILE* post, Node* pNode);              //Wind
+
+void displayListHeight(FILE* post, Node* pNode);            //Height
+void RdisplayListHeight(FILE* post, Node* pNode);           //Height in reverse
+
+void displayListMoisture(FILE* post, Node* pNode);          //Moisture
+void RdisplayListMoisture(FILE* post, Node* pNode);         //Moisture in reverse
 
 //=======================================================================
 

@@ -122,25 +122,57 @@ void displayListAvPerDateAllSt(FILE* post, Node* pNode){
     
 }
 
-
-/*
-void displayList(FILE* post, Node* pNode){
+void displayListAvPerDatePerSt(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        //printf("%.3f > ", pNode->elt);
-        fprintf(post, "%d %.3f %d-%d-%dT%d:00:00+%d:00 %f %f %f %f\n", pNode->ID, pNode->elt, pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode->x, pNode->y, pNode->e1, pNode->e2);
+        fprintf( post, "%d-%d-%d    %d:00:00+%d     %d   %f \n", pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode -> ID, pNode -> average);
         pNode = pNode->pNext;
     }
     
 }
 
-void RdisplayList(FILE* post, Node* pNode){
+void displayListWind(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        //printf("%.3f > ", pNode->elt);
-        fprintf(post, "%d %.3f %d-%d-%dT%d:00:00+%d:00 %f %f %f %f\n", pNode->ID, pNode->elt, pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode->x, pNode->y, pNode->e1, pNode->e2);
+        fprintf( post, "%d    %f %f    %f %f\n", pNode -> ID, pNode -> average, pNode -> average2, pNode -> x, pNode ->y );
+        pNode = pNode->pNext;
+    }
+    
+}
+
+void displayListHeight(FILE* post, Node* pNode){
+
+    while(pNode != NULL){
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);
+        pNode = pNode->pNext;
+    }
+    
+}
+
+void RdisplayListHeight(FILE* post, Node* pNode){
+
+    while(pNode != NULL){
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);
         pNode = pNode->pBefore;
     }
     
 }
-*/
+
+void displayListMoisture(FILE* post, Node* pNode){
+
+    while(pNode != NULL){
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);
+        pNode = pNode->pNext;
+    }
+    
+}
+
+void RdisplayListMoisture(FILE* post, Node* pNode){
+
+    while(pNode != NULL){
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> max, pNode -> x, pNode -> y);
+        pNode = pNode->pBefore;
+    }
+    
+}
+
