@@ -96,46 +96,46 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);
-        //printf("\n\n%d-%d-%d %d:00:00+%d\n",year, month, day, hour, utc);
-        if (( d == 10 )){
+
+        if (( d == 10 )){                   //if sscanf gets less outputs than the 10 necessary will return error 2 (to prevent sorting incomplete lines)
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
-                case(1):
+                case(1):                    //Mode 1 ( Temperature/Pressure ): Sorting per ID for average, min and max values
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         AveragePStationABR(S, ID, N, D, x, y);
                     }
                     break;
-                case(2):
+                case(2):                    //Mode 2 ( Temperature/Pressure ): Sorting per date for all stations to get the average value
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         S = InsertPDateAllStABR(S, ID, N, D, x, y);
                     }
                     break;
-                case(3):
+                case(3):                    //Mode 3 ( Temperature/Pressure ): Sorting per date per station to get the value
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         InsertPDatePStABR(S, ID, N, D, x, y);
                     }
                     break;
-                case(4):
+                case(4):                    //Wind : Sorting per ID to get module and orientation average values
                     if ( S == NULL ){
                         S = createStation1bis(ID, N, N2, x, y);
                     } else {
                         AveragePStationVectorABR(S, ID, N, N2, x, y);
                     }
                     break;
-                case(5):
+                case(5):                    //Height : Sorting per altitude value
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         SortHeight1(S, ID, N, D, x, y);
                     }
                     break;
-                case(6):
+                case(6):                    //Moisture : Sorting per max moisture value
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
@@ -157,33 +157,32 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
 
 
     switch( mode ){
-                case(1):
+                case(1):        //Mode 1 ( Temperature/Pressure )
                     displayAvPerSt(S, post);
                     break;
-                case(2):
+                case(2):        //Mode 2 ( Temperature/Pressure )
                     displayAvPerDateAllSt(S, post);
                     break;
-                case(3):
+                case(3):        //Mode 3 ( Temperature/Pressure )
                     displayPerDatePSt(S, post);
                     break;
-                case(4):
+                case(4):        //Wind
                     displayWind(S, post);
                     break;
-                case(5):
+                case(5):        //Height
                     NS = SortHeight2(S, NS);
                     if ( R == 1 ){
-                        displayHeight(NS, post);
+                        displayHeight(NS, post);        //Base order is in decreasing order
                     } else {
-                        RdisplayHeight(NS, post);
+                        RdisplayHeight(NS, post);       //Reverse order in in rising order
                     }
                     break;
-                case(6):
-
+                case(6):        //Moisture
                     NS = SortMoisture(S, NS);
                     if ( R == 1 ){
-                        displayMoisture(NS, post);
+                        displayMoisture(NS, post);      //Base order is in decreasing order      
                     } else {
-                        RdisplayMoisture(NS, post);
+                        RdisplayMoisture(NS, post);     //Reverse order in in rising order
                     }
                     break;
                 default:
@@ -216,6 +215,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
     List* L = malloc(sizeof(List));
     List* L2 = malloc(sizeof(List));
     int d = 0, p = 1;
+    int i = 0;
     
 
     pre = fopen( preFN, "r" );
@@ -229,11 +229,11 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
         test = fgetc(pre);
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);
-        if (( d == 10 )){
+        if (( d == 10 )){                   //if sscanf gets less outputs than the 10 necessary will return error 2 (to prevent sorting incomplete lines)
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
-                case(1):
-                    if ( p == 1 ){
+                case(1):                    //Mode 1 ( Temperature/Pressure ): Sorting per ID for average, min and max values
+                    if ( p == 1 ){      
                         Node* elt = createNode(ID, N, D, x, y);
                         L = Init(L, elt);
                         p = 0;
@@ -241,7 +241,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         AvPStationList(L, ID, N, D, x, y);
                     }
                     break;
-                case(2):
+                case(2):                     //Mode 2 ( Temperature/Pressure ): Sorting per date for all stations to get the average value
                     if ( p == 1 ){
                         Node* elt = createNode(ID, N, D, x, y);
                         L = Init(L, elt);
@@ -250,7 +250,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         InsertPerDateAllStList(L, L->pFirst, ID, N, D, x, y);
                     }
                     break;
-                case(3):
+                case(3):                     //Mode 3 ( Temperature/Pressure ): Sorting per date per station to get the value
                     if ( p == 1 ){
                         Node* elt = createNode(ID, N, D, x, y);
                         L = Init(L, elt);
@@ -259,7 +259,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         InsertPerDatePerStList(L, L->pFirst, ID, N, D, x, y);
                     }
                     break;
-                case(4):
+                case(4):                     //Wind : Sorting per ID to get module and orientation average values
                     if ( p == 1 ){
                         Node* elt = createNodebis(ID, N, N2, x, y);
                         L = Init(L, elt);
@@ -268,7 +268,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         AvPStationVectorList(L, ID, N, N2, x, y);
                     }
                     break;
-                case(5):
+                case(5):                     //Height : Sorting per altitude value
                     if ( p == 1 ){
                         Node* elt = createNode(ID, N, D, x, y);
                         L = Init(L, elt);
@@ -277,8 +277,8 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                         SortHeight1List(L, ID, N, D, x, y);
                     }
                     break;
-                case(6):
-                    if ( p == 1 ){
+                case(6):                     //Moisture : Sorting per max moisture value
+                    if ( p == 1 ){      
                         Node* elt = createNode(ID, N, D, x, y);
                         L = Init(L, elt);
                         p = 0;
@@ -302,34 +302,34 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
 
 
     switch( mode ){
-                case(1):
+                case(1):        //Mode 1 ( Temperature/Pressure )
                     displayListAvPerSt(post, L->pFirst);
                     break;
-                case(2):
+                case(2):        //Mode 2 ( Temperature/Pressure )
                     displayListAvPerDateAllSt(post, L->pFirst);
                     break;
-                case(3):
+                case(3):        //Mode 3 ( Temperature/Pressure )
                     displayListAvPerDatePerSt(post, L->pFirst);
                     break;
-                case(4):
+                case(4):        //Wind
                     displayListWind(post, L->pFirst);
                     break;
-                case(5):
+                case(5):        //Height
                     L2 -> pFirst = NULL;
                     L2 = SortHeight2List(L->pFirst, L2);
                     if ( R == 1 ){
-                        displayListHeight(post, L2->pLast);
+                        displayListHeight(post, L2->pLast);     //Base order is in decreasing order
                     } else {
-                        RdisplayListHeight(post, L2->pFirst);
+                        RdisplayListHeight(post, L2->pFirst);   //Reverse order in in rising order
                     }
                     break;
-                case(6):
+                case(6):        //Moisture
                     L2 -> pFirst = NULL;
                     L2 = SortMoistureList(L->pFirst, L2);
                     if ( R == 1 ){
-                        displayListMoisture(post, L2->pLast);
+                        displayListMoisture(post, L2->pLast);   //Base order is in decreasing order
                     } else {
-                        RdisplayListMoisture(post, L2->pFirst);
+                        RdisplayListMoisture(post, L2->pFirst); //Reverse order in in rising order
                     }
                     break;
                 default:
@@ -375,46 +375,46 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
         fseek(pre, -1, SEEK_CUR);
         d = sscanf(temp, "%d %d-%d-%dT%d:00:00+%d:00 %f %f %f %f", &ID, &year, &month, &day, &hour, &utc, &N, &N2, &x, &y);
 
-        if ((d == 10)){
+        if ((d == 10)){                     //if sscanf gets less outputs than the 10 necessary will return error 2 (to prevent sorting incomplete lines)
             D = addDate(year,month,day,hour,utc);
             switch( mode ){
-                case(1):
+                case(1):                    //Mode 1 ( Temperature/Pressure ): Sorting per ID for average, min and max values
                     if ( S == NULL ){
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         S = AveragePStationAVL(S, ID, N, pH, D, x, y);
                     }
                     break;
-                case(2):
-                    if ( S == NULL ){
+                case(2):                    //Mode 2 ( Temperature/Pressure ): Sorting per date for all stations to get the average value
+                    if ( S == NULL ){       
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         S = InsertPDateAllStAVL(S, ID, N, pH, D, x, y);
                     }
                     break;
-                case(3):
-                    if ( S == NULL ){
+                case(3):                    //Mode 3 ( Temperature/Pressure ): Sorting per date per station to get the value
+                    if ( S == NULL ){       
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         S = InsertPDatePStAVL(S, ID, N, pH, D, x, y);
                     }
                     break;
-                case(4):
-                    if ( S == NULL ){
+                case(4):                    //Wind : Sorting per ID to get module and orientation average values
+                    if ( S == NULL ){ 
                         S = createStation1bis(ID, N, N2, x, y);
                     } else {
                         S = AveragePStationVectorAVL(S, ID, N, N2, pH, x, y);
                     }
                     break;
-                case(5):
-                    if ( S == NULL ){
+                case(5):                    //Height : Sorting per altitude value
+                    if ( S == NULL ){       
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         S = SortHeight1AVL(S, ID, N, pH, D, x, y);
                     }
                     break;
-                case(6):
-                    if ( S == NULL ){
+                case(6):                    //Moisture : Sorting per max moisture value
+                    if ( S == NULL ){       
                         S = createStation1(ID, N, D, x, y);
                     } else {
                         S = AveragePStationAVL(S, ID, N, pH, D, x, y);
@@ -435,32 +435,32 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
     } while ( test != EOF );
 
     switch( mode ){
-                case(1):
-                    displayAvPerSt(S, post);
+                case(1):        //Mode 1 ( Temperature/Pressure )
+                    displayAvPerSt(S, post);            
                     break;
-                case(2):
+                case(2):        //Mode 2 ( Temperature/Pressure )
                     displayAvPerDateAllSt(S, post);
                     break;
-                case(3):
+                case(3):        //Mode 3 ( Temperature/Pressure )
                     displayPerDatePSt(S, post);
                     break;
-                case(4):
+                case(4):        //Wind
                     displayWind(S, post);
                     break;
-                case(5):
+                case(5):        //Height
                     NS = SortHeight2AVL(S, NS, pH);
                     if ( R == 1 ){
-                        displayHeight(NS, post);
+                        displayHeight(NS, post);        //Base order is in decreasing order
                     } else {
-                        RdisplayHeight(NS, post);
+                        RdisplayHeight(NS, post);       //Reverse order in in rising order
                     }
                     break;
-                case(6):
+                case(6):        //Moisture
                     NS = SortMoistureAVL(S, NS, pH);
                     if ( R == 1 ){
-                        displayMoisture(NS, post);
+                        displayMoisture(NS, post);      //Base order is in decreasing order
                     } else {
-                        RdisplayMoisture(NS, post);
+                        RdisplayMoisture(NS, post);     //Reverse order in in rising order
                     }
                     break;
                 default:
