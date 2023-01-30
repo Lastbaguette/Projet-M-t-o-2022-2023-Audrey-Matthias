@@ -1,11 +1,16 @@
 #include "../weathersort.h"
 
+/*================================================================================================================================================
+
+Doubly linked list method sorting functions
+
+================================================================================================================================================*/
 
 //=======================================================================
 
 // Searching and average calculation (called editing) functions
 
-int searchList( Node* pHead, int ID ){
+int searchList( Node* pHead, int ID ){              //Searching if an element with given ID exists. Will return 1 if yes, otherwise will return 0
 
     if( pHead != NULL ){  
 
@@ -23,7 +28,7 @@ int searchList( Node* pHead, int ID ){
 
 }
 
-void searchEditList( Node* pHead, int ID, float v ){
+void searchEditList( Node* pHead, int ID, float v ){            //Searching for an element with given ID to edit it (for one value).
 
     if( pHead != NULL ){  
 
@@ -45,7 +50,7 @@ void searchEditList( Node* pHead, int ID, float v ){
     }
 }
 
-void searchEditListBis( Node* pHead, int ID, float v, float v2){
+void searchEditListBis( Node* pHead, int ID, float v, float v2){                //Searching for an element with given ID to edit it (for two values).
 
     if( pHead != NULL ){  
 
@@ -71,7 +76,7 @@ void searchEditListBis( Node* pHead, int ID, float v, float v2){
 
 // Mode 1 Sort for temperature and pressure
 
-void AvPStationList( List* L, int ID, float v, Date* D, float x, float y ){
+void AvPStationList( List* L, int ID, float v, Date* D, float x, float y ){             //Will travel across the list to create new element at its given place. (Sorting by ID)
 
     if ( L == NULL ){ 
         exit(1);
@@ -88,7 +93,7 @@ void AvPStationList( List* L, int ID, float v, Date* D, float x, float y ){
 
 }
 
-void InsertListSt( List* L, Node* pHead, int ID, float v, Date* D, float x, float y ){                 //Inserts the read value into the doubly linked list in ascending order
+void InsertListSt( List* L, Node* pHead, int ID, float v, Date* D, float x, float y ){                 //Search if given ID exists. If yes will edit it, else will create a new element with given values 
 
     Node* pNew = createNode(ID, v , D , x , y); 
 
@@ -126,7 +131,7 @@ void InsertListSt( List* L, Node* pHead, int ID, float v, Date* D, float x, floa
 
 // Mode 2 Sort for temperature and pressure
 
-void InsertPerDateAllStList(List* L, Node* pHead, int ID, float v, Date* D, float x, float y){                 //Inserts the read value into the doubly linked list in ascending order
+void InsertPerDateAllStList(List* L, Node* pHead, int ID, float v, Date* D, float x, float y){                 //Will compare the current date and the new element's date. If the date is the same value will be edited, otherwise new element will be created.
 
     Node* pNew = createNode(ID, v , D , x , y); 
 
@@ -180,7 +185,7 @@ void InsertPerDateAllStList(List* L, Node* pHead, int ID, float v, Date* D, floa
 
 // Mode 3 Sort for temperature and pressure
 
-void InsertPerDatePerStList(List* L, Node* pHead, int ID, float v, Date* D, float x, float y){                 //Inserts the read value into the doubly linked list in ascending order
+void InsertPerDatePerStList(List* L, Node* pHead, int ID, float v, Date* D, float x, float y){                 //Will compare the current date and the new element's date. If the date is the same, IDs will be compared and the new element will be placed by rising ID order.
 
     Node* pNew = createNode(ID, v , D , x , y); 
 
@@ -253,7 +258,7 @@ void InsertPerDatePerStList(List* L, Node* pHead, int ID, float v, Date* D, floa
 
 // Wind Sort
 
-void AvPStationVectorList( List* L, int ID, float v, float v2, float x, float y ){
+void AvPStationVectorList( List* L, int ID, float v, float v2, float x, float y ){                  //Will travel across the list to create new element at its given place. (Sorting by ID)
 
     if ( L == NULL ){ 
         exit(1);
@@ -270,7 +275,7 @@ void AvPStationVectorList( List* L, int ID, float v, float v2, float x, float y 
 
 }
 
-void InsertListStBis( List* L, Node* pHead, int ID, float v, float v2, float x, float y ){                 //Inserts the read value into the doubly linked list in ascending order
+void InsertListStBis( List* L, Node* pHead, int ID, float v, float v2, float x, float y ){                 //Search if given ID exists. If yes will edit it else will create a new element with given values
 
     Node* pNew = createNodebis(ID, v , v2 , x , y); 
 
@@ -308,7 +313,7 @@ void InsertListStBis( List* L, Node* pHead, int ID, float v, float v2, float x, 
 
 // Height Sort
 
-List* InsertHeightList( Node* pNew, List* L2 ){
+List* InsertHeightList( Node* pNew, List* L2 ){             //Will travel across the list to create new element at its given place. (Sorting by value)
     if( L2->pFirst == NULL ){
         return L2 = Init(L2, pNew);
     } 
@@ -348,7 +353,7 @@ List* InsertHeightList( Node* pNew, List* L2 ){
     return L2;
 }
 
-void SortHeight1List( List* L, int ID, float v, Date* D, float x, float y ){
+void SortHeight1List( List* L, int ID, float v, Date* D, float x, float y ){            //Search if given ID exists. Will only create a new element if new ID doesn't exists. Elements will be sorted per ID first.
 
     if ( L == NULL ){ 
         exit(1);
@@ -363,7 +368,7 @@ void SortHeight1List( List* L, int ID, float v, Date* D, float x, float y ){
 
 }
 
-List* SortHeight2List( Node* pHead, List* L2 ){ 
+List* SortHeight2List( Node* pHead, List* L2 ){             //Will read the previously created list's element one by one to create a new list sorted by value (Height)
 
     if ( pHead != NULL ){
         Node* temp = createNode( pHead->ID, pHead->max, pHead->date, pHead->x, pHead->y );
@@ -378,7 +383,7 @@ List* SortHeight2List( Node* pHead, List* L2 ){
 
 // Moisture Sort
 
-List* InsertMoistureList( Node* pNew, List* L2 ){
+List* InsertMoistureList( Node* pNew, List* L2 ){           //Will travel across the list to create new element at its given place. (Sorting by max value)
     if( L2->pFirst == NULL ){
         return L2 = Init(L2, pNew);
     } 
@@ -418,7 +423,7 @@ List* InsertMoistureList( Node* pNew, List* L2 ){
     return L2;
 }
 
-List* SortMoistureList( Node* pHead, List* L2 ){ 
+List* SortMoistureList( Node* pHead, List* L2 ){            //Will read the previously created list's element one by one to create a new list sorted by max value (Moisture)
 
     if ( pHead != NULL ){
         Node* temp = createNode( pHead->ID, pHead->max, pHead->date, pHead->x, pHead->y );

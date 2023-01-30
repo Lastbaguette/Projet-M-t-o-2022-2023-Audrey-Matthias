@@ -1,6 +1,15 @@
 #include "weathersort.h"
 
-/*============================================================
+/*================================================================================================================================================
+
+Projet Meteo CY-Tech 2022-2023
+Authors : TRUONG Audrey, GALISSON Matthias
+Class : PREING 2 - Group 2
+Description : Program dedicated to sorting a given file with 6 different modes available in 3 types of sorting methods.
+
+==================================================================================================================================================
+
+==============================================================  
 ERRORS: - 1 : Incorrect arguments
         - 2 : Pre-Sorting file issues
         - 3 : Post-Sorting file issues
@@ -87,7 +96,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
     pre = fopen( preFN, "r" );
     post = fopen( postFN, "w" );
     
-    if( (pre == NULL) ){ printf("a"); return 2;  }
+    if( (pre == NULL) ){  return 2;  }
     if( (post == NULL) ){  return 3;  }
     
     do {
@@ -491,8 +500,6 @@ int* pH = &H;
 if ( argc != 6 ) { test = 1; }                   //Check if the number of given arguments in correct
 
 for ( i=1 ; i < argc; i++){
-
-    //printf("%d | %s          \n", i, argv[i]);
 
     if ( (i == 1) ){                            //Test if pre-sorting file exists
         tpre = TestFileExist ( argv[i] );

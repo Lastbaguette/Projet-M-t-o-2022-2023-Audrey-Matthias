@@ -1,25 +1,30 @@
 #include "../weathersort.h"
 
+/*================================================================================================================================================
+
+AVL method sorting functions
+
+================================================================================================================================================*/
 
 //=======================================================================
 // Station and Balancing functions
 
-int min( int a, int b ){
+int min( int a, int b ){        //Will return the minimal value between the 2 given ones
     if (a>b){ return b; }
-    if (b>a){ return a; }
+    if (b>=a){ return a; }
 
     return 0;
 }
 
-int max( int a, int b ){
+int max( int a, int b ){        //Will return the maximal values between the 2 given ones
     if (a>b){ return a; }
-    if (b>a){ return b; }
+    if (b>=a){ return b; }
 
     return 0;
 }
 
 
-Station1* LeftRotationSt( Station1* S ){
+Station1* LeftRotationSt( Station1* S ){        //Left rotation
     Station1* pivot = malloc(sizeof(Station1));
     int eqA = 0, eqP = 0;
 
@@ -36,7 +41,7 @@ Station1* LeftRotationSt( Station1* S ){
     return S; 
 }
 
-Station1* RightRotationSt( Station1* S ){
+Station1* RightRotationSt( Station1* S ){       //Right rotation
     Station1* pivot = malloc(sizeof(Station1));
     int eqA = 0, eqP = 0;
 
@@ -53,17 +58,17 @@ Station1* RightRotationSt( Station1* S ){
     return S; 
 }
 
-Station1* DoubleRightRotationSt ( Station1* S ){
+Station1* DoubleRightRotationSt ( Station1* S ){        //Double Right rotation
     S->ls = LeftRotationSt(S->ls);
     return RightRotationSt(S);
 }
 
-Station1* DoubleLeftRotationSt ( Station1* S ){
+Station1* DoubleLeftRotationSt ( Station1* S ){         //Double Left rotation
     S->rs = RightRotationSt(S->rs);
     return LeftRotationSt(S);
 }
 
-Station1* StationBalance ( Station1* S ){
+Station1* StationBalance ( Station1* S ){               //Will call the rotation functions depending on the element's balance
     if(S != NULL){
         if( S->balance >= 2 ){
             if( S->rs->balance >= 0 ){
@@ -92,7 +97,7 @@ Station1* StationBalance ( Station1* S ){
 //=======================================================================
 // Mode 1 Sort for temperature and pressure
 
-Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){    //Inserts the read value into the tree with the AVL sorting method
+Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){         //Will travel across the tree to create new element at its given place. (Sorting by ID)
 
     if ( S == NULL ){
         *pH = 1;
@@ -125,7 +130,7 @@ Station1* InsertAVLStation ( Station1* S, int ID, float v, int* pH, Date* D, flo
     return S; 
 }
 
-Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){  
+Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y){        //Search if given ID exists. If yes will edit it, else will create a new element with given values
 
     if ( S == NULL ){
         exit(1);
@@ -149,7 +154,7 @@ Station1* AveragePStationAVL( Station1* S, int ID, float v, int* pH, Date* D, fl
 //=======================================================================
 // Mode 2 Sort for temperature and pressure
 
-Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y ){
+Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y ){      //Will compare the current date and the new element's date. If the date is the same value will be edited, otherwise new element will be created.
 
     if ( S == NULL ){
         *pH = 1;
@@ -193,7 +198,7 @@ Station1* InsertPDateAllStAVL( Station1* S, int ID, float v, int* pH, Date* D, f
 //=======================================================================
 // Mode 3 Sort for temperature and pressure
 
-Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y ){
+Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, float x, float y ){        //Will compare the current date and the new element's date. If the date is the same, IDs will be compared and the new element will be placed by rising ID order.
 
     if ( S == NULL ){
         *pH = 1;
@@ -240,7 +245,7 @@ Station1* InsertPDatePStAVL( Station1* S, int ID, float v, int* pH, Date* D, flo
 //=======================================================================
 // Wind Sort
 
-Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH, float x, float y){
+Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH, float x, float y){     //Will travel across the tree to create new element at its given place. (Sorting by ID)
 
     if ( S == NULL ){
         *pH = 1;
@@ -271,7 +276,7 @@ Station1* InsertAVLStationbis ( Station1* S, int ID, float v, float v2, int* pH,
     return S; 
 }
 
-Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int* pH, float x, float y){  
+Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int* pH, float x, float y){ //Search if given ID exists. If yes will edit it else will create a new element with given values
 
     int T = 0;
     T = search( S, ID );
@@ -291,7 +296,7 @@ Station1* AveragePStationVectorAVL( Station1* S, int ID, float v, float v2 ,int*
 //=======================================================================
 // Height Sort
 
-Station1* InsertHeightAVL(Station1* S, Station1* NS, int* pH){
+Station1* InsertHeightAVL(Station1* S, Station1* NS, int* pH){              //Will travel across the tree to create new element at its given place. (Sorting by value)
     if(NS == NULL){
         *pH = 1;
         return NS = S;
@@ -319,7 +324,7 @@ Station1* InsertHeightAVL(Station1* S, Station1* NS, int* pH){
     return NS;
 }
 
-Station1* SortHeight1AVL( Station1* S, int ID, float v ,int* pH, Date* D, float x, float y){  
+Station1* SortHeight1AVL( Station1* S, int ID, float v ,int* pH, Date* D, float x, float y){            //Search if given ID exists. Will only create a new element if new ID doesn't exists. Elements will be sorted per ID first.
 
     if ( S == NULL ){
         exit(1);
@@ -337,7 +342,7 @@ Station1* SortHeight1AVL( Station1* S, int ID, float v ,int* pH, Date* D, float 
 
 }
 
-Station1* SortHeight2AVL( Station1* S, Station1* NS, int* pH){ 
+Station1* SortHeight2AVL( Station1* S, Station1* NS, int* pH){              //Will read the previously created tree's element one by one to create a new tree sorted by value (Height)
 
     if ( S != NULL ){
         Station1* temp = createStation1( S->ID, S->average, S->date, S->x, S->y );
@@ -354,7 +359,7 @@ Station1* SortHeight2AVL( Station1* S, Station1* NS, int* pH){
 //=======================================================================
 // Moisture Sort
 
-Station1* InsertMoistureAVL(Station1* S, Station1* NS, int* pH){
+Station1* InsertMoistureAVL(Station1* S, Station1* NS, int* pH){            //Will travel across the tree to create new element at its given place. (Sorting by max value)
 
     if(NS == NULL){
         *pH = 1;
@@ -383,7 +388,7 @@ Station1* InsertMoistureAVL(Station1* S, Station1* NS, int* pH){
     return NS;
 }
 
-Station1* SortMoistureAVL( Station1* S, Station1* NS, int* pH){ 
+Station1* SortMoistureAVL( Station1* S, Station1* NS, int* pH){             //Will read the previously created tree's element one by one to create a new tree sorted by max value (Moisture)
 
     if ( S != NULL ){
         Station1* temp = createStation1( S->ID, S->max, S->date, S->x, S->y );

@@ -1,10 +1,15 @@
 #include "../weathersort.h"
 
+/*================================================================================================================================================
+
+ABR method sorting functions
+
+================================================================================================================================================*/
 
 //=======================================================================
 // Searching and average calculation (called editing) functions
 
-int search( Station1* S , int ID ){
+int search( Station1* S , int ID ){             //Searching if an element with given ID exists. Will return 1 if yes, otherwise will return 0
 
     if( S != NULL ){  
         if ( ID == S -> ID ){
@@ -23,7 +28,7 @@ int search( Station1* S , int ID ){
 
 }
 
-void searchEdit( Station1* S , int ID, float v){
+void searchEdit( Station1* S , int ID, float v){             //Searching for an element with given ID to edit it (for one value). 
 
     if( S != NULL ){  
         if ( ID == S -> ID ){
@@ -49,7 +54,7 @@ void searchEdit( Station1* S , int ID, float v){
     }
 }
 
-void searchEditVector( Station1* S , int ID, float v, float v2){
+void searchEditVector( Station1* S , int ID, float v, float v2){             //Searching for an element with given ID to edit it (for two values). 
 
     if( S != NULL ){  
         if (ID == S->ID){
@@ -75,7 +80,7 @@ void searchEditVector( Station1* S , int ID, float v, float v2){
 //=======================================================================
 // Mode 1 Sort for temperature and pressure
 
-void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y){
+void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y){               //Will travel across the tree to create new element at its given place. (Sorting by ID)
     if ( S == NULL ){
         exit(1);
     }
@@ -97,7 +102,7 @@ void InsertABRStation ( Station1* S, int ID, float v, Date* D, float x, float y)
     }
 }
 
-void AveragePStationABR( Station1* S, int ID, float v, Date* D, float x, float y){  
+void AveragePStationABR( Station1* S, int ID, float v, Date* D, float x, float y){              //Search if given ID exists. If yes will edit it, else will create a new element with given values 
 
     if ( S == NULL ){
         exit(1);
@@ -119,7 +124,7 @@ void AveragePStationABR( Station1* S, int ID, float v, Date* D, float x, float y
 //=======================================================================
 // Mode 2 Sort for temperature and pressure
 
-Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
+Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, float y ){       //Will compare the current date and the new element's date. If the date is the same value will be edited, otherwise new element will be created.
 
     if ( S == NULL ){
         S = createStation1(ID, v, D, x, y);
@@ -154,7 +159,7 @@ Station1* InsertPDateAllStABR( Station1* S, int ID, float v, Date* D, float x, f
 //=======================================================================
 // Mode 3 Sort for temperature and pressure
 
-void InsertPDatePStABR( Station1* S, int ID, float v, Date* D, float x, float y ){
+void InsertPDatePStABR( Station1* S, int ID, float v, Date* D, float x, float y ){              //Will compare the current date and the new element's date. If the date is the same, IDs will be compared and the new element will be placed by rising ID order. 
 
     if ( S == NULL ){
         exit(1);
@@ -208,7 +213,7 @@ void InsertPDatePStABR( Station1* S, int ID, float v, Date* D, float x, float y 
 //=======================================================================
 // Wind Sort
 
-void InsertABRStationbis ( Station1* S, int ID, float v, float v2, float x, float y){
+void InsertABRStationbis ( Station1* S, int ID, float v, float v2, float x, float y){           //Will travel across the tree to create new element at its given place. (Sorting by ID)
     if ( S == NULL ){
         exit(1);
     }
@@ -230,7 +235,7 @@ void InsertABRStationbis ( Station1* S, int ID, float v, float v2, float x, floa
     }
 }
 
-void AveragePStationVectorABR( Station1* S, int ID, float v, float v2, float x, float y ){  
+void AveragePStationVectorABR( Station1* S, int ID, float v, float v2, float x, float y ){      //Search if given ID exists. If yes will edit it else will create a new element with given values
 
     if ( S == NULL ){
         exit(1);
@@ -252,7 +257,7 @@ void AveragePStationVectorABR( Station1* S, int ID, float v, float v2, float x, 
 //=======================================================================
 // Height Sort
 
-Station1* InsertHeightABR(Station1* S, Station1* NS){
+Station1* InsertHeightABR(Station1* S, Station1* NS){               //Will travel across the tree to create new element at its given place. (Sorting by value)
     if(NS == NULL){
         NS = S;
     }
@@ -280,7 +285,7 @@ Station1* InsertHeightABR(Station1* S, Station1* NS){
     return NS;
 }
 
-void SortHeight1( Station1* S, int ID, float v, Date* D, float x, float y){  
+void SortHeight1( Station1* S, int ID, float v, Date* D, float x, float y){                 //Search if given ID exists. Will only create a new element if new ID doesn't exists. Elements will be sorted per ID first.
 
     if ( S == NULL ){
         exit(1);
@@ -296,7 +301,7 @@ void SortHeight1( Station1* S, int ID, float v, Date* D, float x, float y){
 
 }
 
-Station1* SortHeight2( Station1* S, Station1* NS){ 
+Station1* SortHeight2( Station1* S, Station1* NS){                  //Will read the previously created tree's element one by one to create a new tree sorted by value (Height)
 
     if ( S != NULL ){
         Station1* temp = createStation1( S->ID, S->max, S->date, S->x, S->y );
@@ -313,7 +318,7 @@ Station1* SortHeight2( Station1* S, Station1* NS){
 //=======================================================================
 // Moisture Sort
 
-Station1* InsertMoistureABR(Station1* S, Station1* NS){
+Station1* InsertMoistureABR(Station1* S, Station1* NS){             //Will travel across the tree to create new element at its given place. (Sorting by max value)
     if(NS == NULL){
         NS = S;
     }
@@ -341,7 +346,7 @@ Station1* InsertMoistureABR(Station1* S, Station1* NS){
     return NS;
 }
 
-Station1* SortMoisture( Station1* S, Station1* NS){ 
+Station1* SortMoisture( Station1* S, Station1* NS){                 //Will read the previously created tree's element one by one to create a new tree sorted by max value (Moisture)
 
     if ( S != NULL ){
         Station1* temp = createStation1( S->ID, S->max, S->date, S->x, S->y );
