@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 
 typedef struct _date {
@@ -20,13 +21,17 @@ typedef struct _station1 {
 
     float min;
     float max;
-    float min2;
-    float max2;
+
     int count;
+
     float total;
     float total2;
+
     float average;
     float average2;
+
+    float cos;
+    float sin;
 
     Date* date;
 
@@ -45,13 +50,17 @@ typedef struct _node {
 
     float min;
     float max;
-    float min2;
-    float max2;
+
     int count;
+
     float total;
     float total2;
+
     float average;
     float average2;
+    
+    float cos;
+    float sin;
 
     Date* date;   
     struct _node* pNext;

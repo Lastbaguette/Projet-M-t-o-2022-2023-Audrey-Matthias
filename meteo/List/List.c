@@ -58,10 +58,9 @@ void searchEditListBis( Node* pHead, int ID, float v, float v2){                
 
             pHead -> count = pHead -> count + 1;
             
-            pHead -> total = pHead -> total + v;
+            pHead -> total = pHead -> total + cos(v)*v2;
+            pHead -> total2 = pHead -> total2 + sin(v)*v2;
             pHead -> average = pHead -> total/ pHead -> count;
-
-            pHead -> total2 = pHead -> total2 + v2;
             pHead -> average2 = pHead -> total2/ pHead -> count;
 
         }

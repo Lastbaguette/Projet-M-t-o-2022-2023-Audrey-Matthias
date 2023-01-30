@@ -35,8 +35,8 @@ Station1* createStation1 ( int ID, float v, Date* D, float x, float y){         
     NewStation -> x = x;
     NewStation -> y = y;
 
-    NewStation -> min2 = 0;
-    NewStation -> max2 = 0;
+    NewStation -> cos = 0;
+    NewStation -> sin = 0;
     NewStation -> total2 = 0;
     NewStation -> average2 = 0;
 
@@ -52,17 +52,15 @@ Station1* createStation1bis( int ID, float v, float v2, float x, float y){      
         
     NewStation -> ID = ID;
 
-    NewStation -> min = v;
-    NewStation -> max = v;
-    NewStation -> total = v;
-    NewStation -> average = v;
-
-    NewStation -> min2 = v2;
-    NewStation -> max2 = v2;
-    NewStation -> total2 = v2;
-    NewStation -> average2 = v2;
+    NewStation -> cos = cos(v)*v2;
+    NewStation -> sin = sin(v)*v2;
 
     NewStation -> count = 1;
+
+    NewStation -> total = NewStation -> cos;
+    NewStation -> total2 = NewStation -> sin;
+    NewStation -> average = NewStation -> total;
+    NewStation -> average2 = NewStation -> total2;
 
     NewStation -> rs = NULL;
     NewStation -> ls = NULL;
@@ -220,8 +218,8 @@ Node* createNode ( int ID, float v, Date* D, float x, float y ){        //Create
     pNode -> x = x;
     pNode -> y = y;
 
-    pNode -> min2 = 0;
-    pNode -> max2 = 0;
+    pNode -> cos = 0;
+    pNode -> sin = 0;
     pNode -> total2 = 0;
     pNode -> average2 = 0;
 
@@ -235,17 +233,15 @@ Node* createNodebis ( int ID, float v, float v2, float x, float y ){        //Cr
     }
     pNode->ID = ID;
 
-    pNode -> min = v;
-    pNode -> max = v;
-    pNode -> total = v;
-    pNode -> average = v;
-
-    pNode -> min2 = 0;
-    pNode -> max2 = 0;
-    pNode -> total2 = 0;
-    pNode -> average2 = 0;
+    pNode -> cos = cos(v)*v2;
+    pNode -> sin = sin(v)*v2;
 
     pNode -> count = 1;
+
+    pNode -> total = pNode -> cos;
+    pNode -> total2 = pNode -> sin;
+    pNode -> average = pNode -> total;
+    pNode -> average2 = pNode -> total2;
 
     pNode->pBefore=NULL;
     pNode->pNext=NULL;

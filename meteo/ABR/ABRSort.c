@@ -60,11 +60,11 @@ void searchEditVector( Station1* S , int ID, float v, float v2){             //S
         if (ID == S->ID){
         S -> count = S -> count + 1;
 
-        S -> total = S -> total + v;
+        S -> total = S -> total + cos(v)*v2;
+        S -> total2 = S -> total2 + sin(v)*v2;
         S -> average = S -> total/ S -> count;
-
-        S -> total2 = S -> total2 + v2;
         S -> average2 = S -> total2/ S -> count;
+
         }
         if ( ( ID > S -> ID ) && ( S -> rs != NULL) ){
                 return searchEditVector( S->rs, ID, v , v2);
