@@ -10,27 +10,27 @@ Writing functions
 //File writing functions for ABR and AVL modes
 
 void processAvPerSt( Station1* S, FILE* post ){
-    fprintf( post, "%d    %f   %f %f\n", S -> ID, S -> average, S -> min, S-> max);
+    fprintf( post, "%d    %f   %f %f\n", S -> ID, S -> average, S -> min, S-> max);         // ID  Average Min Max 
 }
 
 void processAvPerDateAllSt( Station1* S, FILE* post ){
-    fprintf( post, "%d-%d-%d   %d:00:00+%d          %f \n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, S -> average);
+    fprintf( post, "%d-%d-%d   %d:00:00+%d          %f \n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, S -> average);        // Date  Average
 }
 
 void processPerDatePSt( Station1* S, FILE* post ){
-    fprintf( post, "%d-%d-%d    %d:00:00+%d     %d   %f \n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, S -> ID, S -> average);
+    fprintf( post, "%d-%d-%d    %d:00:00+%d     %d   %f \n", S->date->year, S->date->month, S->date->day, S->date->hour, S->date->utc, S -> ID, S -> average);      // Date  ID Average
 }
 
 void processWind( Station1* S, FILE* post ){
-    fprintf( post, "%d    %f %f    %f %f\n", S -> ID, S -> average, S->average2, S->x, S->y);
+    fprintf( post, "%d    %f %f    %f %f\n", S -> ID, S -> average, S->average2, S->x, S->y);       // ID  Average module  Average orientation  Coordinates
 }
 
 void processHeight( Station1* S, FILE* post ){
-    fprintf( post, "%d %f    %f %f\n", S -> ID, S -> average, S->x, S->y);
+    fprintf( post, "%d %f    %f %f\n", S -> ID, S -> average, S->x, S->y);          // ID  Value Coordinates
 }
 
 void processMoisture( Station1* S, FILE* post ){
-    fprintf( post, "%d %f    %f %f\n", S -> ID, S -> max, S->x, S->y);
+    fprintf( post, "%d %f    %f %f\n", S -> ID, S -> max, S->x, S->y);          // ID Max value Coordinates
 }
 
 //=======================================================================
@@ -112,7 +112,7 @@ void RdisplayMoisture( Station1* S, FILE* post){
 void displayListAvPerSt(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        fprintf( post, "%d    %f   %f %f\n", pNode -> ID, pNode -> average, pNode -> min, pNode-> max);
+        fprintf( post, "%d    %f   %f %f\n", pNode -> ID, pNode -> average, pNode -> min, pNode-> max);     // ID  Average Min Max 
         pNode = pNode->pNext;
     }
     
@@ -121,7 +121,7 @@ void displayListAvPerSt(FILE* post, Node* pNode){
 void displayListAvPerDateAllSt(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        fprintf( post, "%d-%d-%d   %d:00:00+%d          %f \n", pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode -> average);
+        fprintf( post, "%d-%d-%d   %d:00:00+%d          %f \n", pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode -> average);        // Date  Average
         pNode = pNode->pNext;
     }
     
@@ -130,7 +130,7 @@ void displayListAvPerDateAllSt(FILE* post, Node* pNode){
 void displayListAvPerDatePerSt(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        fprintf( post, "%d-%d-%d    %d:00:00+%d     %d   %f \n", pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode -> ID, pNode -> average);
+        fprintf( post, "%d-%d-%d    %d:00:00+%d     %d   %f \n", pNode->date->year, pNode->date->month, pNode->date->day, pNode->date->hour, pNode->date->utc, pNode -> ID, pNode -> average);      // Date  ID Average
         pNode = pNode->pNext;
     }
     
@@ -139,7 +139,7 @@ void displayListAvPerDatePerSt(FILE* post, Node* pNode){
 void displayListWind(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        fprintf( post, "%d    %f %f    %f %f\n", pNode -> ID, pNode -> average, pNode -> average2, pNode -> x, pNode ->y );
+        fprintf( post, "%d    %f %f    %f %f\n", pNode -> ID, pNode -> average, pNode -> average2, pNode -> x, pNode ->y );       // ID  Average module  Average orientation  Coordinates
         pNode = pNode->pNext;
     }
     
@@ -148,7 +148,7 @@ void displayListWind(FILE* post, Node* pNode){
 void displayListHeight(FILE* post, Node* pNode){                    //Starting from the end to have decreasing values
 
     while(pNode != NULL){
-        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);      // ID  Value Coordinates
         pNode = pNode->pBefore;
     }
     
@@ -157,7 +157,7 @@ void displayListHeight(FILE* post, Node* pNode){                    //Starting f
 void RdisplayListHeight(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> average, pNode->x, pNode->y);      // ID  Value Coordinates
         pNode = pNode->pNext;
     }
     
@@ -166,7 +166,7 @@ void RdisplayListHeight(FILE* post, Node* pNode){
 void displayListMoisture(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> max, pNode->x, pNode->y);
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> max, pNode->x, pNode->y);          // ID Max value Coordinates
         pNode = pNode->pBefore;
     }
     
@@ -175,7 +175,7 @@ void displayListMoisture(FILE* post, Node* pNode){
 void RdisplayListMoisture(FILE* post, Node* pNode){
 
     while(pNode != NULL){
-        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> max, pNode -> x, pNode -> y);
+        fprintf( post, "%d %f    %f %f\n", pNode -> ID, pNode -> max, pNode -> x, pNode -> y);      // ID Max value Coordinates
         pNode = pNode->pNext;
     }
     
