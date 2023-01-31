@@ -116,7 +116,7 @@ fi
 
 if [ 1==1 ];then
 	
-	a=$b
+	
 
  
 		if [ -e "tmp" ];then
@@ -125,7 +125,8 @@ if [ 1==1 ];then
 		nsort="avl"
 		Argn=""
 		
-
+		a=$b
+		i=1
 		# handle double dash -- options
 		for arg in $@ ; do
 			case "$arg" in
@@ -139,26 +140,29 @@ if [ 1==1 ];then
 					;;
 				--help) Help
 					;;
-				*.cvs) test=1	
-					;;	
-				-f) 	a="$OPTARG"
-			      		b=$a
-			      		echo "$a"
+				-f)	i=$(( $i+1 ))
+					a=${!i}
+					b=$a			
 					;;
 				--*) error
-				;;
+					;;
+				*)	i=$(( $i+1 ))
+					;;
 			esac
 		done	
 		
-		
-			
-		
+		if [ ! -e "$a" ]; then
+			  echo " we can't use the file"
+			  exit 1
+		fi
+				
 		while getopts 'f:e:a:g:d:FGOQASmwp:t:h' OPTION; do          #selection mode of sort with options
 		case "$OPTION" in 
 		  	
 		  	
 		  	
-		      	
+		      	f)	
+		      			;;	
 		      		      	
 		      	a)	argA="$OPTARG"
 				min=$(echo $argA | cut -d " " -f1)
@@ -285,8 +289,7 @@ if [ 1==1 ];then
 			h)      Argn="h"
 				;;
 				
-			?) 			
-				echo "error arg";
+			?) 	echo "error arg"
 				exit 1
 				;;
 			esac
