@@ -49,11 +49,6 @@ function error(){
 	exit 1
 }
 
-function create_files(){                       #general file creation when you choose one mode
-	touch tmpsort;
-	touch endsort;
-}
-
 function delete_files(){                       #general file deleted  
 	rm -f tmpsort;
 	rm -f endsort;
@@ -62,47 +57,61 @@ function delete_files(){                       #general file deleted
 function MinMaxAvg_StationP(){
         
  	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-	
+	 # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
+	 touch endsort;
+        gnuplot Gnuplot/Pminmax.gp
         #appel tri d'audrey croissant      
 }
 
 function DateP(){
 	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-        
-        
+         # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
+        touch endsort;
         
         #appel tri d'audrey croissant
+        gnuplot Gnuplot/P2.gp
+        delete_files
 }
 
 function Sort3P(){
 
         tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-        
-        
+        # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
+        touch endsort;
         #appel tri d'audrey croissant
+        gnuplot Gnuplot/P3.gp
+        delete_files
 }
 
 function Sort3T(){
         
         tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-      	
+      	# Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
+      	touch endsort;
         #appel tri d'audrey croissant
+        gnuplot Gnuplot/T3.gp
+        delete_files
 }
 
 function MinMaxAvg_StationT(){
         
         tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-        
-       
+        # Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
+       touch endsort;
         #appel tri d'audrey croissant
+        gnuplot Gnuplot/Tminmax.gp
+        delete_files
 }
 
 function DateT(){
 	
 	tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-       
-       
+       # Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
+       touch endsort;
         #appel tri d'audrey croissant
+        gnuplot Gnuplot/T2.gp
+        delete_files
+        
 }
 
   if [ $# == 0 ];
@@ -111,10 +120,9 @@ then
 	exit 1
 fi
 
-	b=${!#}	
+	b=${!#}	 # take the last argument for the file to use to simplify the notation
 
 
-if [ 1==1 ];then
 	
 	
 
@@ -140,7 +148,7 @@ if [ 1==1 ];then
 					;;
 				--help) Help
 					;;
-				-f)	i=$(( $i+1 ))
+				-f)	i=$(( $i+1 ))			#take file with -f in priority
 					a=${!i}
 					b=$a			
 					;;
@@ -161,7 +169,7 @@ if [ 1==1 ];then
 		  	
 		  	
 		  	
-		      	f)	
+		      	f)			
 		      			;;	
 		      		      	
 		      	a)	argA="$OPTARG"
@@ -242,51 +250,51 @@ if [ 1==1 ];then
 	    			fi
 	    			;;
 		      	                 	
-			F) 	awk -F '[;,]' '{if( $10>=41 && $10<=52 && $11>=-5 && $11<=10 ){print}}'< $b | grep ';'.....$  >  tmps1 
+			F) 	awk -F '[;,]' '{if( $10>=41 && $10<=52 && $11>=-5 && $11<=10 ){print}}'< $b | grep ';'.....$  >  tmps1 #longitude 52>=x>=41 latitude -5<=y<=10 
 				a=tmp
 				rm tmps1 
 				;;
-			G) 	awk -F '[;,]' '{if( $10>=1 && $10<=2 && $11>=-54 && $11<=-55 ){print}}' $b >  tmp2           #973 guyane Fr
+			G) 	awk -F '[;,]' '{if( $10>=1 && $10<=6 && $11>=-54 && $11<=-55 ){print}}' $b >  tmp2           #longitude -54>=x>=-55 latitude 1<=y<=6 
 				cat tmp2 >> tmp     
 				a=tmp
 				rm tmp2               
 				;;
-			O)	awk -F '[;,]' '{if( $10>=-28 && $10<=-27 && $11>=42 && $11<=46 ){print}}' $b >  tmp3   		 #974 976  indian ocean
+			O)	awk -F '[;,]' '{if( $10>=-22 && $10<=-11 && $11>=44  && $11<=59 ){print}}' $b >  tmp3   		 #co of Indian Ocean island fr longitude 44>=x>=59 latitude -22<=y<=-11 
 				cat tmp3 >> tmp 
 				a=tmp
 				rm tmp3
 				;;
-			Q) 	awk -F '[;,]' '{if( $10>=-45 ){print}}' $b >  tmp4           #984  antartique
+			Q) 	awk -F '[;,]' '{if( $10>=-45 ){print}}' $b >  tmp4           # co of Antartique Fr latitude y<=-45  
 				cat tmp4 >> tmp 
 				a=tmp
 				rm tmp4
 				;;
-			A)	awk -F '[;,]' '{if( $10>=11 && $10<=19 && $11>=-64 && $11<=-58 ){print}}' $b >  tmp5 			# Antille
+			A)	awk -F '[;,]' '{if( $10>=11 && $10<=19 && $11>=-64 && $11<=-58 ){print}}' $b >  tmp5 		#co of Antilles Fr longitude -64<=y<=-58 latitude 19>=x>=11  
 				cat tmp5 >> tmp 
 				a=tmp
 				rm tmp5
 				;;
-			S) 	awk -F '[;,]' '{if( $10>=46 && $10<=47 && $11>=--56 && $11<=57 ){print}}' $b >  tmp6           #975 st pierre
+			S) 	awk -F '[;,]' '{if( $10>=46 && $10<=48 && $11>=-56 && $11<=-57 ){print}}' $b >  tmp6           #co of Saint-Pierre-et-Miquelon longitude -56<=y<=-57 latitude  48>=x>=46 
 				cat tmp6 >> tmp
 				a=tmp
 				rm tmp6
 				;;
 				
-			m)	Argn="m"
+			m)	Argn="m"  #save arg
 				;;
 
-			w) 	Argn="w"
+			w) 	Argn="w" #save arg
 				;;
 		 
-			p)  	argP="$OPTARG"
+			p)  	argP="$OPTARG" #save arg and arg 2
 			   	Argn="p"
 				;;
 				
-			t)      argT="$OPTARG"
+			t)      argT="$OPTARG" #save arg and arg 2
 				Argn="t"
 				;;
 				
-			h)      Argn="h"
+			h)      Argn="h" #save arg 
 				;;
 				
 			?) 	echo "error arg"
@@ -297,18 +305,24 @@ if [ 1==1 ];then
 		
 					
 		if [[ -z "$Argn" ]]; then
-			echo "Vous devez choisir une option obligatoire parmi les suivantes : -h, -m, -t, -p, -w"
+			echo "You need to select one option : -h, -m, -t, -p, -w"
 			exit 1
 		else 
 			case $Argn in
 					
-			m)	tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' |  paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort  # Id, Value, Date, coordonné, exra
-			#appel tri d'audrey decroissant
+			m)	tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' |  paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort  # Id (1), Date(2), Moisture(6), tmp (0), coordinates(10)
+				touch endsort;
+				#appel tri d'audrey decroissant
+				gnuplot Gnuplot/M.gp
+				delete_files
 				;;
 
 			w) 	tail -n+2  <  $a | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-				# Id, Value, Date, coordonné, exra
+				# Id (1), Date(2), speed(4), orientation(5), coordinates(10)	
+				touch endsort;
 				#appel tri d'audrey sur 
+				gnuplot Gnuplot/W.gp
+				delete_files
 				;;
 		 
 			p)  	if [ "1" == "$argP" ];
@@ -353,8 +367,11 @@ if [ 1==1 ];then
 					
 				;;
 			h)     	 tail -n+2  <  $a | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-				
+				# Id (1), Date(2), Height(14), tmp (0), coordinates(10)	
+				touch endsort;
 				#appel tri d'audrey decroissant
+				gnuplot Gnuplot/H.gp
+				delete_files
 				;;
 
 			*)	error
