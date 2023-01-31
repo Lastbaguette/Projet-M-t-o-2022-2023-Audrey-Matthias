@@ -159,6 +159,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
         } else {
             fclose(pre);
             fclose(post);
+            free(S);
             free(D);
             return 2;
         }
@@ -202,6 +203,8 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
      
     fclose(pre);
     fclose(post);
+    free(S);
+    free(D);
     
     return 0;
 }
@@ -303,6 +306,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
         } else {
             fclose(pre);
             fclose(post);
+            free(L);
             free(D);
             return 2;
         }
@@ -348,6 +352,8 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
 
     fclose(pre);
     fclose(post);
+    free(L);
+    free(D);
 
     return 0;
 }
@@ -437,6 +443,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
             } else {
                 fclose(pre);
                 fclose(post);
+                free(S);
                 free(D);
                 return 2;
             }
@@ -479,6 +486,8 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
 
     fclose(pre);
     fclose(post);
+    free(S);
+    free(D);
 
     return 0;
 }
