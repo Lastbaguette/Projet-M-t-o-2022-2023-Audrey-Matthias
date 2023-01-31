@@ -592,7 +592,6 @@ for ( i=1 ; i < argc; i++){
 
 }
 
-
 switch (test)
 {
 case 4:
@@ -611,12 +610,8 @@ case 1:
     printf("|    Program terminated with error code < 1 > :      Given arguments incorrect    |\n");
     break;
 
-case 0:
-    printf("|    Program correctly executed    |\n");
-    break;
-
-
 default:
+    printf("|    Program correctly executed   |\n");        
     break;
 }
 
