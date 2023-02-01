@@ -41,11 +41,11 @@ function Help(){
 function error(){
         printf "You need to use one option\n";                          # utiliser uniq a la fin
 	printf "user commands  :\n";
-	printf "'-h' :  sort by height descending.  \n";
-	printf "'-m' :  sort by maximum moisture descending. \n";
-	printf "'-p' :  sort by atmospherique pressure with mode 1 or 2 or 3 \n";
+	printf "'-h' :  sort by height in decreasing order.  \n";
+	printf "'-m' :  sort by maximum moisture in decreasing order. \n";
+	printf "'-p' :  sort by atmospheric pressure with mode 1 or 2 or 3 \n";
 	printf "'-t' :  sort by temperature with mode 1 or 2 or 3 \n";
-	printf "'-w' :  sort by average winds for each station increasing.\n";
+	printf "'-w' :  sort by average winds for each station in rising.\n";
 	exit 1
 }
 
@@ -59,17 +59,20 @@ function MinMaxAvg_StationP(){
  	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
 	 # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
 	 touch endsort;
-        gnuplot Gnuplot/Pminmax.gp
-        #appel tri d'audrey croissant      
+	./meteo/sort tmpsort endsort -r -m1 --avl		
+	gnuplot -p -c Pminmax.gp
+		        
+	delete_files
+
 }
 
 function DateP(){
 	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
          # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
         touch endsort;
-        
-        #appel tri d'audrey croissant
-        gnuplot Gnuplot/P2.gp
+        ./meteo/sort tmpsort endsort -r -m2 --avl		
+	gnuplot -p -c P2.gp
+		 
         delete_files
 }
 
@@ -78,8 +81,8 @@ function Sort3P(){
         tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
         # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
         touch endsort;
-        #appel tri d'audrey croissant
-        gnuplot Gnuplot/P3.gp
+        ./meteo/sort tmpsort endsort -r -m3 --"nsort"		
+	gnuplot -p -c P3.gp
         delete_files
 }
 
@@ -88,8 +91,10 @@ function Sort3T(){
         tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
       	# Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
       	touch endsort;
-        #appel tri d'audrey croissant
-        gnuplot Gnuplot/T3.gp
+       
+        ./meteo/sort tmpsort endsort -r -m3 --"nsort"		
+	gnuplot -p -c T3.gp
+	
         delete_files
 }
 
@@ -99,7 +104,9 @@ function MinMaxAvg_StationT(){
         # Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
        touch endsort;
         #appel tri d'audrey croissant
-        gnuplot Gnuplot/Tminmax.gp
+       	./meteo/sort tmpsort endsort -r -m2 --"nsort"		
+	gnuplot -p -c Tminmax.gp
+
         delete_files
 }
 
@@ -108,8 +115,9 @@ function DateT(){
 	tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
        # Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
        touch endsort;
-        #appel tri d'audrey croissant
-        gnuplot Gnuplot/T2.gp
+       	./meteo/sort tmpsort endsort -r -m2 --"nsort"		
+	gnuplot -p -c T2.gp
+
         delete_files
         
 }
@@ -194,10 +202,6 @@ fi
 			    																																					
 				awk -F '[;,]' '{if( $10>='$min' && $10<='$max'){print}}'  $a  > tmp
 				a=tmp	
-	  			
-	  			
-	    		#	reprendre -g
-	    			
 	    			;;
     				
 	    		g)	argG="$OPTARG"
@@ -312,16 +316,17 @@ fi
 					
 			m)	tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' |  paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort  # Id (1), Date(2), Moisture(6), tmp (0), coordinates(10)
 				touch endsort;
-				#appel tri d'audrey decroissant
-				gnuplot Gnuplot/M.gp
+				./meteo/sort tmpsort endsort -r -m --"nsort"		
+				gnuplot -p -c M.gp		
 				delete_files
+
 				;;
 
 			w) 	tail -n+2  <  $a | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
 				# Id (1), Date(2), speed(4), orientation(5), coordinates(10)	
 				touch endsort;
-				#appel tri d'audrey sur 
-				gnuplot Gnuplot/W.gp
+				./meteo/sort tmpsort endsort -r -w --"nsort"		
+				gnuplot -p -c W.gp		
 				delete_files
 				;;
 		 
@@ -370,8 +375,9 @@ fi
 				# Id (1), Date(2), Height(14), tmp (0), coordinates(10)	
 				touch endsort;
 				#appel tri d'audrey decroissant
-				gnuplot Gnuplot/H.gp
-				delete_files
+				./meteo/sort tmpsort endsort -r -m --"nsort"		
+				gnuplot -p -c H.gp
+				
 				;;
 
 			*)	error
