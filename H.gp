@@ -11,5 +11,3 @@ set palette rgb 10,13,33
 
 
 splot 'endsort' using 4:3:2 with pm3d title "Height (m)"
-
-

@@ -62,7 +62,7 @@ function MinMaxAvg_StationP(){
 	./meteo/sort tmpsort endsort -r -m1 --avl		
 	gnuplot -p -c Pminmax.gp
 		        
-	delete_files
+	#delete_files
 
 }
 
@@ -73,7 +73,7 @@ function DateP(){
         ./meteo/sort tmpsort endsort -r -m2 --avl		
 	gnuplot -p -c P2.gp
 		 
-        delete_files
+        #delete_files
 }
 
 function Sort3P(){
@@ -83,7 +83,7 @@ function Sort3P(){
         touch endsort;
         ./meteo/sort tmpsort endsort -r -m3 --"nsort"		
 	gnuplot -p -c P3.gp
-        delete_files
+        #delete_files
 }
 
 function Sort3T(){
@@ -95,7 +95,7 @@ function Sort3T(){
         ./meteo/sort tmpsort endsort -r -m3 --"nsort"		
 	gnuplot -p -c T3.gp
 	
-        delete_files
+        #delete_files
 }
 
 function MinMaxAvg_StationT(){
@@ -104,10 +104,10 @@ function MinMaxAvg_StationT(){
         # Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
        touch endsort;
         #appel tri d'audrey croissant
-       	./meteo/sort tmpsort endsort -r -m2 --"nsort"		
+       	./meteo/sort tmpsort endsort -r -m1 --"nsort"		
 	gnuplot -p -c Tminmax.gp
 
-        delete_files
+        #delete_files
 }
 
 function DateT(){
@@ -118,7 +118,7 @@ function DateT(){
        	./meteo/sort tmpsort endsort -r -m2 --"nsort"		
 	gnuplot -p -c T2.gp
 
-        delete_files
+        #delete_files
         
 }
 
@@ -318,7 +318,7 @@ fi
 				touch endsort;
 				./meteo/sort tmpsort endsort -r -m --"nsort"		
 				gnuplot -p -c M.gp		
-				delete_files
+				#delete_files
 
 				;;
 
@@ -327,7 +327,7 @@ fi
 				touch endsort;
 				./meteo/sort tmpsort endsort -r -w --"nsort"		
 				gnuplot -p -c W.gp		
-				delete_files
+				#delete_files
 				;;
 		 
 			p)  	if [ "1" == "$argP" ];
