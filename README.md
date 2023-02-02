@@ -6,6 +6,8 @@ Create an empty folder and use the command "git init".
 
 Then use "git clone https://github.com/Lastbaguette/Projet-M-t-o-2022-2023-Audrey-Matthias.git".
 
+## Configuration
+
 When all files have been downloaded, type "cd meteo" and then "make".
 
 Then "cd .." and you can use the program.
@@ -13,4 +15,10 @@ Then "cd .." and you can use the program.
 Note : Make sure you have the file "meteo_filtered_data_v1.csv".
 
 ## Usage
-./test [OPTION]... [FILE]       Use "./test --help" to see all available options.
+./test [OPTION]... [FILE]       
+Use "./test --help" to see all available options.
+
+## FAQ and Troubleshooting
+Please check the joined PDF document for more details on this program.
+
+If more help is needed please contact : "matthiasgalisson@gmail.com"
