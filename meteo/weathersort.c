@@ -152,7 +152,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
                     }
                     break;
                 default:
-                    return 4;
+                    return 1;
                     break;
                 }
         
@@ -196,7 +196,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
                     }
                     break;
                 default:
-                    return 4;
+                    return 1;
                     break;
             }
 
@@ -299,7 +299,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                     }
                     break;
                 default:
-                    return 4;
+                    return 1;
                     break;
             }
         
@@ -346,7 +346,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
                     }
                     break;
                 default:
-                    return 4;
+                    return 1;
                     break;
             }
 
@@ -436,7 +436,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     }
                     break;
                 default:
-                    return 4;
+                    return 1;
                     break;
                 }
 
@@ -480,7 +480,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
                     }
                     break;
                 default:
-                    return 4;
+                    return 1;
                     break;
             }
 
@@ -562,7 +562,7 @@ for ( i=1 ; i < argc; i++){
                             if ( (tr == 0) ){
                                 mode = 6;
                             } else {
-                                
+                                return 1;
                             }
                         }
                     }
