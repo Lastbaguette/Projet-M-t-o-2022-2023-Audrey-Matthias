@@ -18,7 +18,7 @@ Note : Make sure you have the file "meteo_filtered_data_v1.csv".
 ./test [OPTION]... [FILE]       
 Use "./test --help" to see all available options.
 
-After use, to delete the created files please use "cd meteo" and then "make clean"
+After use, to delete the created files please use "cd meteo" and then "make clean".
 
 ## FAQ and Troubleshooting
 Please check the joined PDF document for more details on this program.
