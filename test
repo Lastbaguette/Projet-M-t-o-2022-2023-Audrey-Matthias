@@ -139,7 +139,7 @@ fi
 			rm tmp
 		fi
 		nsort="avl"
-		Argn=""
+		Argn="m"
 		
 		a=$b
 		i=1
@@ -285,21 +285,26 @@ fi
 				rm tmp6
 				;;
 				
-			m)	Argn="m"  #save arg
+			m)	Argm=1 #save arg
+				Argn=1 
 				;;
 
-			w) 	Argn="w" #save arg
+			w) 	Argw=1 #save arg
+				Argn=1
 				;;
 		 
 			p)  	argP="$OPTARG" #save arg and arg 2
-			   	Argn="p"
-				;;
+			   	Argp=1
+			   	Argn=1
+			   	;;
 				
 			t)      argT="$OPTARG" #save arg and arg 2
-				Argn="t"
+				Argt=1
+				Argn=1
 				;;
 				
-			h)      Argn="h" #save arg 
+			h)      Argh=1 #save arg 
+				Argn=1
 				;;
 				
 			?) 	echo "error arg"
@@ -314,25 +319,27 @@ fi
 			echo "You need to select one option : -h, -m, -t, -p, -w"
 			exit 1
 		else 
-			case $Argn in
-					
-			m)	tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' |  paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort  # Id (1), Date(2), Moisture(6), tmp (0), coordinates(10)
+			
+			if [[ 1 == "$Argm" ]]; then
+				tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' |  paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort  # Id (1), Date(2), Moisture(6), tmp (0), coordinates(10)
 				touch endsort;
 				./meteo/sort tmpsort endsort -r -m --"nsort"		
 				gnuplot -p -c M.gp	w	
 				#delete_files
 
-				;;
-
-			w) 	tail -n+2  <  $a | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
+			fi
+			
+			if [[ 1 == "$Argw" ]]; then
+				tail -n+2  <  $a | cut -d ";" -f1,2,4,5 | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
 				# Id (1), Date(2), speed(4), orientation(5), coordinates(10)	
 				touch endsort;
 				./meteo/sort tmpsort endsort -r -w --"nsort"		
 				gnuplot -p -c W.gp		
 				#delete_files
-				;;
-		 
-			p)  	if [ "1" == "$argP" ];
+			fi
+			
+	 		if [[ 1 ==  "$Argp" ]]; then
+			  	if [ "1" == "$argP" ];
 				then
 					MinMaxAvg_StationP;
 				
@@ -350,9 +357,10 @@ fi
 					printf "        2: in order of average pressure\n"
 					printf "        3: in order of date and with order of station increasing\n"
 				fi
-				
-				;;
-			t)      if [ "1" == "$argT" ];
+			fi
+					
+			if [[ 1 ==  "$Argt" ]]; then	
+				if [ "1" == "$argT" ];
 				then
 					MinMaxAvg_StationT;
 				
@@ -362,7 +370,7 @@ fi
 				
 				elif [ "3" == "$argT" ];
 				then 
-				        Sort3T;
+					Sort3T;
 				
 				else 
 				
@@ -371,21 +379,17 @@ fi
 					printf "        2: in order of average temperature\n"
 					printf "        3: in order of date and with order of station increasing\n"
 				fi
+			fi
 					
-				;;
-			h)     	 tail -n+2  <  $a | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
-				# Id (1), Date(2), Height(14), tmp (0), coordinates(10)	
+			if [[ 1 ==  "$Argh" ]]; then
+			  	tail -n+2  <  $a | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort # Id (1), Date(2), Height(14), tmp (0), coordinates(10)	
 				touch endsort;
-				#appel tri d'audrey decroissant
+				
 				./meteo/sort tmpsort endsort -r -m --"nsort"
 				gnuplot -p -c H.gp
 				
-				;;
+			fi
 
-			*)	error
-				;;
-			esac
-		
 		fi
 		
 	exit 1
