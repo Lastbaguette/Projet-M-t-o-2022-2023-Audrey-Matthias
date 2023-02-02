@@ -3,36 +3,36 @@
 	
 		
 function Help(){
-	
-	printf "Use one file with .csv \n";
-	printf "'-f' file.csv :  select one file\n";
+	printf "\n./test [OPTION]... [FILE]\n";
+	printf "Use one file ending in .csv \n";
+	printf "'-f' :  	select one file\n";
 	printf "You can select location  :\n";
-	printf "'-F' :  Corse\n";
-	printf "'-G' :  Guyane\n";
-	printf "'-O' :  Indian Ocean\n";
-	printf "'-Q' :  Artique\n";
-	printf "'-A' :  Antilles\n";
-	printf "'-S' :  Saint-Pierre et Miquelon\n";
-        printf "You need to use one option\n";                          # utiliser uniq a la fin
-	printf "user commands  :\n";
-	printf "'-h' :  sort by height descending.  \n";
-	printf "'-m' :  sort by maximum moisture descending. \n";
-	printf "'-w' :  sort by average winds for each station increasing.\n";
-	printf "'-p' :  sort by atmospherique pressure with mode 1 or 2 or 3 \n";
-	printf "        1: in order of station increasing\n"
-	printf "        2: in order of average pressure\n"
-	printf "        3: in order of date and with order of station increasing\n"
-	printf "'-t' :  sort by temperature with mode 1 or 2 or 3 \n";
-	printf "        1: in order of station increasing\n"
-	printf "        2: in order of average temperature\n"
-	printf "        3: in order of date and with order of station increasing\n"
-	printf "change type of sort: \n";
+	printf "'-F' :  	Corsica\n";
+	printf "'-G' :  	Guyana\n";
+	printf "'-O' :  	Indian Ocean\n";
+	printf "'-Q' :  	Arctic\n";
+	printf "'-A' :  	West Indies \n";
+	printf "'-S' :  	Saint-Pierre et Miquelon\n";
+    printf "You need to use at least one option\n";                          # utiliser uniq a la fin
+	printf "'-h' :  	sort by height in decreasing order.  \n";
+	printf "'-m' :  	sort by maximum moisture in decreasing order. \n";
+	printf "'-w' :  	sort by average winds for each station in rising order.\n";
+	printf "'-p' :  	sort by atmospheric pressure with mode 1 or 2 or 3 \n";
+	printf "        1: 		in order of station in rising order\n"
+	printf "        2: 		in order of average pressure\n"
+	printf "        3: 		in order of date and with order of station in rising order\n"
+	printf "'-t' :  	sort by temperature with mode 1 or 2 or 3 \n";
+	printf "        1: 		in order of station in rising order\n"
+	printf "        2: 		in order of average temperature\n"
+	printf "        3: 		in order of date and with order of station in rising order\n"
+	printf "Different sorting methods are available: \n";
 	printf "'--avl'\n";
 	printf "'--avl'\n";
 	printf "'--tab'\n";
 	
 	printf "\nManual:\n";
 	printf "'--help'\n";
+	printf "If more details are needed please check the joined PDF\n";
 	
 	exit 1
 }
@@ -353,9 +353,9 @@ fi
 				else 
 				
 					printf "select one mode :\n"
-					printf "        1: in order of station increasing\n"
+					printf "        1: in order of station in rising order\n"
 					printf "        2: in order of average pressure\n"
-					printf "        3: in order of date and with order of station increasing\n"
+					printf "        3: in order of date and with order of station in rising order\n"
 				fi
 			fi
 					
@@ -375,9 +375,9 @@ fi
 				else 
 				
 					printf "select one mode :\n"
-					printf "        1: in order of station increasing\n"
+					printf "        1: in order of station in rising order\n"
 					printf "        2: in order of average temperature\n"
-					printf "        3: in order of date and with order of station increasing\n"
+					printf "        3: in order of date and with order of station in rising order\n"
 				fi
 			fi
 					
