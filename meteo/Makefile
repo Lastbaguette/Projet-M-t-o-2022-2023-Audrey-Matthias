@@ -1,5 +1,5 @@
 sort: weathersort.c ./ABR/ABRSort.o ./AVL/AVLSort.o ./List/List.o ./display/display.o ./create/create.o
-	gcc weathersort.c -lm ABRSort.o AVLSort.o List.o display.o create.o -o sort
+	gcc weathersort.c ABRSort.o AVLSort.o List.o display.o create.o -o sort -lm
 
 ./ABR/ABRSort.o: ./ABR/ABRSort.c
 	gcc -c ./ABR/ABRSort.c 
