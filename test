@@ -5,6 +5,7 @@
 function Help(){
 	printf "\n./test [OPTION]... [FILE]\n";
 	printf "Use one file ending in .csv \n";
+	printf "You can write the file name as last argument without -f \n";
 	printf "'-f' :  	select one file\n";
 	printf "You can select location  :\n";
 	printf "'-F' :  	Corsica\n";
@@ -13,7 +14,11 @@ function Help(){
 	printf "'-Q' :  	Arctic\n";
 	printf "'-A' :  	West Indies \n";
 	printf "'-S' :  	Saint-Pierre et Miquelon\n";
-    printf "You need to use at least one option\n";                          # utiliser uniq a la fin
+	printf "'-g' \"longitude1 longitude2 \"\n";
+     	printf "'-a' \"latitude1 latitude2 \"\n";
+        printf "\n You can select date  :\n";
+        printf "'-d' \"date1 date2 \"\n";     
+  	printf "You need to use at least one option\n";                          # utiliser uniq a la fin
 	printf "'-h' :  	sort by height in decreasing order.  \n";
 	printf "'-m' :  	sort by maximum moisture in decreasing order. \n";
 	printf "'-w' :  	sort by average winds for each station in rising order.\n";
@@ -259,7 +264,7 @@ fi
 				a=tmp
 				rm tmps1 
 				;;
-			G) 	awk -F '[;,]' '{if( $10>=0 && $10<=10 && $11>=-61 && $11<=-48 ){print}}' $b >  tmp2           #longitude -54>=x>=-55 latitude 1<=y<=6 
+			G) 	awk -F '[;,]' '{if( $10>=0 && $10<=10 && $11>=-61 && $11<=-48 ){print}}' $b >  tmp2           #co of Guyana longitude -54>=x>=-55 latitude 1<=y<=6 
 				cat tmp2 >> tmp     
 				a=tmp
 				rm tmp2               
