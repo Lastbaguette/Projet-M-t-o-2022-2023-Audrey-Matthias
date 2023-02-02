@@ -12,6 +12,10 @@ When all files have been downloaded, type "cd meteo" and then "make".
 
 Then "cd .." and you can use the program.
 
+Needed libraries :
+-Gnuplot         If not present use "sudo apt-get install gnuplot".
+-bc          If not present use "sudo apt-get install bc".
+
 Note : Make sure you have the file "meteo_filtered_data_v1.csv".
 
 ## Usage
@@ -23,4 +27,4 @@ After use, to delete the created files please use "cd meteo" and then "make clea
 ## FAQ and Troubleshooting
 Please check the joined PDF document for more details on this program.
 
-If more help is needed please contact : "matthiasgalisson@gmail.com"
+If more help is needed please contact : "matthiasgalisson@gmail.com".
