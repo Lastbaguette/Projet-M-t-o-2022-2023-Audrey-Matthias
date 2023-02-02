@@ -161,6 +161,12 @@ fi
 					;;
 				--help) Help
 					;;
+				--histoireggs)	
+					gnuplot -p -c
+					set terminal png
+					set output './meteo/.easter_eggs'
+					plot './meteo/.easter_eggs'
+					;;
 				-f)	i=$(( $i+1 ))			#take file with -f in priority
 					a=${!i}
 					b=$a			
