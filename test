@@ -88,7 +88,8 @@ function Sort3P(){
         # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
         touch endsort;
         ./meteo/sort tmpsort endsort -r -m3 --"nsort"		
-	gnuplot -p -c .P3.gp
+	
+	echo "I can't use gnuplot for this programme"
         
 }
 
@@ -99,8 +100,7 @@ function Sort3T(){
       	touch endsort;
        
         ./meteo/sort tmpsort endsort -r -m3 --"nsort"		
-	gnuplot -p -c .T3.gp
-	
+	echo "I can't use gnuplot for this programme"
         
 }
 
@@ -153,6 +153,7 @@ fi
 					;;
 				--histoireggs)	
 					`display meteo/.easter_eggs`
+					exit 1
 					;;
 				-f)	i=$(( $i+1 ))			#take file with -f in priority
 					a=${!i}
