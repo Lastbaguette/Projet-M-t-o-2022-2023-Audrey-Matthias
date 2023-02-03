@@ -44,7 +44,7 @@ function Help(){
 
 
 function error(){
-        printf "You need to use one option\n";                          # utiliser uniq a la fin
+        printf "You need to use one option\n";                          
 	printf "user commands  :\n";
 	printf "'-h' :  sort by height in decreasing order.  \n";
 	printf "'-m' :  sort by maximum moisture in decreasing order. \n";
@@ -65,10 +65,8 @@ function MinMaxAvg_StationP(){
 	 # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
 	 touch endsort;
 	./meteo/sort tmpsort endsort -r -m1 --avl		
-	gnuplot -p -c Pminmax.gp
+	gnuplot -p -c .Pminmax.gp
 		        
-	#delete_files
-
 }
 
 function DateP(){
@@ -76,9 +74,9 @@ function DateP(){
          # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
         touch endsort;
         ./meteo/sort tmpsort endsort -r -m2 --avl		
-	gnuplot -p -c P2.gp
+	gnuplot -p -c .P2.gp
 		 
-        #delete_files
+        
 }
 
 function Sort3P(){
@@ -87,8 +85,8 @@ function Sort3P(){
         # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
         touch endsort;
         ./meteo/sort tmpsort endsort -r -m3 --"nsort"		
-	gnuplot -p -c P3.gp
-        #delete_files
+	gnuplot -p -c .P3.gp
+        
 }
 
 function Sort3T(){
@@ -98,9 +96,9 @@ function Sort3T(){
       	touch endsort;
        
         ./meteo/sort tmpsort endsort -r -m3 --"nsort"		
-	gnuplot -p -c T3.gp
+	gnuplot -p -c .T3.gp
 	
-        #delete_files
+        
 }
 
 function MinMaxAvg_StationT(){
@@ -110,9 +108,8 @@ function MinMaxAvg_StationT(){
        touch endsort;
         #appel tri d'audrey croissant
        	./meteo/sort tmpsort endsort -r -m1 --"nsort"		
-	gnuplot -p -c Tminmax.gp
+	gnuplot -p -c .Tminmax.gp
 
-        #delete_files
 }
 
 function DateT(){
@@ -121,9 +118,7 @@ function DateT(){
        # Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
        touch endsort;
        	./meteo/sort tmpsort endsort -r -m2 --"nsort"		
-	gnuplot -p -c T2.gp
-
-        #delete_files
+	gnuplot -p -c .T2.gp
         
 }
 
@@ -335,8 +330,8 @@ fi
 				tail -n+2  <  $a | cut -d ";" -f1,2,6 | sed 's/$/ 0/' |  paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort  # Id (1), Date(2), Moisture(6), tmp (0), coordinates(10)
 				touch endsort;
 				./meteo/sort tmpsort endsort -r -m --"nsort"		
-				gnuplot -p -c M.gp	w	
-				#delete_files
+				gnuplot -p -c .M.gp		
+				
 
 			fi
 			
@@ -345,8 +340,8 @@ fi
 				# Id (1), Date(2), speed(4), orientation(5), coordinates(10)	
 				touch endsort;
 				./meteo/sort tmpsort endsort -r -w --"nsort"		
-				gnuplot -p -c W.gp		
-				#delete_files
+				gnuplot -p -c .W.gp		
+				
 			fi
 			
 	 		if [[ 1 ==  "$Argp" ]]; then
@@ -394,15 +389,15 @@ fi
 					
 			if [[ 1 ==  "$Argh" ]]; then
 			  	tail -n+2  <  $a | cut -d ";" -f1,2,14 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort # Id (1), Date(2), Height(14), tmp (0), coordinates(10)	
-				touch endsort;
+				touch endsort
 				
 				./meteo/sort tmpsort endsort -r -m --"nsort"
-				gnuplot -p -c H.gp
+				gnuplot -p -c .H.gp
 				
 			fi
 
 		fi
-		
+	delete_files
 	exit 1
 	
 	fi
