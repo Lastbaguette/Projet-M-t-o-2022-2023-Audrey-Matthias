@@ -64,7 +64,7 @@ function MinMaxAvg_StationP(){
  	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
 	 # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
 	 touch endsort;
-	./meteo/sort tmpsort endsort -r -m1 --avl		
+	./meteo/sort tmpsort endsort -r -m1 --"nsort"
 	gnuplot -p -c .Pminmax.gp
 		        
 }
@@ -73,7 +73,7 @@ function DateP(){
 	tail -n+2  <  $a | cut -d ";" -f1,2,7 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
          # Id (1), Date(2), Pressure(7), tmp (0), coordinates(10)
         touch endsort;
-        ./meteo/sort tmpsort endsort -r -m2 --avl		
+        ./meteo/sort tmpsort endsort -r -m2 --"nsort"		
 	gnuplot -p -c .P2.gp
 		 
         
@@ -106,8 +106,8 @@ function MinMaxAvg_StationT(){
         tail -n+2  <  $a | cut -d ";" -f1,2,11 | sed 's/$/ 0/' | paste -d " " - <(cut -d ";" -f10 < $a |tail -n+2 ) | tr '[;,]' ' ' | awk -F' ' '{if (NF==6) print $0}' > tmpsort
         # Id (1), Date(2), Temperature(11), tmp (0), coordinates(10)
        touch endsort;
-        #appel tri d'audrey croissant
-       	./meteo/sort tmpsort endsort -r -m1 --"nsort"		
+        
+       	./meteo/sort tmpsort endsort -r -m1 --"nsort"	
 	gnuplot -p -c .Tminmax.gp
 
 }

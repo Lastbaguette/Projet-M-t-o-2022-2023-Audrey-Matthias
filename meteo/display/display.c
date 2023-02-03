@@ -9,8 +9,9 @@ Writing functions
 //=======================================================================
 //File writing functions for ABR and AVL modes
 
-void processAvPerSt( Station1* S, FILE* post ){
-    fprintf( post, "%d    %f   %f %f\n", S -> ID, S -> average, S -> min, S-> max);         // ID  Average Min Max 
+void processAvPerSt( Station1* S, FILE* post, int* count ){
+    *count++;
+    fprintf( post, "%d %d    %f   %f %f\n", count, S -> ID, S -> average, S -> min, S-> max);         // ID  Average Min Max 
 }
 
 void processAvPerDateAllSt( Station1* S, FILE* post ){
@@ -38,11 +39,11 @@ void processMoisture( Station1* S, FILE* post ){
 //=======================================================================
 //Functions to go across the tree
 
-void displayAvPerSt( Station1* S, FILE* post){
+void displayAvPerSt( Station1* S, FILE* post, int* count){
     if ( S != NULL ){
-        displayAvPerSt( S -> ls, post);
-        processAvPerSt( S, post );
-        displayAvPerSt( S -> rs, post);
+        displayAvPerSt( S -> ls, post, count);
+        processAvPerSt( S, post, count );
+        displayAvPerSt( S -> rs, post, count);
     }
 }
 
@@ -109,10 +110,11 @@ void RdisplayMoisture( Station1* S, FILE* post){
 //=======================================================================
 //File writing functions for List mode
 
-void displayListAvPerSt(FILE* post, Node* pNode){
+void displayListAvPerSt(FILE* post, Node* pNode, int* count){
 
     while(pNode != NULL){
-        fprintf( post, "%d    %f   %f %f\n", pNode -> ID, pNode -> average, pNode -> min, pNode-> max);     // ID  Average Min Max 
+	*count++;
+        fprintf( post, "%d %d    %f   %f %f\n", count, pNode -> ID, pNode -> average, pNode -> min, pNode-> max);     // ID  Average Min Max 
         pNode = pNode->pNext;
     }
     

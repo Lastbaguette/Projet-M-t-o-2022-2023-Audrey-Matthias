@@ -92,6 +92,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
     Station1* NS = NULL;
     Date* D = malloc(sizeof(Date));
     int d = 0;
+    int i = 0;
 
     pre = fopen( preFN, "r" );
     post = fopen( postFN, "w" );
@@ -168,7 +169,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
 
     switch( mode ){
                 case(1):        //Mode 1 ( Temperature/Pressure )
-                    displayAvPerSt(S, post);
+                    displayAvPerSt(S, post, i);
                     break;
                 case(2):        //Mode 2 ( Temperature/Pressure )
                     displayAvPerDateAllSt(S, post);
@@ -316,7 +317,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
 
     switch( mode ){
                 case(1):        //Mode 1 ( Temperature/Pressure )
-                    displayListAvPerSt(post, L->pFirst);
+                    displayListAvPerSt(post, L->pFirst, i);
                     break;
                 case(2):        //Mode 2 ( Temperature/Pressure )
                     displayListAvPerDateAllSt(post, L->pFirst);
@@ -376,6 +377,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
     Station1* NS = NULL;
     Date* D = malloc(sizeof(Date));
     int d = 0;
+    int i = 0;
 
     pre = fopen( preFN, "r" );
     post = fopen( postFN, "w" );
@@ -452,7 +454,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
 
     switch( mode ){
                 case(1):        //Mode 1 ( Temperature/Pressure )
-                    displayAvPerSt(S, post);            
+                    displayAvPerSt(S, post, i);            
                     break;
                 case(2):        //Mode 2 ( Temperature/Pressure )
                     displayAvPerDateAllSt(S, post);

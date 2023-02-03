@@ -1,5 +1,3 @@
-set term png;
-set output "graphique.png";
 set title "Line Plot of Data over Time";
 set xlabel "Date and Time";
 set timefmt "%Y-%m-%d %H:%M:%S";
@@ -8,5 +6,4 @@ set format x "%Y-%m-%d\n%H:%M:%S";
 set ylabel "Temperature";
 set xrange [*:*]noextend;
 set yrange [*:*]noextend;
-plot 'endsort' using 1:3 with lines title "Temperature by date";
-replot;
+plot 'endsort' using 1:3 with lines title "temperature by date";
