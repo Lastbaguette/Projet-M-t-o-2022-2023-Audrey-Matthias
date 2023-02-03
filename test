@@ -397,7 +397,7 @@ fi
 			fi
 
 		fi
-	delete_files
+	#delete_files
 	exit 1
 	
 	fi
