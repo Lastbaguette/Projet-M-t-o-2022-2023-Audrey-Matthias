@@ -5,8 +5,8 @@ set xlabel "Longitude"
 set ylabel "Latitude"
 set autoscale
 set cbrange[*:*]
-set xrange [*:*]noextend
 set yrange [*:*]noextend
+set xrange [*:*]noextend
 set palette rgb 10,13,33
 
 
