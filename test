@@ -57,6 +57,9 @@ function error(){
 function delete_files(){                       #general file deleted  
 	rm -f tmpsort;
 	rm -f endsort;
+	if [ -e "tmp" ];then
+			rm tmp
+	fi
 }
 
 function MinMaxAvg_StationP(){
@@ -130,14 +133,6 @@ fi
 
 	b=${!#}	 # take the last argument for the file to use to simplify the notation
 
-
-	
-	
-
- 
-		if [ -e "tmp" ];then
-			rm tmp
-		fi
 		nsort="avl"
 		Argn="m"
 		
@@ -394,7 +389,7 @@ fi
 			fi
 
 		fi
-	#delete_files
+	delete_files
 	exit 1
 	
 	fi
