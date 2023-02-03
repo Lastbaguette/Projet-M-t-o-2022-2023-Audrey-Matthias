@@ -10,8 +10,8 @@ Writing functions
 //File writing functions for ABR and AVL modes
 
 void processAvPerSt( Station1* S, FILE* post, int* count ){
-    *count++;
-    fprintf( post, "%d %d    %f   %f %f\n", count, S -> ID, S -> average, S -> min, S-> max);         // ID  Average Min Max 
+    *count = *count + 1;
+    fprintf( post, "%d %d    %f   %f %f\n", *count, S -> ID, S -> average, S -> min, S-> max);         // ID  Average Min Max 
 }
 
 void processAvPerDateAllSt( Station1* S, FILE* post ){
@@ -113,8 +113,8 @@ void RdisplayMoisture( Station1* S, FILE* post){
 void displayListAvPerSt(FILE* post, Node* pNode, int* count){
 
     while(pNode != NULL){
-	*count++;
-        fprintf( post, "%d %d    %f   %f %f\n", count, pNode -> ID, pNode -> average, pNode -> min, pNode-> max);     // ID  Average Min Max 
+	    *count = *count + 1;
+        fprintf( post, "%d %d    %f   %f %f\n", *count, pNode -> ID, pNode -> average, pNode -> min, pNode-> max);     // ID  Average Min Max 
         pNode = pNode->pNext;
     }
     

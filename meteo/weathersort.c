@@ -93,6 +93,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
     Date* D = malloc(sizeof(Date));
     int d = 0;
     int i = 0;
+    int* pi = &i;
 
     pre = fopen( preFN, "r" );
     post = fopen( postFN, "w" );
@@ -169,7 +170,7 @@ int SortABR( char* preFN , char* postFN , int R, int dSort, int mode){   //ABR t
 
     switch( mode ){
                 case(1):        //Mode 1 ( Temperature/Pressure )
-                    displayAvPerSt(S, post, i);
+                    displayAvPerSt(S, post, pi);
                     break;
                 case(2):        //Mode 2 ( Temperature/Pressure )
                     displayAvPerDateAllSt(S, post);
@@ -229,6 +230,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
     List* L2 = malloc(sizeof(List));
     int d = 0, p = 1;
     int i = 0;
+    int* pi = &i;
     
 
     pre = fopen( preFN, "r" );
@@ -317,7 +319,7 @@ int SortLIST(char* preFN , char* postFN , int R, int dSort, int mode){    //Doub
 
     switch( mode ){
                 case(1):        //Mode 1 ( Temperature/Pressure )
-                    displayListAvPerSt(post, L->pFirst, i);
+                    displayListAvPerSt(post, L->pFirst, pi);
                     break;
                 case(2):        //Mode 2 ( Temperature/Pressure )
                     displayListAvPerDateAllSt(post, L->pFirst);
@@ -378,6 +380,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
     Date* D = malloc(sizeof(Date));
     int d = 0;
     int i = 0;
+    int* pi = &i;
 
     pre = fopen( preFN, "r" );
     post = fopen( postFN, "w" );
@@ -454,7 +457,7 @@ int SortAVL( char* preFN , char* postFN , int R, int* pH, int dSort, int mode ){
 
     switch( mode ){
                 case(1):        //Mode 1 ( Temperature/Pressure )
-                    displayAvPerSt(S, post, i);            
+                    displayAvPerSt(S, post, pi);            
                     break;
                 case(2):        //Mode 2 ( Temperature/Pressure )
                     displayAvPerDateAllSt(S, post);
